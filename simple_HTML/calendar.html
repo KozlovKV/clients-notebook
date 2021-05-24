@@ -1,78 +1,129 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Календарь</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Главная</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
+
 <body>
-    <div class="container-md my-5">
-        <div class="row g-1 g-lg-3 g-xl-5 align-items-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand h1" href="#">Название</a>
+            <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse row justify-content-around" id="navbarSupportedContent">
+                <div class="navbar-nav col-md-6 ms-3 md-justify-content-start">
+                    <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                    <a class="nav-link" href="#">Запись на приём</a>
+                    <a class="nav-link" href="#">Жалоба</a>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                <!-- <a class="nav-link disabled align-right" href="#" tabindex="-1" aria-disabled="true">Личный кабинет</a> -->
+                <form class="d-flex col-md-6 justify-content-around md-justify-content-end row">
+                    <!-- CSRF -->
+                    <div class="col-md-8 row">
+                        <input class="form-control m-1 col" type="username" placeholder="Имя пользователя"
+                            aria-label="Имя пользователя">
+                        <input class="form-control m-1 col" type="password" placeholder="Пароль" aria-label="Пароль">
                     </div>
-                </div>
+                    <button class="btn btn-success m-1 col-md-2" type="submit">Войти</button>
+                    <a class="btn btn-warning m-1 col-md-2" href="/registration/">Регистрация</a>
+                </form>
             </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
+        </div>
+    </nav>
+
+    <div class="container-lg">
+        <h1 class="text-center m-5">Запись на ИМЯ_УСЛУГИ</h1>
+        <div class="d-flex justify-content-around g-1 row">
+            <table class="table table-striped table-bordered" id="calendar">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">
+                            <i class="fas fa-arrow-left"></i>
+                        </th>
+                        <th scope="col" colspan="5"></th>
+                        <th scope="col">
+                            <i class="fas fa-arrow-right"></i>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">Пн</th>
+                        <th scope="col">Вт</th>
+                        <th scope="col">Ср</th>
+                        <th scope="col">Чт</th>
+                        <th scope="col">Пт</th>
+                        <th scope="col">Сб</th>
+                        <th scope="col">Вс</th>
+                    </tr>
+                <tbody>
+            </table>
+
+            <script>
+                function Calendar(id, year, month) {
+                    var Dlast = new Date(year, month + 1, 0).getDate(),
+                        D = new Date(year, month, Dlast),
+                        DNlast = new Date(D.getFullYear(), D.getMonth(), Dlast).getDay(),
+                        DNfirst = new Date(D.getFullYear(), D.getMonth(), 1).getDay(),
+                        calendar = '<tr>',
+                        month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+                    if (DNfirst != 0) {
+                        for (var i = 1; i < DNfirst; i++) calendar += '<td>';
+                    } else {
+                        for (var i = 0; i < 6; i++) calendar += '<td>';
+                    }
+                    for (var i = 1; i <= Dlast; i++) {
+                        if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
+                            calendar += '<td>' + i;
+                        } else {
+                            calendar += '<td>' + i;
+                        }
+                        if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
+                            calendar += '<tr>';
+                        }
+                    }
+                    for (var i = DNlast; i < 7; i++) calendar += '<td>&nbsp;';
+                    document.querySelector('#' + id + ' tbody').innerHTML = calendar;
+                    document.querySelector('#' + id + ' thead th:nth-child(2)').innerHTML = month[D.getMonth()] + ' ' + D.getFullYear();
+                    document.querySelector('#' + id + ' thead th:nth-child(2)').dataset.month = D.getMonth();
+                    document.querySelector('#' + id + ' thead th:nth-child(2)').dataset.year = D.getFullYear();
+                    if (document.querySelectorAll('#' + id + ' tbody tr').length < 6) {  // чтобы при перелистывании месяцев не "подпрыгивала" вся страница, добавляется ряд пустых клеток. Итог: всегда 6 строк для цифр
+                        document.querySelector('#' + id + ' tbody').innerHTML += '<tr><td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;';
+                    }
+                }
+
+                Calendar("calendar", new Date().getFullYear(), new Date().getMonth());
+
+                // переключатель минус месяц
+                document.querySelector('#calendar thead tr:nth-child(1) th:nth-child(1)').onclick = function () {
+                    Calendar("calendar", document.querySelector('#calendar thead th:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar thead th:nth-child(2)').dataset.month) - 1);
+                }
+
+                // переключатель плюс месяц
+                document.querySelector('#calendar thead tr:nth-child(1) th:nth-child(3)').onclick = function () {
+                    Calendar("calendar", document.querySelector('#calendar thead th:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar thead th:nth-child(2)').dataset.month) + 1);
+                }
+            </script>
         </div>
     </div>
-    <div class="container">
-        <div class="row border">
-          <div class="col-md-8 bg-light">.col-md-8</div>
-          <div class="col-6 col-md-4 bg-light">.col-6 .col-md-4</div>
+
+    <footer class="footer py-3 bg-dark text-light mt-5">
+        <div class="container">
+            &copy; 2021, Козлов К.В.
         </div>
-      
-        <div class="row border">
-          <div class="col-6 col-md-4 bg-light">.col-6 .col-md-4</div>
-          <div class="col-6 col-md-4 bg-light">.col-6 .col-md-4</div>
-          <div class="col-6 col-md-4 bg-light">.col-6 .col-md-4</div>
-        </div>
-      
-        <div class="row border">
-          <div class="col-6 bg-light">.col-6</div>
-          <div class="col-6 bg-light">.col-6</div>
-        </div>
-      </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/7028e958f2.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
