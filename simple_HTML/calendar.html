@@ -132,11 +132,11 @@
 
             <div class="container">
                 <div class="row justify-content-md-center text-center">
-                    <div class="col">                
+                    <div class="col" id="leftArrow">                
                         <i class="fas fa-arrow-left"></i>
                     </div>
                     <h3 class="col-6" id="calendarLabel">Январь 2021</h3>
-                    <div class="col">
+                    <div class="col" id="rightArrow">
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
@@ -148,21 +148,84 @@
                     <div class="col-1 h4">Пт</div>
                     <div class="col-1 h4">Сб</div>
                     <div class="col-1 h4">Вс</div>
-                    
-                    <a href="#" class="col-1 btn btn-success">1</a>
-                    <a href="#" class="col-1 btn btn-danger">0</a>
-                    <a href="#" class="col-1 btn btn-success">1</a>
-                    <a href="#" class="col-1 btn btn-danger">0</a>
-                    <a href="#" class="col-1 btn btn-success">1</a>
-                    <a href="#" class="col-1 btn btn-danger">0</a>
-                    <a href="#" class="col-1 btn btn-success">1</a>
-                    <a href="#" class="col-1 btn btn-danger">0</a>
-                    <a href="#" class="col-1 btn btn-success">1</a>
-                    <a href="#" class="col-1 btn btn-danger">0</a>
-                    <a href="#" class="col-1 btn btn-success">1</a>
-                    <a href="#" class="col-1 btn btn-danger">0</a>
+                </div>
+                <div class="row row-cols-7 justify-content-center" id="calendarBody">
                 </div>
             </div>
+            <script>
+                function getEmptyCalCell() {
+                    let obj = document.createElement('div');
+                    obj.className = 'col-1 btn btn-warning';
+                    return obj;
+                }
+                
+                function getActiveCalCell(day) {
+                    let obj = document.createElement('a');
+                    obj.href = '#';
+                    obj.textContent = day
+                    obj.className = 'col-1 btn btn-success';
+                    return obj;
+                }
+                
+                function getFilledCalCell(day) {
+                    let obj = document.createElement('div');
+                    obj.textContent = day
+                    obj.className = 'col-1 btn btn-danger';
+                    return obj;
+                }
+
+                function setCalLabel(date) {
+                    calendar_label.textContent = MONTHS[date.getMonth()] + ' ' + date.getFullYear()
+                }
+
+                function appendCellInCalendar(cell) {
+                    calendar_body.appendChild(cell)
+                }
+
+                function resetCalendar() {
+                    while (calendar_body.childNodes.length > 0) {
+                        calendar_body.removeChild(calendar_body.firstChild);
+                    }
+                }
+
+                function fillCalendar(date) {
+                    resetCalendar();
+                    setCalLabel(date);
+
+                    let first_day = new Date(date.getFullYear(), date.getMonth(), 1)
+                    let last_day = new Date(date.getFullYear(), date.getMonth()+1, 0)
+                    let gaps_start = first_day.getDay() == 0 ? 6 : first_day.getDay() - 1;
+                    let gaps_end = last_day.getDay() == 0 ? 0 : 7 - last_day.getDay();
+
+                    for (let i = 0; i < gaps_start; ++i) {
+                        appendCellInCalendar(getEmptyCalCell())
+                    }
+                    
+                    for (let i = 0; i < last_day.getDate(); ++i) {
+                        if (Math.random() > 0.5)
+                            appendCellInCalendar(getActiveCalCell(i+1));
+                        else 
+                            appendCellInCalendar(getFilledCalCell(i+1));
+                    }
+                    
+                    for (let i = 0; i < gaps_end; ++i) {
+                        appendCellInCalendar(getEmptyCalCell())
+                    }
+                }
+
+                function changeMonth(delta) {
+                    current_date = new Date(current_date.getFullYear(), current_date.getMonth()+delta)
+                    fillCalendar(current_date)
+                }
+                
+                const MONTHS = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];          
+                let calendar_body = document.getElementById('calendarBody');
+                let calendar_label = document.getElementById('calendarLabel');
+                let current_date = new Date()
+                fillCalendar(current_date)
+                leftArrow.addEventListener('click', () => {changeMonth(-1)});
+                rightArrow.addEventListener('click', () => {changeMonth(1)});
+            </script>
         </div>
     </div>
 
