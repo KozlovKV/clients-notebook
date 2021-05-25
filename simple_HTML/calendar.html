@@ -39,8 +39,8 @@
             </button>
             <div class="collapse navbar-collapse row justify-content-around" id="navbarSupportedContent">
                 <div class="navbar-nav col-md-6 ms-3 md-justify-content-start">
-                    <a class="nav-link active" aria-current="page" href="#">Главная</a>
-                    <a class="nav-link" href="#">Запись на приём</a>
+                    <a class="nav-link" aria-current="page" href="#">Главная</a>
+                    <a class="nav-link active" href="#">Запись на приём</a>
                     <a class="nav-link" href="#">Жалоба</a>
                 </div>
                 <!-- <a class="nav-link disabled align-right" href="#" tabindex="-1" aria-disabled="true">Личный кабинет</a> -->
@@ -59,84 +59,19 @@
     </nav>
 
     <div class="container-lg">
-        <h1 class="text-center m-5">Запись на ИМЯ_УСЛУГИ</h1>
-        <div class="d-flex justify-content-around g-1 row">
-            <table class="table table-striped table-bordered" id="calendar">
-                <thead class="table-primary">
-                    <tr>
-                        <th scope="col">
-                            <i class="fas fa-arrow-left"></i>
-                        </th>
-                        <th scope="col" colspan="5"></th>
-                        <th scope="col">
-                            <i class="fas fa-arrow-right"></i>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th scope="col">Пн</th>
-                        <th scope="col">Вт</th>
-                        <th scope="col">Ср</th>
-                        <th scope="col">Чт</th>
-                        <th scope="col">Пт</th>
-                        <th scope="col">Сб</th>
-                        <th scope="col">Вс</th>
-                    </tr>
-                <tbody>
-            </table>
-
-            <script>
-                function Calendar(id, year, month) {
-                    var Dlast = new Date(year, month + 1, 0).getDate(),
-                        D = new Date(year, month, Dlast),
-                        DNlast = new Date(D.getFullYear(), D.getMonth(), Dlast).getDay(),
-                        DNfirst = new Date(D.getFullYear(), D.getMonth(), 1).getDay(),
-                        calendar = '<tr>',
-                        month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
-                    if (DNfirst != 0) {
-                        for (var i = 1; i < DNfirst; i++) calendar += '<td>';
-                    } else {
-                        for (var i = 0; i < 6; i++) calendar += '<td>';
-                    }
-                    for (var i = 1; i <= Dlast; i++) {
-                        if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
-                            calendar += '<td>' + i;
-                        } else {
-                            calendar += '<td>' + i;
-                        }
-                        if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
-                            calendar += '<tr>';
-                        }
-                    }
-                    for (var i = DNlast; i < 7; i++) calendar += '<td>&nbsp;';
-                    document.querySelector('#' + id + ' tbody').innerHTML = calendar;
-                    document.querySelector('#' + id + ' thead th:nth-child(2)').innerHTML = month[D.getMonth()] + ' ' + D.getFullYear();
-                    document.querySelector('#' + id + ' thead th:nth-child(2)').dataset.month = D.getMonth();
-                    document.querySelector('#' + id + ' thead th:nth-child(2)').dataset.year = D.getFullYear();
-                    if (document.querySelectorAll('#' + id + ' tbody tr').length < 6) {  // чтобы при перелистывании месяцев не "подпрыгивала" вся страница, добавляется ряд пустых клеток. Итог: всегда 6 строк для цифр
-                        document.querySelector('#' + id + ' tbody').innerHTML += '<tr><td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;';
-                    }
-                }
-
-                Calendar("calendar", new Date().getFullYear(), new Date().getMonth());
-
-                // переключатель минус месяц
-                document.querySelector('#calendar thead tr:nth-child(1) th:nth-child(1)').onclick = function () {
-                    Calendar("calendar", document.querySelector('#calendar thead th:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar thead th:nth-child(2)').dataset.month) - 1);
-                }
-
-                // переключатель плюс месяц
-                document.querySelector('#calendar thead tr:nth-child(1) th:nth-child(3)').onclick = function () {
-                    Calendar("calendar", document.querySelector('#calendar thead th:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar thead th:nth-child(2)').dataset.month) + 1);
-                }
-            </script>
-
-            <div class="container">
-                <div class="row justify-content-md-center text-center">
-                    <div class="col" id="leftArrow">                
+        <div class="card mt-5 text-center border-3">
+            <h1 class="card-header">Запись на ИМЯ_УСЛУГИ</h1>
+            <div class="card-text p-3">ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. </div>
+        </div>
+        <div class="card mt-2 text-center border-3">
+            <h2 class="card-header">Зелёным обозначены дни, в которые можно записаться</h2>
+            <div class="card-body">
+                <div class="row justify-content-center text-center p-3">
+                    <div class="col btn btn-primary border-dark border-2" id="leftArrow">                
                         <i class="fas fa-arrow-left"></i>
                     </div>
-                    <h3 class="col-6" id="calendarLabel">Январь 2021</h3>
-                    <div class="col" id="rightArrow">
+                    <h3 class="col-6" id="calendarLabel"></h3>
+                    <div class="col btn btn-primary border-dark border-2" id="rightArrow">
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
@@ -152,81 +87,11 @@
                 <div class="row row-cols-7 justify-content-center" id="calendarBody">
                 </div>
             </div>
-            <script>
-                function getEmptyCalCell() {
-                    let obj = document.createElement('div');
-                    obj.className = 'col-1 btn btn-warning';
-                    return obj;
-                }
-                
-                function getActiveCalCell(day) {
-                    let obj = document.createElement('a');
-                    obj.href = '#';
-                    obj.textContent = day
-                    obj.className = 'col-1 btn btn-success';
-                    return obj;
-                }
-                
-                function getFilledCalCell(day) {
-                    let obj = document.createElement('div');
-                    obj.textContent = day
-                    obj.className = 'col-1 btn btn-danger';
-                    return obj;
-                }
-
-                function setCalLabel(date) {
-                    calendar_label.textContent = MONTHS[date.getMonth()] + ' ' + date.getFullYear()
-                }
-
-                function appendCellInCalendar(cell) {
-                    calendar_body.appendChild(cell)
-                }
-
-                function resetCalendar() {
-                    while (calendar_body.childNodes.length > 0) {
-                        calendar_body.removeChild(calendar_body.firstChild);
-                    }
-                }
-
-                function fillCalendar(date) {
-                    resetCalendar();
-                    setCalLabel(date);
-
-                    let first_day = new Date(date.getFullYear(), date.getMonth(), 1)
-                    let last_day = new Date(date.getFullYear(), date.getMonth()+1, 0)
-                    let gaps_start = first_day.getDay() == 0 ? 6 : first_day.getDay() - 1;
-                    let gaps_end = last_day.getDay() == 0 ? 0 : 7 - last_day.getDay();
-
-                    for (let i = 0; i < gaps_start; ++i) {
-                        appendCellInCalendar(getEmptyCalCell())
-                    }
-                    
-                    for (let i = 0; i < last_day.getDate(); ++i) {
-                        if (Math.random() > 0.5)
-                            appendCellInCalendar(getActiveCalCell(i+1));
-                        else 
-                            appendCellInCalendar(getFilledCalCell(i+1));
-                    }
-                    
-                    for (let i = 0; i < gaps_end; ++i) {
-                        appendCellInCalendar(getEmptyCalCell())
-                    }
-                }
-
-                function changeMonth(delta) {
-                    current_date = new Date(current_date.getFullYear(), current_date.getMonth()+delta)
-                    fillCalendar(current_date)
-                }
-                
-                const MONTHS = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];          
-                let calendar_body = document.getElementById('calendarBody');
-                let calendar_label = document.getElementById('calendarLabel');
-                let current_date = new Date()
-                fillCalendar(current_date)
-                leftArrow.addEventListener('click', () => {changeMonth(-1)});
-                rightArrow.addEventListener('click', () => {changeMonth(1)});
-            </script>
         </div>
+        <script src="./calendar.js"></script>
+        <script>
+            let calendar_instance = new SwitchingCalendar('calendarBody', 'calendarLabel', 'leftArrow', 'rightArrow');
+        </script>
     </div>
 
     <footer class="footer py-3 bg-dark text-light mt-5">
