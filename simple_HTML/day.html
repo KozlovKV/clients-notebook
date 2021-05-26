@@ -8,24 +8,6 @@
     <title>Главная</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <style>
-        .row-cols-7 .col-1 {
-            width: 13%;
-            *width: 13%;
-            padding: 6px 3px;
-            text-align: center;
-            margin: 1px;
-            border: 1px solid black;
-            font-size: 1.5rem;
-        }
-
-        @media (min-width: 992px) {
-            .row-cols-7 .col-1 {
-                padding: 10px 5px;
-                border: 2px solid black;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -72,34 +54,48 @@
             </div>
         </div>
         <div class="card mt-2 text-center border-3">
-            <h2 class="card-header">Зелёным обозначены дни, в которые можно записаться</h2>
+            <h2 class="card-header font-monospace">ДД.ММ.ГГГГ</h2>
             <div class="card-body">
-                <div class="row justify-content-center text-center p-3">
-                    <button class="col btn btn-primary border-dark border-2" id="leftArrow">                
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <h3 class="col-6" id="calendarLabel"></h3>
-                    <button class="col btn btn-primary border-dark border-2" id="rightArrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-                <div class="row row-cols-7 justify-content-center">
-                    <div class="col-1 h4">Пн</div>
-                    <div class="col-1 h4">Вт</div>
-                    <div class="col-1 h4">Ср</div>
-                    <div class="col-1 h4">Чт</div>
-                    <div class="col-1 h4">Пт</div>
-                    <div class="col-1 h4">Сб</div>
-                    <div class="col-1 h4">Вс</div>
-                </div>
-                <div class="row row-cols-7 justify-content-center" id="calendarBody">
-                </div>
+                <table class="table table-bordered table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Время начала</th>
+                            <th scope="col">Время конца</th>
+                            <th scope="col">Записаться</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-monospace">11:00</td>
+                            <td class="font-monospace">12:00</td>
+                            <td>
+                                <form action="">
+                                    <button class="btn btn-primary" type="submit">Записаться</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-monospace">12:00</td>
+                            <td class="font-monospace">13:00</td>
+                            <td>
+                                <form action="">
+                                    <button class="btn btn-primary" type="submit">Записаться</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-monospace">13:00</td>
+                            <td class="font-monospace">14:00</td>
+                            <td>
+                                <form action="">
+                                    <button class="btn btn-primary" type="submit">Записаться</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <script src="./calendar.js"></script>
-        <script>
-            let calendar_instance = new SwitchingCalendar('calendarBody', 'calendarLabel', 'leftArrow', 'rightArrow');
-        </script>
     </div>
 
     <footer class="footer py-3 bg-dark text-light mt-5">
