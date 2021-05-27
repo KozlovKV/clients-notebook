@@ -44,8 +44,12 @@
         <div class="card mt-5 text-center border-3">
             <h1 class="card-header">Запись на ИМЯ_УСЛУГИ</h1>
             <div class="card-body row">
-                <img class="col-md-4" src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="Картинка массажа">
-                <div class="col-md-8 card-text p-3">ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. </div>
+                <img class="col-md-4"
+                    src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+                    alt="Картинка массажа">
+                <div class="col-md-8 card-text p-3">ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ.
+                    ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ.
+                    ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. </div>
             </div>
             <div class="card-footer text-end">
                 <a class="card-link text-muted" href="/user/<id>">
@@ -57,55 +61,67 @@
             <h2 class="card-header font-monospace">ДД.ММ.ГГГГ</h2>
             <div class="card-body">
                 <div class="row g-3">
-                    <div class="card col-md-4 border-2">
-                        <div class="card-body">
-                            <div class="card-text font-monospace m-1">11:00 - 12:00</div>
-                            <div class="card-text m-2">Дополнительная информация</div>
-                            <div class="card-text">
-                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm1">
-                                    <i class="fas fa-arrow-circle-down"></i>
-                                </button>
+                    <div class="col-md-4">
+                        <div class="card border-2">
+                            <div class="card-body">
+                                <div class="card-text font-monospace m-1">11:00 - 12:00</div>
+                                <div class="card-text m-2">Дополнительная информация</div>
+                                <div class="card-text">
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseForm1">
+                                        <i class="fas fa-arrow-circle-down"></i>
+                                    </button>
+                                </div>
+                                <form action="" class="card collapse m-3" id="collapseForm1">
+                                    <div class="card-body">
+                                        <input class="form-control m-2" type="text" name="additional_info"
+                                            placeholder="Дополнительная информация">
+                                        <input class="btn btn-success m-2" type="submit" value="Записаться">
+                                    </div>
+                                </form>
                             </div>
-                            <form action="" class="card collapse m-3" id="collapseForm1">
-                                <div class="card-body">
-                                    <input class="form-control m-2" type="text" name="additional_info" placeholder="Дополнительная информация">
-                                    <input class="btn btn-success m-2" type="submit" value="Записаться">
-                                </div>
-                            </form>
                         </div>
                     </div>
-                    <div class="card col-md-4 border-2">
-                        <div class="card-body">
-                            <div class="card-text font-monospace m-1">11:00 - 12:00</div>
-                            <div class="card-text m-2">Дополнительная информация</div>
-                            <div class="card-text">
-                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm2">
-                                    <i class="fas fa-arrow-circle-down"></i>
-                                </button>
-                            </div>       
-                            <form action="" class="card collapse m-3" id="collapseForm2">
-                                <div class="card-body">
-                                    <input class="form-control m-2" type="text" name="additional_info" placeholder="Дополнительная информация">
-                                    <input class="btn btn-success m-2" type="submit" value="Записаться">
+                    <div class="col-md-4">
+                        <div class="card border-2">
+                            <div class="card-body">
+                                <div class="card-text font-monospace m-1">11:00 - 12:00</div>
+                                <div class="card-text m-2">Дополнительная информация</div>
+                                <div class="card-text">
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseForm2">
+                                        <i class="fas fa-arrow-circle-down"></i>
+                                    </button>
                                 </div>
-                            </form>
+                                <form action="" class="card collapse m-3" id="collapseForm2">
+                                    <div class="card-body">
+                                        <input class="form-control m-2" type="text" name="additional_info"
+                                            placeholder="Дополнительная информация">
+                                        <input class="btn btn-success m-2" type="submit" value="Записаться">
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <div class="card col-md-4 border-2">
-                        <div class="card-body">
-                            <div class="card-text font-monospace m-1">11:00 - 12:00</div>
-                            <div class="card-text m-2">Дополнительная информация</div>
-                            <div class="card-text">
-                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm3">
-                                    <i class="fas fa-arrow-circle-down"></i>
-                                </button>
-                            </div>       
-                            <form action="" class="card collapse m-3" id="collapseForm3">
-                                <div class="card-body">
-                                    <input class="form-control m-2" type="text" name="additional_info" placeholder="Дополнительная информация">
-                                    <input class="btn btn-success m-2" type="submit" value="Записаться">
+                    <div class="col-md-4">
+                        <div class="card border-2">
+                            <div class="card-body">
+                                <div class="card-text font-monospace m-1">11:00 - 12:00</div>
+                                <div class="card-text m-2">Дополнительная информация</div>
+                                <div class="card-text">
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseForm3">
+                                        <i class="fas fa-arrow-circle-down"></i>
+                                    </button>
                                 </div>
-                            </form>
+                                <form action="" class="card collapse m-3" id="collapseForm3">
+                                    <div class="card-body">
+                                        <input class="form-control m-2" type="text" name="additional_info"
+                                            placeholder="Дополнительная информация">
+                                        <input class="btn btn-success m-2" type="submit" value="Записаться">
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
