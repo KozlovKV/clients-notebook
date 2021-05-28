@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <style>
+        .row-cols-7 .col-1 {
+            width: 13%;
+            *width: 13%;
+            padding: 6px 3px;
+            text-align: center;
+            margin: 1px;
+            border: 1px solid black;
+            font-size: 1.5rem;
+        }
+
+        @media (min-width: 992px) {
+            .row-cols-7 .col-1 {
+                padding: 10px 5px;
+                border: 2px solid black;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand h1" href="#">Название</a>
+            <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse row justify-content-around" id="navbarSupportedContent">
+                <div class="navbar-nav col-md-6 ms-3 md-justify-content-start">
+                    <a class="nav-link" aria-current="page" href="#">Главная</a>
+                    <a class="nav-link active" href="#">Запись на приём</a>
+                    <a class="nav-link" href="#">Жалоба</a>
+                </div>
+                <!-- <a class="nav-link disabled align-right" href="#" tabindex="-1" aria-disabled="true">Личный кабинет</a> -->
+                <form class="d-flex col-md-6 justify-content-around md-justify-content-end row">
+                    <!-- CSRF -->
+                    <div class="col-md-8 row">
+                        <input class="form-control m-1 col" type="username" placeholder="Имя пользователя"
+                            aria-label="Имя пользователя">
+                        <input class="form-control m-1 col" type="password" placeholder="Пароль" aria-label="Пароль">
+                    </div>
+                    <button class="btn btn-success m-1 col-md-2" type="submit">Войти</button>
+                    <a class="btn btn-warning m-1 col-md-2" href="/registration/">Регистрация</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-lg">
+        <div class="card mt-5 text-center border-3">
+            <h1 class="card-header">Запись на ИМЯ_УСЛУГИ</h1>
+            <div class="card-body row">
+                <img class="col-md-4"
+                    src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+                    alt="Картинка массажа">
+                <div class="col-md-8 card-text p-3">ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ.
+                    ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ.
+                    ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. </div>
+            </div>
+            <div class="card-footer text-end">
+                <a class="card-link text-muted" href="/user/<id>">
+                    Поставщик
+                </a>
+            </div>
+        </div>
+        <div class="card mt-2 text-center border-3">
+            <h2 class="card-header">Зелёным обозначены дни, в которые можно записаться</h2>
+            <div class="card-body">
+                <div class="row justify-content-center text-center p-3">
+                    <button class="col btn btn-primary border-dark border-2" id="leftArrow">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h3 class="col-6" id="calendarLabel"></h3>
+                    <button class="col btn btn-primary border-dark border-2" id="rightArrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="row row-cols-7 justify-content-center">
+                    <div class="col-1 h4">Пн</div>
+                    <div class="col-1 h4">Вт</div>
+                    <div class="col-1 h4">Ср</div>
+                    <div class="col-1 h4">Чт</div>
+                    <div class="col-1 h4">Пт</div>
+                    <div class="col-1 h4">Сб</div>
+                    <div class="col-1 h4">Вс</div>
+                </div>
+                <div class="row row-cols-7 justify-content-center" id="calendarBody">
+                </div>
+            </div>
+        </div>
+        <script src="./calendar.js"></script>
+        <script>
+            let calendar_instance = new SwitchingCalendar('calendarBody', 'calendarLabel', 'leftArrow', 'rightArrow');
+        </script>
+    </div>
+
+    <footer class="footer py-3 bg-dark text-light mt-5">
+        <div class="container">
+            &copy; 2021, Козлов К.В.
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/7028e958f2.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

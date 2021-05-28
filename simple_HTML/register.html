@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand h1" href="#">Название</a>
+            <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse row justify-content-around" id="navbarSupportedContent">
+                <div class="navbar-nav col-md-6 ms-3 md-justify-content-start">
+                    <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                    <a class="nav-link" href="#">Запись на приём</a>
+                    <a class="nav-link" href="#">Жалоба</a>
+                </div>
+                <!-- <a class="nav-link disabled align-right" href="#" tabindex="-1" aria-disabled="true">Личный кабинет</a> -->
+                <form class="d-flex col-md-6 justify-content-around md-justify-content-end row">
+                    <!-- CSRF -->
+                    <div class="col-md-8 row">
+                        <input class="form-control m-1 col" type="username" placeholder="Имя пользователя"
+                            aria-label="Имя пользователя">
+                        <input class="form-control m-1 col" type="password" placeholder="Пароль" aria-label="Пароль">
+                    </div>
+                    <button class="btn btn-success m-1 col-md-2" type="submit">Войти</button>
+                    <a class="btn btn-warning m-1 col-md-2" href="/registration/">Регистрация</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-lg">
+        <h1 class="text-center m-5">Регистрация</h1>
+        <div class="card border-2 border-danger m-1 mb-3">
+            <h2 class="card-header">Ошибки регистрации или входа</h2>
+            <ul class="card-body list-group list-group-flush">
+                <li class="card-text list-group-item">Ошибка 1</li>
+                <li class="card-text list-group-item">Ошибка 2</li>
+            </ul>
+        </div>
+        <form action="" class="card m-1">
+            <div class="card-body m-2 p-2 row">
+                <div class="card-text p-2 col-md-6">
+                    <label class="form-label fs-5" for="username">Имя пользователя</label>
+                    <input class="form-control-lg w-100" type="text" name="username" placeholder="Имя пользователя">
+                </div>
+                <div class="card-text p-2 col-md-6">
+                    <label class="form-label fs-5" for="email">Электронная почта</label>
+                    <input class="form-control-lg w-100" type="email" name="email" placeholder="Электронная почта">
+                </div>
+                <div class="card-text p-2 col-md-6">
+                    <label class="form-label fs-5" for="password">Пароль</label>
+                    <input class="form-control-lg w-100" type="password" name="password" placeholder="Пароль">
+                </div>
+                <div class="card-text p-2 col-md-6">
+                    <label class="form-label fs-5" for="repeat_pswd">Повторите пароль</label>
+                    <input class="form-control-lg w-100" type="password" name="repeat_pswd"
+                        placeholder="Повторите пароль">
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <input type="submit" class="btn btn-primary border-2" value="Зарегистрироваться">
+            </div>
+        </form>
+    </div>
+
+    <footer class="footer py-3 bg-dark text-light mt-5">
+        <div class="container">
+            &copy; 2021, Козлов К.В.
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/7028e958f2.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

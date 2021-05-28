@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand h1" href="#">Название</a>
+            <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse row justify-content-around" id="navbarSupportedContent">
+                <div class="navbar-nav col-md-6 ms-3 md-justify-content-start">
+                    <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                    <a class="nav-link" href="#">Запись на приём</a>
+                    <a class="nav-link" href="#">Жалоба</a>
+                </div>
+                <!-- <a class="nav-link disabled align-right" href="#" tabindex="-1" aria-disabled="true">Личный кабинет</a> -->
+                <form class="d-flex col-md-6 justify-content-around md-justify-content-end row">
+                    <!-- CSRF -->
+                    <div class="col-md-8 row">
+                        <input class="form-control m-1 col" type="username" placeholder="Имя пользователя"
+                            aria-label="Имя пользователя">
+                        <input class="form-control m-1 col" type="password" placeholder="Пароль" aria-label="Пароль">
+                    </div>
+                    <button class="btn btn-success m-1 col-md-2" type="submit">Войти</button>
+                    <a class="btn btn-warning m-1 col-md-2" href="/registration/">Регистрация</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-lg">
+        <h1 class="text-center m-5">Записная книжка для каждого!</h1>
+        <div class="d-flex justify-content-around g-1 row">
+            <div class="col-md-6">
+                <div class="card border-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Для чего нужен этот сайт?</h3>
+                        <p class="card-text">
+                            Наш сайт предоставляет возможность зарегистрировавшимся у нас пользователям записываться на
+                            приём
+                            друг к другу для получения разнообразных услуг.
+                        </p>
+                        <p class="card-text">
+                            После приёма пользователь может оставить отзыв о полученной услуге.
+                        </p>
+                        <p class="card-text">
+                            При необходимости можно пожаловаться на пользователя. Администрация рассмотрит вашу жалобу и
+                            примет справедливое решение
+                        </p>
+                        <a class="btn btn-primary m-1" href="/list/">Список услуг</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Нас уже много!</h3>
+                        <p class="card-text">Уже 1000 пользователей зарегистрировались на нашем сайте! Совершили 10 000
+                            записей друг к другу и оставили 300 отзывов. Присоединяйся и ты.</p>
+                        <a class="btn btn-warning m-1" href="/registration/">Регистрация</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer py-3 bg-dark text-light mt-5">
+        <div class="container">
+            &copy; 2021, Козлов К.В.
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/7028e958f2.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
