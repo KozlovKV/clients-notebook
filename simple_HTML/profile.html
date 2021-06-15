@@ -21,9 +21,11 @@
             </button>
             <div class="collapse navbar-collapse row justify-content-around" id="navbarSupportedContent">
                 <div class="navbar-nav col-md-6 ms-3 md-justify-content-start">
-                    <a class="nav-link active" aria-current="page" href="#">Главная</a>
-                    <a class="nav-link" href="#">Запись на приём</a>
-                    <a class="nav-link" href="#">Жалоба</a>
+                    <a class="nav-link" href="./index.html">Главная</a>
+                    <a class="nav-link" href="./services_list.html">Запись на приём</a>
+                    <a class="nav-link active" href="./profile.html">Личный кабинет</a>
+                    <a class="nav-link" href="./my_services.html">Мои услуги</a>
+                    <a class="nav-link" href="./my_notes.html">Мои записи</a>
                 </div>
                 <!-- <a class="nav-link disabled align-right" href="#" tabindex="-1" aria-disabled="true">Личный кабинет</a> -->
                 <form class="d-flex col-md-6 justify-content-around md-justify-content-end row">
@@ -34,7 +36,7 @@
                         <input class="form-control m-1 col" type="password" placeholder="Пароль" aria-label="Пароль">
                     </div>
                     <button class="btn btn-success m-1 col-md-2" type="submit">Войти</button>
-                    <a class="btn btn-warning m-1 col-md-2" href="/registration/">Регистрация</a>
+                    <a class="btn btn-warning m-1 col-md-2" href="./register.html">Регистрация</a>
                 </form>
             </div>
         </div>
@@ -44,22 +46,48 @@
         <h1 class="text-center m-5">Профиль пользователя ИМЯ ПОЛЬЗОВАТЕЛЯ</h1>
         <div class="card border-3 m-md-4">
             <div class="card-body row">
-                <img class="col-md-4" src="https://cdn.hipwallpaper.com/i/43/33/srY1a6.jpg" alt="Аватарка">
-                <div class="col-md-8 card-text fs-1 p-3">
-                    <p>Фамилия</p>
-                    <p>Имя</p>
-                    <p class="font-monospace">Имейл</p>
-                    <p>О СЕБЕ. О СЕБЕ. О СЕБЕ.</p>
-                    <a href="#" class="btn btn-success fs-4">
-                        Посмотреть услуги пользователя<i class="fas fa-arrow-alt-circle-right"></i>
-                    </a>
+                <img class="col-md-5" src="https://cdn.hipwallpaper.com/i/43/33/srY1a6.jpg" alt="Аватарка">
+                <div class="col-md-7 card-text fs-2 list-group list-group-flush">
+                    <p class="list-group-item">Фамилия</p>
+                    <p class="list-group-item">Имя</p>
+                    <p class="font-monospace list-group-item">Имейл</p>
+                    <p class="font-monospace list-group-item">Средняя оценка - 12/10</p>
+                    <p class="list-group-item">О СЕБЕ. О СЕБЕ. О СЕБЕ.</p>
+                    <div class="list-group-item">
+                        <a href="#" class="btn btn-success fs-4">
+                            Посмотреть услуги пользователя <i class="fas fa-arrow-alt-circle-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="card border-3 m-md-4 mt-3">
+            <h2 class="card-header">Редактирование профиля</h2>
+            <form action="" class="card-body row g-2">
+                <div class="col-md-6">
+                    <label class="form-label" for="sirname">Фамилия</label>
+                    <input class="form-control" type="text" placeholder="Фамилия" name="sirname" id="sirname">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="name">Имя</label>
+                    <input class="form-control" type="text" placeholder="Имя" name="name" id="name">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="avatar">Аватарка</label>
+                    <input class="form-control" type="file" name="avatar" id="avatar">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="info">О себе</label>
+                    <textarea class="form-control" type="text" placeholder="Кратко расскажите о себе, своих навыках"
+                        name="info" id="info"></textarea>
+                </div>
+                <input class="col-12 btn btn-success" type="submit" value="Сохранить изменения">
+            </form>
         </div>
         <div class="card border-3 border-warning m-md-4 mt-3">
             <h2 class="card-header">Отзывы</h2>
             <div class="card-body">
-                <div class="row g-3">
+                <div class="row g-3 justify-content-around">
                     <div class="col-md-4">
                         <div class="card border-2">
                             <h3 class="card-header">Заголовок</h3>

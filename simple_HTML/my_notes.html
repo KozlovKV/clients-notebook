@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand h1" href="#">Название</a>
+            <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse row justify-content-around" id="navbarSupportedContent">
+                <div class="navbar-nav col-md-6 ms-3 md-justify-content-start">
+                    <a class="nav-link" href="./index.html">Главная</a>
+                    <a class="nav-link" href="./services_list.html">Запись на приём</a>
+                    <a class="nav-link" href="./profile.html">Личный кабинет</a>
+                    <a class="nav-link" href="./my_services.html">Мои услуги</a>
+                    <a class="nav-link active" href="./my_notes.html">Мои записи</a>
+                </div>
+                <form class="d-flex col-md-6 justify-content-around md-justify-content-end row">
+                    <!-- CSRF -->
+                    <div class="col-md-8 row">
+                        <input class="form-control m-1 col" type="username" placeholder="Имя пользователя"
+                            aria-label="Имя пользователя">
+                        <input class="form-control m-1 col" type="password" placeholder="Пароль" aria-label="Пароль">
+                    </div>
+                    <button class="btn btn-success m-1 col-md-2" type="submit">Войти</button>
+                    <a class="btn btn-warning m-1 col-md-2" href="./register.html">Регистрация</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="text-center m-5">Мои записи</h1>
+        <div class="card mt-3 border-3">
+            <div class="card-header d-flex justify-content-between">
+                <h2>Я записан</h2>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#me2other">
+                    <i id="arrow" class="fs-3 fas fa-arrow-circle-down"></i>
+                </button>
+            </div>
+            <div class="card-body collapse row row-cols-1 row-cols-md-3 g-2 g-md-3" id="me2other">
+                <div class="col">
+                    <div class="card border-2">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Записан к пользователю:
+                                    <a class="link" href="./profile.html">
+                                        Николай
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    Услуга -
+                                    <a class="link" href="./services_list.html">
+                                        Массаж
+                                    </a>
+                                </li>
+                                <li class="list-group-item font-monospace">
+                                    <a class="link font-monospace" href="./day.html">
+                                        00.00.0000
+                                    </a>, 12:00
+                                </li>
+                                <li class="list-group-item">
+                                    Статус - <span class="text-warning">Активно</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="btn btn-danger border-1 border-dark">Отменить</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-2">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Записан к пользователю:
+                                    <a class="link" href="./profile.html">
+                                        Николай
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    Услуга -
+                                    <a class="link" href="./services_list.html">
+                                        Массаж
+                                    </a>
+                                </li>
+                                <li class="list-group-item font-monospace">
+                                    <a class="link font-monospace" href="./day.html">
+                                        00.00.0000
+                                    </a>, 12:00
+                                </li>
+                                <li class="list-group-item">
+                                    Статус - <span class="text-success">Прошло</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="btn btn-success border-1 border-dark">Оставить отзыв</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-2">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Записан к пользователю:
+                                    <a class="link" href="./profile.html">
+                                        Николай
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    Услуга -
+                                    <a class="link" href="./services_list.html">
+                                        Массаж
+                                    </a>
+                                </li>
+                                <li class="list-group-item font-monospace">
+                                    <a class="link font-monospace" href="./day.html">
+                                        00.00.0000
+                                    </a>, 12:00
+                                </li>
+                                <li class="list-group-item">
+                                    Статус - <span class="text-danger">Отменено</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-2">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Записан к пользователю:
+                                    <a class="link" href="./profile.html">
+                                        Николай
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    Услуга -
+                                    <a class="link" href="./services_list.html">
+                                        Массаж
+                                    </a>
+                                </li>
+                                <li class="list-group-item font-monospace">
+                                    <a class="link font-monospace" href="./day.html">
+                                        00.00.0000
+                                    </a>, 12:00
+                                </li>
+                                <li class="list-group-item">
+                                    Статус - <span class="text-warning">Активно</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="btn btn-danger border-1 border-dark">Отменить</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-2">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Записан к пользователю:
+                                    <a class="link" href="./profile.html">
+                                        Николай
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    Услуга -
+                                    <a class="link" href="./services_list.html">
+                                        Массаж
+                                    </a>
+                                </li>
+                                <li class="list-group-item font-monospace">
+                                    <a class="link font-monospace" href="./day.html">
+                                        00.00.0000
+                                    </a>, 12:00
+                                </li>
+                                <li class="list-group-item">
+                                    Статус - <span class="text-warning">Активно</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="btn btn-danger border-1 border-dark">Отменить</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3 border-3">
+            <div class="card-header d-flex justify-content-between">
+                <h2>Ко мне записаны</h2>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#other2me">
+                    <i id="arrow" class="fs-3 fas fa-arrow-circle-down"></i>
+                </button>
+            </div>
+            <div class="card-body collapse row row-cols-1 row-cols-md-3 g-2 g-md-3" id="other2me">
+                <div class="col">
+                    <div class="card border-2">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Ко мне записан пользователь:
+                                    <a class="link" href="./profile.html">
+                                        Николай
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    Услуга -
+                                    <a class="link" href="./services_list.html">
+                                        Массаж
+                                    </a>
+                                </li>
+                                <li class="list-group-item font-monospace">
+                                    <a class="link font-monospace" href="./day.html">
+                                        00.00.0000
+                                    </a>, 12:00
+                                </li>
+                                <li class="list-group-item">
+                                    Статус - <span class="text-warning">Активно</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="btn btn-danger border-1 border-dark">Отменить</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-2">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Ко мне записан пользователь:
+                                    <a class="link" href="./profile.html">
+                                        Николай
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    Услуга -
+                                    <a class="link" href="./services_list.html">
+                                        Массаж
+                                    </a>
+                                </li>
+                                <li class="list-group-item font-monospace">
+                                    <a class="link font-monospace" href="./day.html">
+                                        00.00.0000
+                                    </a>, 12:00
+                                </li>
+                                <li class="list-group-item">
+                                    Статус - <span class="text-success">Прошло</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-2">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Ко мне записан пользователь:
+                                    <a class="link" href="./profile.html">
+                                        Николай
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    Услуга -
+                                    <a class="link" href="./services_list.html">
+                                        Массаж
+                                    </a>
+                                </li>
+                                <li class="list-group-item font-monospace">
+                                    <a class="link font-monospace" href="./day.html">
+                                        00.00.0000
+                                    </a>, 12:00
+                                </li>
+                                <li class="list-group-item">
+                                    Статус - <span class="text-danger">Отменено</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-2">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Ко мне записан пользователь:
+                                    <a class="link" href="./profile.html">
+                                        Николай
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    Услуга -
+                                    <a class="link" href="./services_list.html">
+                                        Массаж
+                                    </a>
+                                </li>
+                                <li class="list-group-item font-monospace">
+                                    <a class="link font-monospace" href="./day.html">
+                                        00.00.0000
+                                    </a>, 12:00
+                                </li>
+                                <li class="list-group-item">
+                                    Статус - <span class="text-warning">Активно</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="btn btn-danger border-1 border-dark">Отменить</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-2">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    Ко мне записан пользователь:
+                                    <a class="link" href="./profile.html">
+                                        Николай
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    Услуга -
+                                    <a class="link" href="./services_list.html">
+                                        Массаж
+                                    </a>
+                                </li>
+                                <li class="list-group-item font-monospace">
+                                    <a class="link font-monospace" href="./day.html">
+                                        00.00.0000
+                                    </a>, 12:00
+                                </li>
+                                <li class="list-group-item">
+                                    Статус - <span class="text-warning">Активно</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="btn btn-danger border-1 border-dark">Отменить</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer py-3 bg-dark text-light mt-5">
+        <div class="container">
+            &copy; 2021, Козлов К.В.
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/7028e958f2.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

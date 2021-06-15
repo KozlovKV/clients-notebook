@@ -22,14 +22,15 @@ class SwitchingCalendar{
 
     static getActiveCalCell(day) {
         let obj = document.createElement('a');
-        obj.href = '#';
-        obj.textContent = day
+        obj.href = './day.html';
+        obj.textContent = day;
         obj.className = 'col-1 btn btn-success';
         return obj;
     }
 
     static getFilledCalCell(day) {
-        let obj = document.createElement('div');
+        let obj = document.createElement('a');
+        obj.href = './day.html';
         obj.textContent = day;
         obj.className = 'col-1 btn btn-danger';
         return obj;
