@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django-registration'
+    'django_registration',
+    'apps.front_app',
+    'apps.profile_app',
+    'apps.services_app',
 ]
 
 MIDDLEWARE = [
@@ -100,6 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+ACCOUNT_ACTIVATION_DAYS = 7
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
