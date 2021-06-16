@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      {% block title %}{% endblock %}
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    {% block extra_head %}
+
+    {% endblock %}
+</head>
+
+<body>
+    <header>
+        {% include 'base/menu.html' %}
+        {% block extra_header %}
+
+        {% endblock %}
+    </header>
+
+    <main>
+      <div class="container">
+          {% block main_content %}
+
+          {% endblock %}
+      </div>
+    </main>
+
+    <footer class="footer py-3 bg-dark text-light mt-5">
+        {% block pre_footer %}
+
+        {% endblock %}
+        <div class="container">
+            &copy; 2021, Козлов К.В.
+        </div>
+        {% block post_footer %}
+
+        {% endblock %}
+    </footer>
+
+    <script src="https://kit.fontawesome.com/7028e958f2.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+    {% block extra_scripts %}
+
+    {% endblock %}
+</body>
+
+</html>

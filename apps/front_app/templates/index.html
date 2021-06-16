@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Главная
+{% endblock %}
+
+{% block main_content %}
+        <h1 class="text-center m-5">Записная книжка для каждого!</h1>
+        <div class="d-flex justify-content-around g-1 row">
+            <div class="col-md-6">
+                <div class="card border-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Для чего нужен этот сайт?</h3>
+                        <p class="card-text">
+                            Наш сайт предоставляет возможность зарегистрировавшимся у нас пользователям записываться на
+                            приём
+                            друг к другу для получения разнообразных услуг.
+                        </p>
+                        <p class="card-text">
+                            После приёма пользователь может оставить отзыв о полученной услуге.
+                        </p>
+                        <p class="card-text">
+                            При необходимости можно пожаловаться на пользователя. Администрация рассмотрит вашу жалобу и
+                            примет справедливое решение
+                        </p>
+                        <a class="btn btn-primary m-1" href="./services_list.html">Список услуг</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-3">
+                    <div class="card-body">
+                        <h3 class="card-title">Нас уже много!</h3>
+                        <p class="card-text">Уже 1000 пользователей зарегистрировались на нашем сайте! Совершили 10 000
+                            записей друг к другу и оставили 300 отзывов. Присоединяйся и ты.</p>
+                        <a class="btn btn-warning m-1" href="./register.html">Регистрация</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

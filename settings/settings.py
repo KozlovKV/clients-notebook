@@ -58,7 +58,11 @@ ROOT_URLCONF = 'settings.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'front_app/templates',
+            'services_app/templates',
+            'profile_app/templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
