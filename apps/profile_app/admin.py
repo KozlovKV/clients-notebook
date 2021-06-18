@@ -1,4 +1,5 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
+import apps.profile_app.models as profile_models
 
 
+admin.site.register(profile_models.UserAdditionInfo)
