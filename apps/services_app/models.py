@@ -1,3 +1,8 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
+
+class Service(models.Model):
+    provider = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    label = models.CharField(max_length=255)
+    description = models.TextField()
