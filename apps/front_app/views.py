@@ -15,7 +15,7 @@ class BaseViewWithMenu(TemplateView):
     def get_menu(self) -> List[dict]:
         return [
             self.get_link_dict('index', 'Главная'),
-            self.get_link_dict('index', 'Запись на приём'),
+            self.get_link_dict('services_list', 'Запись на приём'),
             self.get_link_dict('index', 'Личный кабинет'),
             self.get_link_dict('index', 'Мои услуги'),
             self.get_link_dict('index', 'Мои записи'),

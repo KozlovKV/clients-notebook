@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from apps.front_app import views as front
+from apps.services_app import views as service
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', front.IndexView.as_view(), name='index'),
+    path('service/', service.ServicesListView.as_view(), name='services_list')
 ]

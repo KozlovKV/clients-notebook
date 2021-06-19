@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+from apps.front_app.views import BaseViewWithMenu
+
+
+class ServicesListView(BaseViewWithMenu):
+    template_name = 'services_list.html'
