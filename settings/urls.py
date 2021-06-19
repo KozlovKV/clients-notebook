@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', front.IndexView.as_view(), name='index'),
     path('service/', service.ServicesListView.as_view(), name='services_list'),
-    path('service/<int:id>/', service.OneServiceView.as_view(), name='one_service'),
+    path('service/<int:id>/', service.OneServiceCalendarView.as_view(), name='one_service_calendar'),
+    path('service/<int:id>/<Y>/<m>/<d>/', service.OneServiceDayView.as_view(), name='one_service_day'),
 ]
