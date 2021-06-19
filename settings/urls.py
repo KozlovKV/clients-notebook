@@ -21,5 +21,6 @@ from apps.services_app import views as service
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', front.IndexView.as_view(), name='index'),
-    path('service/', service.ServicesListView.as_view(), name='services_list')
+    path('service/', service.ServicesListView.as_view(), name='services_list'),
+    path('service/<int:id>/', service.OneServiceView.as_view(), name='one_service'),
 ]
