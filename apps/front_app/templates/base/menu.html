@@ -12,16 +12,23 @@
                     <a class="nav-link" href="{{ link.url }}">{{ link.name }}</a>
                 {% endfor %}
             </div>
-            <form class="d-flex col-md-6 justify-content-around md-justify-content-end row">
-                <!-- CSRF -->
-                <div class="col-md-8 row">
-                    <input class="form-control m-1 col" type="text" placeholder="Имя пользователя"
-                        aria-label="Имя пользователя">
-                    <input class="form-control m-1 col" type="password" placeholder="Пароль" aria-label="Пароль">
+            {% if user.is_authenticated %}
+                <div class="d-flex col-md-6 justify-content-end align-items-center row">
+                    <span class="text-light m-1 col-md-2">Привет, {{ user }}!</span>
+                    <a class="btn btn-danger m-1 col-md-2" href="{% url 'logout' %}">Выйти</a>
                 </div>
-                <button class="btn btn-success m-1 col-md-2" type="submit">Войти</button>
-                <a class="btn btn-warning m-1 col-md-2" href="./register.html">Регистрация</a>
-            </form>
+            {% else %}
+                <form method="post" action="{% url 'login' %}"
+                      class="d-flex col-md-6 justify-content-around md-justify-content-end row">
+                    {% csrf_token %}
+                    <div class="col-md-8 row">
+                        {{ login_form.username }}
+                        {{ login_form.password }}
+                    </div>
+                    <button class="btn btn-success m-1 col-md-2" type="submit">Войти</button>
+                    <a class="btn btn-warning m-1 col-md-2" href="./register.html">Регистрация</a>
+                </form>
+            {% endif %}
         </div>
     </div>
 </nav>
