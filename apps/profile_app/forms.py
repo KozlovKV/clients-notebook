@@ -1,0 +1,55 @@
+from django.contrib.auth import forms as auth_forms
+from django.contrib.auth.models import User
+from django_registration import forms as reg_forms
+from django import forms
+
+
+class AuthenticationFormModified(auth_forms.AuthenticationForm):
+    username = auth_forms.UsernameField(
+        widget=forms.TextInput(
+            attrs={
+                'autofocus': True,
+                'class': 'form-control m-1 col',
+                'placeholder': 'Имя пользователя',
+            }
+        )
+    )
+    password = forms.CharField(
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                'autocomplete': 'current-password',
+                'class': 'form-control m-1 col',
+                'placeholder': 'Пароль',
+            }
+        ),
+    )
+
+
+class RegistrationFormUniqueEmailModified(reg_forms.RegistrationFormUniqueEmail):
+    class Meta(reg_forms.RegistrationFormUniqueEmail.Meta):
+        widgets = {
+            User.USERNAME_FIELD: forms.TextInput(attrs={
+                'class': 'form-control-lg w-100',
+                'placeholder': 'Имя пользователя',
+            }),
+            User.get_email_field_name(): forms.EmailInput(attrs={
+                'class': 'form-control-lg w-100',
+                'placeholder': 'Электронная почта',
+            }),
+            'password1': forms.PasswordInput(attrs={
+                'class': 'form-control-lg w-100',
+                'placeholder': 'Пароль',
+            }),
+            'password2': forms.PasswordInput(attrs={
+                'class': 'form-control-lg w-100',
+                'placeholder': 'Повторите пароль',
+            }),
+        }
+
+        labels = {
+            User.USERNAME_FIELD: 'Имя пользователя',
+            User.get_email_field_name(): 'Электронная почта',
+            'password1': 'Пароль',
+            'password2': 'Подтверждение пароля',
+        }

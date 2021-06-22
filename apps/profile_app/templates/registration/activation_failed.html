@@ -1,0 +1,9 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    Ошибка активации
+{% endblock %}
+
+{% block main_content %}
+    <h1>При активации произошла ошибка</h1>
+    <h2>{{ activation_error.message }}</h2>
+{% endblock %}
