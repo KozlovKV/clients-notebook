@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import secret_const
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -108,6 +110,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_OPEN = True
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = secret_const.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = secret_const.EMAIL_HOST_PASSWORD
+EMAIL_USE_TLS = True
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

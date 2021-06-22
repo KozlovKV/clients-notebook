@@ -26,7 +26,7 @@
                         {{ login_form.password }}
                     </div>
                     <button class="btn btn-success m-1 col-md-2" type="submit">Войти</button>
-                    <a class="btn btn-warning m-1 col-md-2" href="./register.html">Регистрация</a>
+                    <a class="btn btn-warning m-1 col-md-2" href="{% url 'register' %}">Регистрация</a>
                 </form>
             {% endif %}
         </div>

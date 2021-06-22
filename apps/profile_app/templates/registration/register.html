@@ -14,25 +14,32 @@
             {% endfor %}
         </ul>
     </div>
-    <form action="" class="card m-1">
+    <form action="{% url 'register' %}" method="post" class="card m-1">
         <div class="card-body m-2 p-2 row">
-            <div class="card-text p-2 col-md-6">
-                <label class="form-label fs-5" for="username">Имя пользователя</label>
-                <input class="form-control-lg w-100" type="text" name="username" placeholder="Имя пользователя">
-            </div>
-            <div class="card-text p-2 col-md-6">
-                <label class="form-label fs-5" for="email">Электронная почта</label>
-                <input class="form-control-lg w-100" type="email" name="email" placeholder="Электронная почта">
-            </div>
-            <div class="card-text p-2 col-md-6">
-                <label class="form-label fs-5" for="password">Пароль</label>
-                <input class="form-control-lg w-100" type="password" name="password" placeholder="Пароль">
-            </div>
-            <div class="card-text p-2 col-md-6">
-                <label class="form-label fs-5" for="repeat_pswd">Повторите пароль</label>
-                <input class="form-control-lg w-100" type="password" name="repeat_pswd"
-                    placeholder="Повторите пароль">
-            </div>
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="card-text p-2 col-md-6">
+                    {{ field.label }}
+                    {{ field }}
+                </div>
+            {% endfor %}
+<!--            <div class="card-text p-2 col-md-6">-->
+<!--                <label class="form-label fs-5" for="username">Имя пользователя</label>-->
+<!--                <input class="form-control-lg w-100" type="text" name="username" placeholder="Имя пользователя">-->
+<!--            </div>-->
+<!--            <div class="card-text p-2 col-md-6">-->
+<!--                <label class="form-label fs-5" for="email">Электронная почта</label>-->
+<!--                <input class="form-control-lg w-100" type="email" name="email" placeholder="Электронная почта">-->
+<!--            </div>-->
+<!--            <div class="card-text p-2 col-md-6">-->
+<!--                <label class="form-label fs-5" for="password">Пароль</label>-->
+<!--                <input class="form-control-lg w-100" type="password" name="password" placeholder="Пароль">-->
+<!--            </div>-->
+<!--            <div class="card-text p-2 col-md-6">-->
+<!--                <label class="form-label fs-5" for="repeat_pswd">Повторите пароль</label>-->
+<!--                <input class="form-control-lg w-100" type="password" name="repeat_pswd"-->
+<!--                    placeholder="Повторите пароль">-->
+<!--            </div>-->
         </div>
         <div class="card-footer text-center">
             <input type="submit" class="btn btn-primary border-2" value="Зарегистрироваться">
