@@ -8,9 +8,9 @@ from apps.profile_app.forms import AuthenticationFormModified
 
 class BaseViewWithMenu(TemplateView):
     @staticmethod
-    def get_link_dict(url_name: str, human_name: str) -> dict:
+    def get_link_dict(url_name: str, human_name: str, kwargs: dict = {}) -> dict:
         return {
-            'url': reverse(url_name),
+            'url': reverse(url_name, kwargs=kwargs),
             'name': human_name,
         }
 
@@ -18,7 +18,7 @@ class BaseViewWithMenu(TemplateView):
         return [
             self.get_link_dict('index', 'Главная'),
             self.get_link_dict('services_list', 'Запись на приём'),
-            self.get_link_dict('index', 'Личный кабинет'),
+            self.get_link_dict('profile', 'Личный кабинет', {'id': 0}),
             self.get_link_dict('index', 'Мои услуги'),
             self.get_link_dict('index', 'Мои записи'),
         ]

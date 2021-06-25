@@ -16,14 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from apps.front_app import views as front
-from apps.services_app import views as service
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', front.IndexView.as_view(), name='index'),
-    path('service/', service.ServicesListView.as_view(), name='services_list'),
-    path('service/<int:id>/', service.OneServiceCalendarView.as_view(), name='one_service_calendar'),
-    path('service/<int:id>/<Y>/<m>/<d>/', service.OneServiceDayView.as_view(), name='one_service_day'),
-
+    path('service/', include('apps.services_app.urls')),
     path('profile/', include('apps.profile_app.urls')),
 ]

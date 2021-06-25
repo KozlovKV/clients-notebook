@@ -86,6 +86,11 @@
             }
 
             static MONTHS = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
+            static COLORS = {
+                'empty': 'btn-warning',
+                'active': 'btn-success',
+                'filled': 'btn-danger',
+            }
 
             static getEmptyCalCell() {
                 let obj = document.createElement('div');
@@ -93,19 +98,12 @@
                 return obj;
             }
 
-            static getActiveCalCell(day) {
+            getCalCell(day, type) {
                 let obj = document.createElement('a');
-                obj.href = './day.html';
+                let date = this.current_date;
+                obj.href = '/service/0/' + date.getFullYear() + '/' + String(date.getMonth()+1) + '/' + day + '/';
                 obj.textContent = day;
-                obj.className = 'col-1 btn btn-success';
-                return obj;
-            }
-
-            static getFilledCalCell(day) {
-                let obj = document.createElement('a');
-                obj.href = './day.html';
-                obj.textContent = day;
-                obj.className = 'col-1 btn btn-danger';
+                obj.className = 'col-1 btn ' + SwitchingCalendar.COLORS[type];
                 return obj;
             }
 
@@ -143,9 +141,9 @@
 
                 for (let i = 0; i < last_day.getDate(); ++i) {
                     if (Math.random() > 0.5)
-                        this.appendCellInCalendar(SwitchingCalendar.getActiveCalCell(i+1));
+                        this.appendCellInCalendar(this.getCalCell(i+1, 'active'));
                     else
-                        this.appendCellInCalendar(SwitchingCalendar.getFilledCalCell(i+1));
+                        this.appendCellInCalendar(this.getCalCell(i+1, 'filled'));
                 }
 
                 for (let i = 0; i < gaps_end; ++i) {

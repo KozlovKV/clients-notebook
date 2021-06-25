@@ -27,3 +27,7 @@ class RegistrationViewModified(reg_activation_views.RegistrationView, BaseViewWi
 
 class ActivationViewModified(reg_activation_views.ActivationView, BaseViewWithMenu):
     success_url = reverse_lazy('django_registration_complete')
+
+
+class ProfileView(BaseViewWithMenu):
+    template_name = 'profile.html'
