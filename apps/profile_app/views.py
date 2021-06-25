@@ -1,9 +1,12 @@
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
+from django.views.generic import UpdateView
 from django_registration.backends.activation import views as reg_activation_views
 
 from apps.front_app.views import BaseViewWithMenu
 from apps.profile_app import forms as profile_forms
+from apps.profile_app.forms import EditProfileForm
+from apps.profile_app.models import UserAdditionInfo
 
 
 class LoginViewModified(auth_views.LoginView, BaseViewWithMenu):
@@ -29,5 +32,16 @@ class ActivationViewModified(reg_activation_views.ActivationView, BaseViewWithMe
     success_url = reverse_lazy('django_registration_complete')
 
 
-class ProfileView(BaseViewWithMenu):
+class ProfileView(UpdateView, BaseViewWithMenu):
+    object = None
     template_name = 'profile.html'
+    model = UserAdditionInfo
+    form_class = EditProfileForm
+
+    def get_object(self, queryset=None):
+        object = super(ProfileView, self).get_object(queryset)
+        return object
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super(ProfileView, self).get(request, *args, **kwargs)

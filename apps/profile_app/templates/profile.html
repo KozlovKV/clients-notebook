@@ -1,19 +1,19 @@
 {% extends 'base/base.html' %}
 {% block title %}
-    Главная
+    {{ object.user }}
 {% endblock %}
 
 {% block main_content %}
-    <h1 class="text-center m-5">Профиль пользователя ИМЯ ПОЛЬЗОВАТЕЛЯ</h1>
+    <h1 class="text-center m-5">Профиль пользователя {{ object.user }}</h1>
     <div class="card border-3 m-md-4">
         <div class="card-body row">
-            <img class="col-md-5" src="https://cdn.hipwallpaper.com/i/43/33/srY1a6.jpg" alt="Аватарка">
+            <img class="col-md-5" src="{{ object.avatar.url }}" alt="Аватарка">
             <div class="col-md-7 card-text fs-2 list-group list-group-flush">
-                <p class="list-group-item">Фамилия</p>
-                <p class="list-group-item">Имя</p>
-                <p class="font-monospace list-group-item">Имейл</p>
-                <p class="font-monospace list-group-item">Средняя оценка - 12/10</p>
-                <p class="list-group-item">О СЕБЕ. О СЕБЕ. О СЕБЕ.</p>
+                <p class="list-group-item">{{ object.user.last_name }}</p>
+                <p class="list-group-item">{{ object.user.first_name }}</p>
+                <p class="font-monospace list-group-item">{{ object.user.email }}</p>
+                <p class="font-monospace list-group-item">Средняя оценка - {{ object.avg_mark }}/10</p>
+                <p class="list-group-item">{{ object.about }}</p>
                 <div class="list-group-item">
                     <a href="#" class="btn btn-success fs-4">
                         Посмотреть услуги пользователя <i class="fas fa-arrow-alt-circle-right"></i>
@@ -22,43 +22,36 @@
             </div>
         </div>
     </div>
-    <div class="card border-3 m-md-4 mt-3">
-        <h2 class="card-header">Редактирование профиля</h2>
-        <form action="" class="card-body row g-2">
-            <div class="col-md-6">
-                <label class="form-label" for="sirname">Фамилия</label>
-                <input class="form-control" type="text" placeholder="Фамилия" name="sirname" id="sirname">
-            </div>
-            <div class="col-md-6">
-                <label class="form-label" for="name">Имя</label>
-                <input class="form-control" type="text" placeholder="Имя" name="name" id="name">
-            </div>
-            <div class="col-md-6">
-                <label class="form-label" for="avatar">Аватарка</label>
-                <input class="form-control" type="file" name="avatar" id="avatar">
-            </div>
-            <div class="col-md-6">
-                <label class="form-label" for="info">О себе</label>
-                <textarea class="form-control" placeholder="Кратко расскажите о себе, своих навыках"
-                    name="info" id="info"></textarea>
-            </div>
-            <input class="col-12 btn btn-success" type="submit" value="Сохранить изменения">
-        </form>
-    </div>
+    {% if user == object.user %}
+        <div class="card border-3 m-md-4 mt-3">
+            <h2 class="card-header">Редактирование профиля</h2>
+            <form method="post" action="{% url 'profile' object.pk %}" enctype="multipart/form-data" class="card-body row g-2">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="col-md-6">
+                        {{ field.label }}
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <input class="col-12 btn btn-success" type="submit" value="Сохранить изменения">
+            </form>
+        </div>
+    {% endif %}
     <div class="card border-3 border-warning m-md-4 mt-3">
         <h2 class="card-header">Отзывы</h2>
         <div class="card-body">
             <div class="row g-3 justify-content-around">
-                {% for i in '0123'|make_list %}
+                {% for feedback in object.feedbacks %}
                     <div class="col-md-4">
                         <div class="card border-2">
-                            <h3 class="card-header">Заголовок</h3>
                             <div class="card-body">
-                                <p class="font-monospace fs-2 text-center">12/10</p>
-                                <p class="card-text">ТЕКСТ ОТЗЫВА. ТЕКСТ ОТЗЫВА. ТЕКСТ ОТЗЫВА.</p>
+                                <p class="font-monospace fs-2 text-center">{{ feedback.mark }}/10</p>
+                                <p class="card-text">{{ feedback.text }}</p>
                             </div>
                             <div class="card-footer text-end">
-                                <a href="#" class="text-muted">Пользователь</a>
+                                <a href="{{ feedback.service_note.service.get_absolute_url }}" class="text-muted">
+                                    {{ feedback.service_note.service.label }}
+                                </a>
                             </div>
                         </div>
                     </div>

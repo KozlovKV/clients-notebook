@@ -5,7 +5,7 @@ from apps.front_app.views import BaseViewWithMenu
 from apps.profile_app import views as profile_views
 
 urlpatterns = [
-    path('view/<int:id>/', profile_views.ProfileView.as_view(), name='profile'),
+    path('view/<int:pk>/', profile_views.ProfileView.as_view(), name='profile'),
     path('login/', profile_views.LoginViewModified.as_view(), name='login'),
     path('logout/', origin_auth_views.LogoutView.as_view(), name='logout'),
 

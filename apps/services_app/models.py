@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse_lazy
 
 
 class Service(models.Model):
@@ -9,6 +10,9 @@ class Service(models.Model):
 
     def __str__(self):
         return f'{self.label} by {self.provider}'
+
+    def get_absolute_url(self):
+        return reverse_lazy('one_service_calendar', kwargs={'pk': self.pk})
 
 
 class ServiceNote(models.Model):

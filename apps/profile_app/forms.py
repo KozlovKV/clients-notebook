@@ -3,6 +3,27 @@ from django.contrib.auth.models import User
 from django_registration import forms as reg_forms
 from django import forms
 
+from apps.profile_app.models import UserAdditionInfo
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserAdditionInfo
+        fields = ['avatar', 'about']
+        widgets = {
+            'avatar': forms.FileInput(attrs={
+                'class': 'form-control',
+            }),
+            'about': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Кратко расскажите о себе, своих навыках',
+            })
+        }
+        labels = {
+            'avatar': 'Аватарка',
+            'about': 'О себе',
+        }
+
 
 class AuthenticationFormModified(auth_forms.AuthenticationForm):
     username = auth_forms.UsernameField(

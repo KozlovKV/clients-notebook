@@ -18,7 +18,7 @@ class BaseViewWithMenu(TemplateView):
         return [
             self.get_link_dict('index', 'Главная'),
             self.get_link_dict('services_list', 'Запись на приём'),
-            self.get_link_dict('profile', 'Личный кабинет', {'id': 0}),
+            self.get_link_dict('profile', 'Личный кабинет', {'pk': 1}),
             self.get_link_dict('index', 'Мои услуги'),
             self.get_link_dict('index', 'Мои записи'),
         ]
