@@ -17,6 +17,12 @@ class UserAdditionInfo(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('profile', kwargs={'pk': self.pk})
 
+    def get_avatar_url(self):
+        try:
+            return self.avatar.url
+        except ValueError:
+            return ''
+
     @property
     def services(self):
         return services_models.Service.objects.filter(provider=self.user)
@@ -37,6 +43,8 @@ class UserAdditionInfo(models.Model):
 
     @property
     def avg_mark(self):
+        if len(self.feedbacks) <= 0:
+            return 0
         return sum([feedback.mark for feedback in self.feedbacks]) / len(self.feedbacks)
 
 

@@ -6,18 +6,23 @@
 {% block main_content %}
     <h1 class="text-center m-5">Профиль пользователя {{ object.user }}</h1>
     <div class="card border-3 m-md-4">
-        <div class="card-body row">
-            <img class="col-md-5" src="{{ object.avatar.url }}" alt="Аватарка">
-            <div class="col-md-7 card-text fs-2 list-group list-group-flush">
-                <p class="list-group-item">{{ object.user.last_name }}</p>
-                <p class="list-group-item">{{ object.user.first_name }}</p>
-                <p class="font-monospace list-group-item">{{ object.user.email }}</p>
-                <p class="font-monospace list-group-item">Средняя оценка - {{ object.avg_mark }}/10</p>
-                <p class="list-group-item">{{ object.about }}</p>
-                <div class="list-group-item">
-                    <a href="#" class="btn btn-success fs-4">
-                        Посмотреть услуги пользователя <i class="fas fa-arrow-alt-circle-right"></i>
-                    </a>
+        <div class="row">
+            {% if object.get_avatar_url != '' %}
+            <img class="col-md-6 img-fluid" src="{{ object.get_avatar_url }}" alt="Аватарка">
+            <div class="col-md-6 card-text fs-3 list-group list-group-flush">
+            {% else %}
+            <div class="col-md-12 card-text fs-3 list-group list-group-flush">
+            {% endif %}
+                <div class="card-body">
+                    <p class="list-group-item">{{ object.user.get_full_name }}</p>
+                    <p class="font-monospace list-group-item">{{ object.user.email }}</p>
+                    <p class="font-monospace list-group-item">Средняя оценка - {{ object.avg_mark }}/10</p>
+                    <p class="list-group-item">{{ object.about }}</p>
+                    <div class="list-group-item">
+                        <a href="#" class="btn btn-success fs-4">
+                            Посмотреть услуги пользователя <i class="fas fa-arrow-alt-circle-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

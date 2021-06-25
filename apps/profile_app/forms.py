@@ -48,8 +48,25 @@ class AuthenticationFormModified(auth_forms.AuthenticationForm):
 
 
 class RegistrationFormUniqueEmailModified(reg_forms.RegistrationFormUniqueEmail):
-    class Meta(reg_forms.RegistrationFormUniqueEmail.Meta):
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'last_name',
+            User.USERNAME_FIELD,
+            User.get_email_field_name(),
+            'password1',
+            'password2',
+        ]
         widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control-lg w-100',
+                'placeholder': 'Имя',
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control-lg w-100',
+                'placeholder': 'Фамилия',
+            }),
             User.USERNAME_FIELD: forms.TextInput(attrs={
                 'class': 'form-control-lg w-100',
                 'placeholder': 'Имя пользователя',
@@ -69,6 +86,8 @@ class RegistrationFormUniqueEmailModified(reg_forms.RegistrationFormUniqueEmail)
         }
 
         labels = {
+            'first_name': 'Имя',
+            'last_name': 'Фамилия',
             User.USERNAME_FIELD: 'Имя пользователя',
             User.get_email_field_name(): 'Электронная почта',
             'password1': 'Пароль',

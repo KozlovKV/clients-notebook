@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.views.generic import TemplateView
 
 from apps.profile_app.forms import AuthenticationFormModified
+from apps.profile_app.models import UserAdditionInfo
 
 
 class BaseViewWithMenu(TemplateView):
@@ -15,13 +16,18 @@ class BaseViewWithMenu(TemplateView):
         }
 
     def get_menu(self) -> List[dict]:
-        return [
+        links = [
             self.get_link_dict('index', 'Главная'),
             self.get_link_dict('services_list', 'Запись на приём'),
-            self.get_link_dict('profile', 'Личный кабинет', {'pk': 1}),
-            self.get_link_dict('index', 'Мои услуги'),
-            self.get_link_dict('index', 'Мои записи'),
         ]
+        if self.request.user.is_authenticated:
+            addition = UserAdditionInfo.objects.get(user=self.request.user)
+            links += [
+                self.get_link_dict('profile', 'Личный кабинет', {'pk': addition.pk}),
+                self.get_link_dict('index', 'Мои услуги'),
+                self.get_link_dict('index', 'Мои записи'),
+            ]
+        return links
 
     def get_context_data(self, **kwargs):
         context = super(BaseViewWithMenu, self).get_context_data(**kwargs)

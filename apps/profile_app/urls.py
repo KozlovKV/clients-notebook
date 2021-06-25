@@ -6,6 +6,7 @@ from apps.profile_app import views as profile_views
 
 urlpatterns = [
     path('view/<int:pk>/', profile_views.ProfileView.as_view(), name='profile'),
+
     path('login/', profile_views.LoginViewModified.as_view(), name='login'),
     path('logout/', origin_auth_views.LogoutView.as_view(), name='logout'),
 
