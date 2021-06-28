@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 class Service(models.Model):
     provider = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     label = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='services_images/', blank=True, null=True)
     description = models.TextField()
 
     def __str__(self):
@@ -13,6 +14,12 @@ class Service(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy('one_service_calendar', kwargs={'pk': self.pk})
+
+    def get_image_url(self):
+        try:
+            return self.image.url
+        except ValueError:
+            return ''
 
 
 class ServiceNote(models.Model):

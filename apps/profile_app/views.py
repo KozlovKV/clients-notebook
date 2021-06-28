@@ -42,8 +42,12 @@ class ActivationViewModified(reg_activation_views.ActivationView, BaseViewWithMe
 class ProfileView(UpdateView, BaseViewWithMenu):
     object = None
     template_name = 'profile.html'
-    model = UserAdditionInfo
+    model = User  # Using for getting url
     form_class = EditProfileForm
+
+    def get_object(self, queryset=None):
+        real_user = super(ProfileView, self).get_object(queryset)
+        return UserAdditionInfo.objects.get(user=real_user)
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
