@@ -1,97 +1,106 @@
 {% extends 'base/base.html' %}
 
 {% block title %}
-    ИМЯ УСЛУГИ - ДД.ММ.ГГГГ
+    {{ service.label }} - {{ date }}
 {% endblock %}
 
 
 {% block main_content %}
     <div class="card mt-5 text-center border-3">
-        <h1 class="card-header">Запись на ИМЯ_УСЛУГИ</h1>
+        <h1 class="card-header">{{ service.label }}</h1>
         <div class="card-body row">
-            <img class="col-md-4"
-                src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-                alt="Картинка массажа">
-            <div class="col-md-8 card-text p-3">ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ.
-                ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ.
-                ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. ОПИСАНИЕ_УСЛУГИ. </div>
+            {% if service.get_image_url != '' %}
+            <img class="col-md-4" src="{{ service.get_image_url }}"
+                 alt="Картинка услуги {{ service.label }}">
+            <div class="col-md-8 card-text p-3">
+            {% else %}
+            <div class="col-md-12 card-text p-3">
+            {% endif %}
+                {{ service.description }}
+            </div>
         </div>
         <div class="card-footer text-end">
-            <a class="card-link text-muted" href="/user/<id>">
-                Поставщик
+            <a class="card-link text-muted" href="{% url 'profile' service.provider.pk %}">
+                Поставщик ({{ service.provider }})
             </a>
         </div>
     </div>
-    <div class="card mt-3 border-3">
-        <div class="card-header d-flex justify-content-between">
-            <h2>Управление записью</h2>
-            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#manageForms">
-                <i id="arrow" class="fs-3 fas fa-arrow-circle-down"></i>
-            </button>
-        </div>
-        <div class="card-body row collapse" id="manageForms">
-            <div class="col-md-6">
-                <form action="" class="card border-2">
-                    <h4 class="card-header">Добавить одну карточку для записи</h4>
-                    <div class="card-body p-3">
-                        <div class="row row-cols-2 mb-2">
-                            <div class="col">
-                                <label class="form-label" for="start_time">Время начала</label>
-                                <input class="form-control" type="time" name="start_time" id="start_time">
-                            </div>
-                            <div class="col">
-                                <label class="form-label" for="end_time">Время конца</label>
-                                <input class="form-control" type="time" name="end_time" id="end_time">
-                            </div>
-                        </div>
-                        <label class="form-label" for="info">Дополнительная информация</label>
-                        <input class="form-control" type="text" name="info" id="info"
-                            placeholder="Дополнительная информация">
-                    </div>
-                    <div class="card-footer text-center">
-                        <input class="btn btn-success" type="submit" value="Добавить">
-                    </div>
-                </form>
+    {% if service.provider == user %}
+        <div class="card mt-3 border-3">
+            <div class="card-header d-flex justify-content-between">
+                <h2>Управление записью</h2>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#manageForms">
+                    <i id="arrow" class="fs-3 fas fa-arrow-circle-down"></i>
+                </button>
             </div>
-            <div class="col-md-6">
-                <form action="" class="card border-2">
-                    <h4 class="card-header">Сгенерировать список карточек для записи</h4>
-                    <div class="card-body p-3">
-                        <div class="row row-cols-3 mb-2">
-                            <div class="col">
-                                <label class="form-label" for="generator_start_time">Время начала дня *</label>
-                                <input class="form-control" type="time" name="generator_start_time" id="generator_start_time">
+            <div class="card-body row collapse" id="manageForms">
+                <div class="col-md-6">
+                    <form action="" class="card border-2">
+                        <h4 class="card-header">Добавить одну карточку для записи</h4>
+                        <div class="card-body p-3">
+                            <div class="row row-cols-2 mb-2">
+                                <div class="col">
+                                    <label class="form-label" for="start_time">Время начала</label>
+                                    <input class="form-control" type="time" name="start_time" id="start_time">
+                                </div>
+                                <div class="col">
+                                    <label class="form-label" for="end_time">Время конца</label>
+                                    <input class="form-control" type="time" name="end_time" id="end_time">
+                                </div>
                             </div>
-                            <div class="col">
-                                <label class="form-label" for="generator_time_gap">Интервал записи *</label>
-                                <input class="form-control" type="time" name="generator_time_gap" id="generator_ime_gap">
-                            </div>
-                            <div class="col">
-                                <label class="form-label" for="generator_end_time">Время конца</label>
-                                <input class="form-control" type="time" name="generator_end_time" id="generator_end_time">
-                            </div>
+                            <label class="form-label" for="info">Дополнительная информация</label>
+                            <input class="form-control" type="text" name="info" id="info"
+                                placeholder="Дополнительная информация">
                         </div>
-                        <label class="form-label" for="generator_info">Дополнительная информация для всех карточек</label>
-                        <input class="form-control" type="text" name="generator_info" id="generator_info"
-                            placeholder="Дополнительная информация">
-                    </div>
-                    <div class="card-footer text-center">
-                        <input class="btn btn-success" type="submit" value="Добавить">
-                    </div>
-                </form>
+                        <div class="card-footer text-center">
+                            <input class="btn btn-success" type="submit" value="Добавить">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <form action="" class="card border-2">
+                        <h4 class="card-header">Сгенерировать список карточек для записи</h4>
+                        <div class="card-body p-3">
+                            <div class="row row-cols-3 mb-2">
+                                <div class="col">
+                                    <label class="form-label" for="generator_start_time">Время начала дня *</label>
+                                    <input class="form-control" type="time" name="generator_start_time" id="generator_start_time">
+                                </div>
+                                <div class="col">
+                                    <label class="form-label" for="generator_time_gap">Интервал записи *</label>
+                                    <input class="form-control" type="time" name="generator_time_gap" id="generator_ime_gap">
+                                </div>
+                                <div class="col">
+                                    <label class="form-label" for="generator_end_time">Время конца</label>
+                                    <input class="form-control" type="time" name="generator_end_time" id="generator_end_time">
+                                </div>
+                            </div>
+                            <label class="form-label" for="generator_info">Дополнительная информация для всех карточек</label>
+                            <input class="form-control" type="text" name="generator_info" id="generator_info"
+                                placeholder="Дополнительная информация">
+                        </div>
+                        <div class="card-footer text-center">
+                            <input class="btn btn-success" type="submit" value="Добавить">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
     <div class="card mt-3 text-center border-3">
-        <h2 class="card-header font-monospace">ДД.ММ.ГГГГ</h2>
+        <h2 class="card-header font-monospace">{{ date }}</h2>
         <div class="card-body">
             <div class="row g-3 justify-content-around">
-                {% for i in '0123456789'|make_list %}
+                {% for object in object_list %}
                     <div class="col-md-4">
                         <div class="card border-2">
                             <div class="card-body">
-                                <div class="card-text font-monospace m-1">{{ i }}:00 - {{ i }}:00</div>
-                                <div class="card-text m-2">Дополнительная информация</div>
+                                <div class="card-text font-monospace m-1">
+                                    {{ object.time_start }} - {{ object.time_end }}
+                                </div>
+                                {% if object.addition is not None %}
+                                    <div class="card-text m-2">{{ object.addition }}</div>
+                                {% endif %}
                                 <div class="card-text mb-3">
                                     <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseForm1">

@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse_lazy
@@ -11,6 +13,19 @@ class Service(models.Model):
 
     def __str__(self):
         return f'{self.label} by {self.provider}'
+
+    @property
+    def notes(self):
+        return ServiceNote.objects.filter(service=self)
+
+    def get_dates_with_notes(self):
+        dates = set()
+        for note in self.notes:
+            dates.add(note.date)
+        return dates
+
+    def get_notes_by_date(self, date: datetime.date):
+        return self.notes.filter(date=date)
 
     def get_absolute_url(self):
         return reverse_lazy('one_service_calendar', kwargs={'pk': self.pk})
@@ -28,6 +43,7 @@ class ServiceNote(models.Model):
     date = models.DateField()
     time_start = models.TimeField()
     time_end = models.TimeField()
+    addition = models.CharField(max_length=255, blank=True, null=True)
 
     EMPTY = 0
     OCCUPIED = 1
@@ -50,3 +66,11 @@ class ServiceNote(models.Model):
     def __str__(self):
         return f'{self.service} for {self.client} at {self.date}, {self.time_start}-{self.time_end} ' \
                f'({self.status_name})'
+
+    def get_absolute_url(self):
+        return reverse_lazy('one_service_day', kwargs={
+            'pk': self.pk,
+            'Y': self.date.year,
+            'm': self.date.month,
+            'd': self.date.day,
+        })

@@ -27,9 +27,9 @@
 
 {% block main_content %}
     <div class="card mt-5 text-center border-3">
-        <h1 class="card-header">Запись на {{ object.label }}</h1>
+        <h1 class="card-header">{{ object.label }}</h1>
         <div class="card-body row">
-            {% if object.get_image_url %}
+            {% if object.get_image_url != '' %}
             <img class="col-md-4" src="{{ object.get_image_url }}"
                  alt="Картинка услуги {{ object.label }}">
             <div class="col-md-8 card-text p-3">
@@ -76,12 +76,18 @@
     <script>
         "use strict"
 
+        function is_equal(d1, d2) {
+            return d1.getFullYear() == d2.getFullYear() && d1.getMonth() == d2.getMonth() && d1.getDate() == d2.getDate();
+        }
+
         class SwitchingCalendar{
-            constructor(body_id, label_id, left_id, right_id) {
+            constructor(body_id, label_id, left_id, right_id, url, active_dates) {
                 this.calendar_body = document.getElementById(body_id);
                 this.calendar_label = document.getElementById(label_id);
                 this.left_switcher = document.getElementById(left_id);
                 this.right_switcher = document.getElementById(right_id);
+                this.url = url;
+                this.active_dates = active_dates;
                 this.current_date = new Date();
                 this.fillCalendar();
                 this.left_switcher.addEventListener('click', () => {this.changeMonth(-1);});
@@ -101,11 +107,18 @@
                 return obj;
             }
 
-            getCalCell(day, type) {
+            is_active(date) {
+                for (let active_date of this.active_dates) {
+                    if (is_equal(active_date, date))
+                        return true;
+                }
+                return false;
+            }
+
+            getCalCell(date, type) {
                 let obj = document.createElement('a');
-                let date = this.current_date;
-                obj.href = '{{ object.get_absolute_url }}' + date.getFullYear() + '/' + String(date.getMonth()+1) + '/' + day + '/';
-                obj.textContent = day;
+                obj.href = this.url + date.getFullYear() + '/' + String(date.getMonth()+1) + '/' + date.getDate() + '/';
+                obj.textContent = date.getDate();
                 obj.className = 'col-1 btn ' + SwitchingCalendar.COLORS[type];
                 return obj;
             }
@@ -143,10 +156,11 @@
                 }
 
                 for (let i = 0; i < last_day.getDate(); ++i) {
-                    if (Math.random() > 0.5)
-                        this.appendCellInCalendar(this.getCalCell(i+1, 'active'));
+                    let date = new Date(this.current_date.getFullYear(), this.current_date.getMonth(), i+1);
+                    if (this.is_active(date))
+                        this.appendCellInCalendar(this.getCalCell(date, 'active'));
                     else
-                        this.appendCellInCalendar(this.getCalCell(i+1, 'filled'));
+                        this.appendCellInCalendar(this.getCalCell(date, 'filled'));
                 }
 
                 for (let i = 0; i < gaps_end; ++i) {
@@ -156,6 +170,11 @@
         }
     </script>
     <script>
-        let calendar_instance = new SwitchingCalendar('calendarBody', 'calendarLabel', 'leftArrow', 'rightArrow');
+        let dates = new Array();
+        {% for date in dates_with_notes %}
+            dates.push( new Date('{{ date }} 00:00:00') );
+        {% endfor %}
+        let calendar_instance = new SwitchingCalendar('calendarBody', 'calendarLabel', 'leftArrow', 'rightArrow',
+                                                      '{{ object.get_absolute_url }}', dates);
     </script>
 {% endblock %}
