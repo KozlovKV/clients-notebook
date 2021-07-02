@@ -21,10 +21,9 @@ class BaseViewWithMenu(TemplateView):
             self.get_link_dict('services_list', 'Запись на приём'),
         ]
         if self.request.user.is_authenticated:
-            addition = UserAdditionInfo.objects.get(user=self.request.user)
             links += [
-                self.get_link_dict('profile', 'Личный кабинет', {'pk': addition.pk}),
-                self.get_link_dict('index', 'Мои услуги'),
+                self.get_link_dict('profile', 'Личный кабинет', {'pk': self.request.user.pk}),
+                self.get_link_dict('my_services', 'Мои услуги'),
                 self.get_link_dict('index', 'Мои записи'),
             ]
         return links

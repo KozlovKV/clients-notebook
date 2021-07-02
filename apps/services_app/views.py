@@ -19,6 +19,20 @@ class ServicesListView(BaseViewWithMenu, generic_list_views.ListView):
         return super(ServicesListView, self).get(request, *args, **kwargs)
 
 
+class MyServicesListView(BaseViewWithMenu, generic_list_views.ListView):
+    template_name = 'my_services.html'
+    object_list = []
+    model = service_models.Service
+
+    def get_queryset(self):
+        queryset = super(MyServicesListView, self).get_queryset()
+        return queryset.filter(provider=self.request.user)
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        return super(MyServicesListView, self).get(request, *args, **kwargs)
+
+
 class OneServiceCalendarView(BaseViewWithMenu, generic_detail_views.DetailView):
     template_name = 'one_service_calendar.html'
     object = None

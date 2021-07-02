@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    Мои услуги
+{% endblock %}
+
+{% block main_content %}
+        <h1 class="text-center m-5">Мои услуги</h1>
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h2>Добавить услугу</h2>
+                <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#serviceCreateForm">
+                    <i id="arrow" class="fs-3 fas fa-arrow-circle-down"></i>
+                </button>
+            </div>
+            <form action="" class="card-body row g-2 collapse" id="serviceCreateForm">
+                <div class="col-md-6">
+                    <label class="form-label" for="header">Название</label>
+                    <input class="form-control" type="text" placeholder="Название" name="header" id="header">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="image">Картинка</label>
+                    <input class="form-control" type="file" name="image" id="image">
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="description">Описание</label>
+                    <textarea class="form-control" placeholder="Описание" name="description"
+                        id="description"></textarea>
+                </div>
+                <input class="btn btn-success" type="submit" value="Добавить">
+            </form>
+        </div>
+        <div class="card mt-3">
+            <h2 class="card-header">Список моих услуг</h2>
+            {% include 'base/services_list_card_body.html' %}
+        </div>
+{% endblock %}

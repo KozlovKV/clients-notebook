@@ -1,0 +1,30 @@
+<div class="card-body">
+    <div class="d-flex justify-content-around g-3 row row-cols-1 row-cols-md-3">
+        {% for object in object_list %}
+            <div class="col">
+                <div class="card border-3 border-success">
+                    <h3 class="card-header">{{ object.label }}</h3>
+                    {% if object.get_image_url != '' %}
+                        <img class="card-img-top" src="{{ object.get_image_url }}"
+                             alt="Картинка услуги {{ object.label }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item card-text">
+                                {{ object.description }}
+                            </li>
+                            <li class="list-group-item text-center">
+                                <a class="btn btn-success m-1" href="{{ object.get_absolute_url }}">Календарь услуги</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer text-end">
+                        <a class="card-link text-muted" href="{% url 'profile' object.provider.pk %}">
+                            Поставщик ({{ object.provider }})
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
