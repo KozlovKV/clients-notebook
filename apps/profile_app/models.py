@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
+import apps.services_app.models as services_models
+
 from django.db import models
 from django.core import validators
 from django.urls import reverse_lazy
-
-import apps.services_app.models as services_models
 
 
 class UserAdditionInfo(models.Model):

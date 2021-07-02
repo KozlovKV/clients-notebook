@@ -1,10 +1,10 @@
 from typing import List
 
 from django.urls import reverse
+
 from django.views.generic import TemplateView
 
-from apps.profile_app.forms import AuthenticationFormModified
-from apps.profile_app.models import UserAdditionInfo
+import apps.profile_app.forms as profile_forms
 
 
 class BaseViewWithMenu(TemplateView):
@@ -31,7 +31,7 @@ class BaseViewWithMenu(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BaseViewWithMenu, self).get_context_data(**kwargs)
         context['menu'] = self.get_menu()
-        context['login_form'] = AuthenticationFormModified()
+        context['login_form'] = profile_forms.AuthenticationFormModified()
         return context
 
 

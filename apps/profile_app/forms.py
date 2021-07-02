@@ -1,14 +1,14 @@
-from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.models import User
-from django_registration import forms as reg_forms
-from django import forms
+import apps.profile_app.models as profile_models
 
-from apps.profile_app.models import UserAdditionInfo
+from django import forms
+from django.contrib.auth import forms as auth_forms
+from django_registration import forms as reg_forms
 
 
 class EditProfileForm(forms.ModelForm):
     class Meta:
-        model = UserAdditionInfo
+        model = profile_models.UserAdditionInfo
         fields = ['avatar', 'about']
         widgets = {
             'avatar': forms.FileInput(attrs={

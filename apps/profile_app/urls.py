@@ -1,6 +1,6 @@
 from django.urls import path
-from django.contrib.auth import views as origin_auth_views
 
+from django.contrib.auth import views as origin_auth_views
 from apps.front_app.views import BaseViewWithMenu
 from apps.profile_app import views as profile_views
 

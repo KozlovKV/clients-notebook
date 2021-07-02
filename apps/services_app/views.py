@@ -1,9 +1,7 @@
 import datetime
 
-from django.shortcuts import render
-from  django.views.generic import list as generic_list_views
-from  django.views.generic import detail as generic_detail_views
-
+from django.views.generic import list as generic_list_views
+from django.views.generic import detail as generic_detail_views
 from apps.front_app.views import BaseViewWithMenu
 
 from apps.services_app import models as service_models
@@ -26,7 +24,10 @@ class MyServicesListView(BaseViewWithMenu, generic_list_views.ListView):
 
     def get_queryset(self):
         queryset = super(MyServicesListView, self).get_queryset()
-        return queryset.filter(provider=self.request.user)
+        if self.request.user.is_authenticated:
+            return queryset.filter(provider=self.request.user)
+        else:
+            return []
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()

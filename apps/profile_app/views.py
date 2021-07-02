@@ -1,13 +1,14 @@
-from django.contrib.auth import views as auth_views
-from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView, DetailView
-from django_registration.backends.activation import views as reg_activation_views
 
+from django.contrib.auth.models import User
+import apps.profile_app.models as profile_models
+
+from django.contrib.auth import views as auth_views
+from django.views.generic import edit as generic_edit_views
+from django_registration.backends.activation import views as reg_activation_views
 from apps.front_app.views import BaseViewWithMenu
+
 from apps.profile_app import forms as profile_forms
-from apps.profile_app.forms import EditProfileForm
-from apps.profile_app.models import UserAdditionInfo
 
 
 class LoginViewModified(auth_views.LoginView, BaseViewWithMenu):
@@ -23,7 +24,7 @@ class RegistrationViewModified(reg_activation_views.RegistrationView, BaseViewWi
 
     def register(self, form):
         new_user = super(RegistrationViewModified, self).register(form)
-        addition_info = UserAdditionInfo(user=new_user)
+        addition_info = profile_models.UserAdditionInfo(user=new_user)
         addition_info.save()
         return new_user
 
@@ -39,15 +40,15 @@ class ActivationViewModified(reg_activation_views.ActivationView, BaseViewWithMe
     success_url = reverse_lazy('django_registration_complete')
 
 
-class ProfileView(UpdateView, BaseViewWithMenu):
+class ProfileView(generic_edit_views.UpdateView, BaseViewWithMenu):
     object = None
     template_name = 'profile.html'
     model = User  # Using for getting url
-    form_class = EditProfileForm
+    form_class = profile_forms.EditProfileForm
 
     def get_object(self, queryset=None):
         real_user = super(ProfileView, self).get_object(queryset)
-        return UserAdditionInfo.objects.get(user=real_user)
+        return profile_models.UserAdditionInfo.objects.get(user=real_user)
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()

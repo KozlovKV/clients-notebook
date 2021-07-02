@@ -1,8 +1,9 @@
 import datetime
 
+from django.urls import reverse_lazy
+
 from django.contrib.auth.models import User
 from django.db import models
-from django.urls import reverse_lazy
 
 
 class Service(models.Model):
