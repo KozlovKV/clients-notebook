@@ -1,4 +1,6 @@
 from django.urls import reverse_lazy
+from django.contrib import messages
+
 
 from django.contrib.auth.models import User
 import apps.profile_app.models as profile_models
@@ -49,6 +51,10 @@ class ProfileView(generic_edit_views.UpdateView, BaseViewWithMenu):
     def get_object(self, queryset=None):
         real_user = super(ProfileView, self).get_object(queryset)
         return profile_models.UserAdditionInfo.objects.get(user=real_user)
+
+    def get_success_url(self):
+        self.add_message('Данные успешно изменены', messages.SUCCESS)
+        return super(ProfileView, self).get_success_url()
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
