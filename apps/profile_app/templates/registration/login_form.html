@@ -1,0 +1,31 @@
+<div class="modal fade w-100" id="loginForm" tabindex="-1" aria-labelledby="Контейнер с формой входа" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Вход</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" action="{% url 'login' %}">
+        <div class="modal-body">
+          {% csrf_token %}
+          <div class="row row-cols-1 row-cols-md-2">
+            <div class="col">
+                {{ login_form.username.label }}
+                {{ login_form.username }}
+            </div>
+            <div class="col">
+                {{ login_form.password.label }}
+                {{ login_form.password }}
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+          <button type="submit" class="btn btn-success">Войти</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

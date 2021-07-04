@@ -36,7 +36,7 @@ class AuthenticationFormModified(auth_forms.AuthenticationForm):
         )
     )
     password = forms.CharField(
-        strip=False,
+        strip=False, label='Пароль',
         widget=forms.PasswordInput(
             attrs={
                 'autocomplete': 'current-password',

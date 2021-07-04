@@ -9,26 +9,29 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h2>Добавить услугу</h2>
-                <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#serviceCreateForm">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#serviceCreateForm"
+                        aria-controls="serviceCreateForm" aria-expanded="false">
                     <i id="arrow" class="fs-3 fas fa-arrow-circle-down"></i>
                 </button>
             </div>
-            <form action="" class="card-body row g-2 collapse" id="serviceCreateForm">
-                <div class="col-md-6">
-                    <label class="form-label" for="header">Название</label>
-                    <input class="form-control" type="text" placeholder="Название" name="header" id="header">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="image">Картинка</label>
-                    <input class="form-control" type="file" name="image" id="image">
-                </div>
-                <div class="col-12">
-                    <label class="form-label" for="description">Описание</label>
-                    <textarea class="form-control" placeholder="Описание" name="description"
-                        id="description"></textarea>
-                </div>
-                <input class="btn btn-success" type="submit" value="Добавить">
-            </form>
+            <div class="collapse" id="serviceCreateForm">
+                <form action="" class="card-body row g-2">
+                    <div class="col-md-6">
+                        <label class="form-label" for="header">Название</label>
+                        <input class="form-control" type="text" placeholder="Название" name="header" id="header">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" for="image">Картинка</label>
+                        <input class="form-control" type="file" name="image" id="image">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" for="description">Описание</label>
+                        <textarea class="form-control" placeholder="Описание" name="description"
+                            id="description"></textarea>
+                    </div>
+                    <input class="btn btn-success" type="submit" value="Добавить">
+                </form>
+            </div>
         </div>
         <div class="card mt-3">
             <h2 class="card-header">Список моих услуг</h2>

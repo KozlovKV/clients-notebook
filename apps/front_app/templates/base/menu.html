@@ -1,33 +1,32 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand h1" href="#">Название</a>
-        <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        <a class="navbar-brand h1" href="{% url 'index' %}">Название</a>
+        <button class="navbar-toggler mb-2" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse row justify-content-around" id="navbarSupportedContent">
-            <div class="navbar-nav col-md-6 ms-3 md-justify-content-start">
+        <div class="collapse navbar-collapse row row-cols-1 row-cols-md-2 justify-content-between" id="navbarSupportedContent">
+            <div class="navbar-nav col md-justify-content-start">
                 {% for link in menu %}
                     <a class="nav-link" href="{{ link.url }}">{{ link.name }}</a>
                 {% endfor %}
             </div>
             {% if user.is_authenticated %}
-                <div class="d-flex col-md-6 justify-content-end align-items-center row">
-                    <span class="text-light m-1 col-md-2">Привет, {{ user }}!</span>
-                    <a class="btn btn-danger m-1 col-md-2" href="{% url 'logout' %}">Выйти</a>
+                <div class="col row row-cols-2 g-2 d-flex align-items-center">
+                    <span class="text-light col">Привет, {{ user }}!</span>
+                    <a class="btn btn-danger col" href="{% url 'logout' %}">Выйти</a>
                 </div>
             {% else %}
-                <form method="post" action="{% url 'login' %}"
-                      class="d-flex col-md-6 justify-content-around md-justify-content-end row">
-                    {% csrf_token %}
-                    <div class="col-md-8 row">
-                        {{ login_form.username }}
-                        {{ login_form.password }}
+                <div class="col row row-cols-2 d-flex justify-content-end">
+                    <div class="text-center col">
+                        <button class="btn btn-success" type="submit" data-target="#loginForm" data-toggle="modal">Вход</button>
                     </div>
-                    <button class="btn btn-success m-1 col-md-2" type="submit">Войти</button>
-                    <a class="btn btn-warning m-1 col-md-2" href="{% url 'register' %}">Регистрация</a>
-                </form>
+                    <div class="text-center col">
+                        <a class="btn btn-warning" href="{% url 'register' %}">Регистрация</a>
+                    </div>
+                </div>
+                {% include 'registration/login_form.html' %}
             {% endif %}
         </div>
     </div>
