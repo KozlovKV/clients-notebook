@@ -13,9 +13,8 @@
                 {% endfor %}
             </div>
             {% if user.is_authenticated %}
-                <div class="col row row-cols-2 g-2 d-flex align-items-center">
-                    <span class="text-light col">Привет, {{ user }}!</span>
-                    <a class="btn btn-danger col" href="{% url 'logout' %}">Выйти</a>
+                <div class="text-end col">
+                    <a class="btn btn-danger" href="{% url 'logout' %}">Выйти</a>
                 </div>
             {% else %}
                 <div class="col row row-cols-2 d-flex justify-content-end">

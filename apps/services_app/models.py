@@ -56,6 +56,12 @@ class ServiceNote(models.Model):
         (ENDED, 'Прошло'),
         (CANCELED, 'Отменено'),
     )
+    STATUS_CSS_CLASSES = (
+        (EMPTY, 'text-success'),
+        (OCCUPIED, 'text-warning'),
+        (ENDED, 'text-secondary'),
+        (CANCELED, 'text-danger'),
+    )
     status = models.IntegerField(default=EMPTY, choices=STATUS_CHOICES)
 
     @property
@@ -63,6 +69,15 @@ class ServiceNote(models.Model):
         for status_pair in self.STATUS_CHOICES:
             if status_pair[0] == self.status:
                 return status_pair[1]
+
+    @property
+    def status_css(self):
+        for status_pair in self.STATUS_CSS_CLASSES:
+            if status_pair[0] == self.status:
+                return status_pair[1]
+
+    def is_free(self):
+        return self.status == self.EMPTY
 
     def __str__(self):
         return f'{self.service} for {self.client} at {self.date}, {self.time_start}-{self.time_end} ' \

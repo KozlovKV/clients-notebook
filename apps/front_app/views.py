@@ -27,7 +27,7 @@ class BaseViewWithMenu(TemplateView):
             links += [
                 self.get_link_dict('profile', 'Личный кабинет', {'pk': self.request.user.pk}),
                 self.get_link_dict('my_services', 'Мои услуги'),
-                self.get_link_dict('index', 'Мои записи'),
+                self.get_link_dict('my_notes', 'Мои записи'),
             ]
         return links
 

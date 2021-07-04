@@ -34,6 +34,28 @@ class MyServicesListView(BaseViewWithMenu, generic_list_views.ListView):
         return super(MyServicesListView, self).get(request, *args, **kwargs)
 
 
+class MyServiceNotesListView(BaseViewWithMenu):
+    template_name = 'my_notes.html'
+
+    def get_notes_me2other(self):
+        return service_models.ServiceNote.objects.filter(client=self.request.user)
+
+    def get_notes_other2me(self):
+        my_services = service_models.Service.objects.filter(provider=self.request.user)
+        notes = []
+        for service in my_services:
+            notes += service_models.ServiceNote.objects.filter(service=service)
+        return notes
+
+    def get_context_data(self, **kwargs):
+        context = super(MyServiceNotesListView, self).get_context_data(**kwargs)
+        context.update({
+            'me2other': self.get_notes_me2other(),
+            'other2me': self.get_notes_other2me(),
+        })
+        return context
+
+
 class OneServiceCalendarView(BaseViewWithMenu, generic_detail_views.DetailView):
     template_name = 'one_service_calendar.html'
     object = None
