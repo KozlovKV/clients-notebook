@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 import apps.profile_app.models as profile_models
 
 from django import forms
-from django.contrib.auth import forms as auth_forms
+from django.contrib.auth import forms as auth_forms, password_validation
 from django_registration import forms as reg_forms
 
 
@@ -48,15 +48,12 @@ class AuthenticationFormModified(auth_forms.AuthenticationForm):
 
 
 class RegistrationFormUniqueEmailModified(reg_forms.RegistrationFormUniqueEmail):
-    class Meta:
-        model = User
+    class Meta(reg_forms.RegistrationFormUniqueEmail.Meta):
         fields = [
             'first_name',
             'last_name',
             User.USERNAME_FIELD,
             User.get_email_field_name(),
-            'password1',
-            'password2',
         ]
         widgets = {
             'first_name': forms.TextInput(attrs={
@@ -75,14 +72,6 @@ class RegistrationFormUniqueEmailModified(reg_forms.RegistrationFormUniqueEmail)
                 'class': 'form-control-lg w-100',
                 'placeholder': 'Электронная почта',
             }),
-            'password1': forms.PasswordInput(attrs={
-                'class': 'form-control-lg w-100',
-                'placeholder': 'Пароль',
-            }),
-            'password2': forms.PasswordInput(attrs={
-                'class': 'form-control-lg w-100',
-                'placeholder': 'Повторите пароль',
-            }),
         }
 
         labels = {
@@ -90,6 +79,23 @@ class RegistrationFormUniqueEmailModified(reg_forms.RegistrationFormUniqueEmail)
             'last_name': 'Фамилия',
             User.USERNAME_FIELD: 'Имя пользователя',
             User.get_email_field_name(): 'Электронная почта',
-            'password1': 'Пароль',
-            'password2': 'Подтверждение пароля',
         }
+
+    password1 = forms.CharField(
+        label='Пароль',
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+                'class': 'form-control-lg w-100',
+                'placeholder': 'Пароль',
+        }),
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    password2 = forms.CharField(
+        label='Подтверждение пароля',
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+                'class': 'form-control-lg w-100',
+                'placeholder': 'Повторите пароль',
+        }),
+        help_text=password_validation.password_validators_help_text_html(),
+    )

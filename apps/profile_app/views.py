@@ -37,6 +37,10 @@ class RegistrationViewModified(reg_activation_views.RegistrationView, BaseViewWi
         })
         return context
 
+    def get(self, request, *args, **kwargs):
+        resp = super(RegistrationViewModified, self).get(request, *args, **kwargs)
+        return resp
+
 
 class ActivationViewModified(reg_activation_views.ActivationView, BaseViewWithMenu):
     success_url = reverse_lazy('django_registration_complete')
