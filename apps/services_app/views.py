@@ -1,10 +1,16 @@
 import datetime
+from django.http.response import HttpResponseRedirect
+from django.urls.base import reverse_lazy
+from django.contrib import messages as messages
 
 from django.views.generic import list as generic_list_views
 from django.views.generic import detail as generic_detail_views
+from django.views.generic import edit as generic_edit_views
 from apps.front_app.views import BaseViewWithMenu
 
 from apps.services_app import models as service_models
+
+from apps.services_app import forms as service_forms
 
 
 class ServicesListView(BaseViewWithMenu, generic_list_views.ListView):
@@ -17,21 +23,45 @@ class ServicesListView(BaseViewWithMenu, generic_list_views.ListView):
         return super(ServicesListView, self).get(request, *args, **kwargs)
 
 
-class MyServicesListView(BaseViewWithMenu, generic_list_views.ListView):
+class MyServicesListView(BaseViewWithMenu, generic_edit_views.BaseCreateView):
     template_name = 'my_services.html'
-    object_list = []
+    object = None
     model = service_models.Service
+    form_class = service_forms.ServiceForm
+    success_url = reverse_lazy('my_services')
 
     def get_queryset(self):
-        queryset = super(MyServicesListView, self).get_queryset()
+        queryset = []
         if self.request.user.is_authenticated:
-            return queryset.filter(provider=self.request.user)
-        else:
-            return []
+            queryset = service_models.Service.objects.filter(
+                provider=self.request.user
+            )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'object_list': self.get_queryset(),
+            'service_form': service_forms.ServiceForm(),
+        })
+        return context
 
     def get(self, request, *args, **kwargs):
-        self.object_list = self.get_queryset()
         return super(MyServicesListView, self).get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.provider = self.request.user
+        self.object.save()
+        self.add_message('Форма успешно создана', messages.SUCCESS)
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        self.add_message('Ошибка формы', messages.ERROR)
+        return super(MyServicesListView, self).form_invalid(form)
+
+    def post(self, request, *args, **kwargs):
+        return super(MyServicesListView, self).post(request, *args, **kwargs)
 
 
 class MyServiceNotesListView(BaseViewWithMenu):
