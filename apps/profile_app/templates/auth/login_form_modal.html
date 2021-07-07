@@ -13,7 +13,7 @@
           <div class="row row-cols-1 row-cols-md-2 g-2">
             {% for field in login_form %}
                 <div class="col">
-                    <label class="form-label fs-6" for="{{ field.name }}">{{ field.label }}</label>
+                    <label class="form-label fs-6" for="id_{{ field.name }}">{{ field.label }}</label>
                     {{ field }}
                 </div>
             {% endfor %}

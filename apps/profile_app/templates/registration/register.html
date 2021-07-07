@@ -6,14 +6,13 @@
 
 {% block main_content %}
     <h1 class="text-center m-5">Регистрация</h1>
-    {% include 'base/form_errors.html' %}
     <form action="{% url 'register' %}" method="post" class="card m-1 border-2">
         <h2 class="card-header">Форма регистрации</h2>
-        <div class="card-body m-2 p-2 row g-2">
+        <div class="card-body m-2 row row-cols-md-2 g-2">
             {% csrf_token %}
             {% for field in form %}
-                <div class="card-text col-md-6">
-                    <label class="form-label fs-5" for="{{ field.name }}">{{ field.label }}</label>
+                <div class="card-text col">
+                    <label class="form-label fs-5" for="id_{{ field.name }}">{{ field.label }}</label>
                     {{ field }}
                 </div>
             {% endfor %}

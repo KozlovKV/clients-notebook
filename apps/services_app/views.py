@@ -42,7 +42,9 @@ class MyServicesListView(BaseViewWithMenu, generic_list_views.ListView):
         context = super().get_context_data(**kwargs)
         context.update({
             'object_list': self.get_queryset(),
-            'service_form': service_forms.ServiceForm(),
+            'service_form': service_forms.ServiceForm(data={
+                'provider': self.request.user,
+            }),
         })
         return context
 
@@ -50,22 +52,17 @@ class MyServicesListView(BaseViewWithMenu, generic_list_views.ListView):
         return super(MyServicesListView, self).get(request, *args, **kwargs)
 
 
-class CreateServiceView(BaseViewWithMenu, generic_edit_views.BaseCreateView):
+class CreateServiceView(MyServicesListView, generic_edit_views.BaseCreateView):
+    template_name = 'my_services.html'
     object = None
     model = service_models.Service
     form_class = service_forms.ServiceForm
     success_url = reverse_lazy('my_services')
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.provider = self.request.user
-        self.object.save()
+        self.object = form.save()
         self.add_message('Форма успешно создана', messages.SUCCESS)
         return HttpResponseRedirect(self.get_success_url())
-
-    def form_invalid(self, form):
-        self.add_message('Ошибка формы', messages.ERROR)
-        return super(CreateServiceView, self).form_invalid(form)
 
 
 class MyServiceNotesListView(BaseViewWithMenu):
@@ -103,7 +100,9 @@ class OneServiceCalendarView(BaseViewWithMenu, generic_detail_views.DetailView):
     def get_context_data(self, **kwargs):
         context = super(OneServiceCalendarView, self).get_context_data(**kwargs)
         context.update({
-            'dates_with_notes': self.get_dates_for_js(self.object.get_dates_with_notes()),
+            'dates_with_notes': self.get_dates_for_js(
+                self.object.get_dates_with_notes()
+            ),
         })
         return context
 
@@ -133,6 +132,18 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
         context.update({
             'service': self.service,
             'date': self.date,
+            'single_form': service_forms.SingleServiceNoteForm(
+                data={
+                    'date': self.date,
+                    'service': self.service,
+                }
+            ),
+            'multi_form': service_forms.MultiServiceNoteForm(
+                data={
+                    'date': self.date,
+                    'service': self.service,
+                }
+            ),
         })
         return context
 

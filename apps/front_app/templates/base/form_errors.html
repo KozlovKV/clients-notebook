@@ -1,5 +1,5 @@
 {% if form.errors %}
-    <div class="card border-3 border-danger m-1 mb-5">
+    <div class="card border-3 border-danger my-5 m-1">
         <div class="card-header d-flex justify-content-between">
             <h2>Ошибки</h2>
             <button type="button" class="btn btn-danger" data-toggle="collapse" data-target="#formErrors" aria-label="Свернуть сообщение">
@@ -8,7 +8,7 @@
         </div>
         <div id="formErrors" class="collapse">
             <div class="card-body">
-                <div class="d-flex justiy-content-around row row-cols-1 row-cols-md-3 g-2">
+                <div class="d-flex justify-content-around row row-cols-1 row-cols-md-3 g-2">
                     {% for field in form %}
                         {% if field.errors %}
                             <div class="col">

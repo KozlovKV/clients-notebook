@@ -14,7 +14,7 @@ from apps.profile_app import forms as profile_forms
 
 
 class LoginViewModified(auth_views.LoginView, BaseViewWithMenu):
-    template_name = 'registration/login_page.html'
+    template_name = 'auth/login_page.html'
     form_class = profile_forms.AuthenticationFormModified
 
 

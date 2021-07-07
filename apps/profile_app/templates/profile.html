@@ -28,7 +28,6 @@
         </div>
     </div>
     {% if user == object.user %}
-        {% include 'base/form_errors.html' %}
         <div class="card border-3 m-md-4 mt-3">
             <h2 class="card-header">Редактирование профиля</h2>
             <form method="post" action="{% url 'profile' object.pk %}" enctype="multipart/form-data" class="card-body row g-2">
