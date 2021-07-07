@@ -23,9 +23,9 @@ class ServicesListView(BaseViewWithMenu, generic_list_views.ListView):
         return super(ServicesListView, self).get(request, *args, **kwargs)
 
 
-class MyServicesListView(BaseViewWithMenu, generic_edit_views.BaseCreateView):
+class MyServicesListView(BaseViewWithMenu, generic_list_views.ListView):
     template_name = 'my_services.html'
-    object = None
+    object_list = []
     model = service_models.Service
     form_class = service_forms.ServiceForm
     success_url = reverse_lazy('my_services')
@@ -49,6 +49,13 @@ class MyServicesListView(BaseViewWithMenu, generic_edit_views.BaseCreateView):
     def get(self, request, *args, **kwargs):
         return super(MyServicesListView, self).get(request, *args, **kwargs)
 
+
+class CreateServiceView(BaseViewWithMenu, generic_edit_views.BaseCreateView):
+    object = None
+    model = service_models.Service
+    form_class = service_forms.ServiceForm
+    success_url = reverse_lazy('my_services')
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.provider = self.request.user
@@ -58,10 +65,7 @@ class MyServicesListView(BaseViewWithMenu, generic_edit_views.BaseCreateView):
 
     def form_invalid(self, form):
         self.add_message('Ошибка формы', messages.ERROR)
-        return super(MyServicesListView, self).form_invalid(form)
-
-    def post(self, request, *args, **kwargs):
-        return super(MyServicesListView, self).post(request, *args, **kwargs)
+        return super(CreateServiceView, self).form_invalid(form)
 
 
 class MyServiceNotesListView(BaseViewWithMenu):
