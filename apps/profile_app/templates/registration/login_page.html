@@ -1,25 +1,24 @@
 {% extends 'base/base.html' %}
 
 {% block title %}
-    Регистрация
+    Вход
 {% endblock %}
 
 {% block main_content %}
-    <h1 class="text-center m-5">Регистрация</h1>
+    <h1 class="text-center m-5">Страница входа</h1>
     {% include 'base/form_errors.html' %}
-    <form action="{% url 'register' %}" method="post" class="card m-1 border-2">
-        <h2 class="card-header">Форма регистрации</h2>
+    <form action="{% url 'login' %}" method="post" class="card m-1">
         <div class="card-body m-2 p-2 row g-2">
             {% csrf_token %}
             {% for field in form %}
                 <div class="card-text col-md-6">
-                    <label class="form-label fs-5" for="{{ field.name }}">{{ field.label }}</label>
+                    {{ field.label }}
                     {{ field }}
                 </div>
             {% endfor %}
         </div>
         <div class="card-footer text-center">
-            <input type="submit" class="btn btn-primary border-2" value="Зарегистрироваться">
+            <input type="submit" class="btn btn-success border-2" value="Войти">
         </div>
     </form>
 {% endblock %}

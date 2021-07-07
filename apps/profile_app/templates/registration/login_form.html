@@ -10,15 +10,13 @@
       <form method="post" action="{% url 'login' %}">
         <div class="modal-body">
           {% csrf_token %}
-          <div class="row row-cols-1 row-cols-md-2">
-            <div class="col">
-                {{ login_form.username.label }}
-                {{ login_form.username }}
-            </div>
-            <div class="col">
-                {{ login_form.password.label }}
-                {{ login_form.password }}
-            </div>
+          <div class="row row-cols-1 row-cols-md-2 g-2">
+            {% for field in login_form %}
+                <div class="col">
+                    <label class="form-label fs-6" for="{{ field.name }}">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
           </div>
         </div>
         <div class="modal-footer">

@@ -1,0 +1,42 @@
+{% if form.errors %}
+    <div class="card border-3 border-danger m-1 mb-5">
+        <div class="card-header d-flex justify-content-between">
+            <h2>Ошибки</h2>
+            <button type="button" class="btn btn-danger" data-toggle="collapse" data-target="#formErrors" aria-label="Свернуть сообщение">
+                <i id="arrow" class="fs-3 fas fa-arrow-circle-down"></i>
+            </button>
+        </div>
+        <div id="formErrors" class="collapse">
+            <div class="card-body">
+                <div class="d-flex justiy-content-around row row-cols-1 row-cols-md-3 g-2">
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <div class="col">
+                                <div class="card border-1 border-danger">
+                                    <h3 class="card-header">{{ field.label }}</h3>
+                                    <ul class="card-body list-group list-group-flush">
+                                        {% for error in field.errors %}
+                                            <li class="card-text list-group-item">{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% if form.non_field_errors %}
+                        <div class="col">
+                            <div class="card">
+                                <h3 class="card-header">Другие ошибки</h3>
+                                <ul class="card-body list-group list-group-flush">
+                                {% for error in form.non_field_errors %}
+                                    <li class="card-text list-group-item">{{ error }}</li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

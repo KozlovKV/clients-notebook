@@ -12,10 +12,10 @@ class EditProfileForm(forms.ModelForm):
         fields = ['avatar', 'about']
         widgets = {
             'avatar': forms.FileInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control-lg w-100',
             }),
             'about': forms.TextInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control-lg w-100',
                 'placeholder': 'Кратко расскажите о себе, своих навыках',
             })
         }
@@ -30,7 +30,7 @@ class AuthenticationFormModified(auth_forms.AuthenticationForm):
         widget=forms.TextInput(
             attrs={
                 'autofocus': True,
-                'class': 'form-control m-1 col',
+                'class': 'form-control w-100',
                 'placeholder': 'Имя пользователя',
             }
         )
@@ -40,7 +40,7 @@ class AuthenticationFormModified(auth_forms.AuthenticationForm):
         widget=forms.PasswordInput(
             attrs={
                 'autocomplete': 'current-password',
-                'class': 'form-control m-1 col',
+                'class': 'form-control w-100',
                 'placeholder': 'Пароль',
             }
         ),

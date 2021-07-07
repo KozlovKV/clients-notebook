@@ -19,14 +19,14 @@ class ServiceForm(forms.ModelForm):
         }
         widgets = {
             'label': forms.TextInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control-lg w-100',
                 'placeholder': 'Название',
             }),
             'image': forms.FileInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control-lg w-100',
             }),
             'description': forms.Textarea(attrs={
-                'class': 'form-control',
+                'class': 'form-control-lg w-100',
                 'placeholder': 'Описание',
             }),
         }

@@ -5,7 +5,7 @@
 
 {% block main_content %}
     <h1 class="text-center m-5">Профиль пользователя {{ object.user }}</h1>
-    <div class="card border-3 m-md-4">
+    <div class="card border-3 m-1 m-md-4">
         <div class="row">
             {% if object.get_avatar_url != '' %}
             <img class="col-md-6 img-fluid" src="{{ object.get_avatar_url }}" alt="Аватарка">
@@ -28,13 +28,14 @@
         </div>
     </div>
     {% if user == object.user %}
+        {% include 'base/form_errors.html' %}
         <div class="card border-3 m-md-4 mt-3">
             <h2 class="card-header">Редактирование профиля</h2>
             <form method="post" action="{% url 'profile' object.pk %}" enctype="multipart/form-data" class="card-body row g-2">
                 {% csrf_token %}
                 {% for field in form %}
                     <div class="col-md-6">
-                        {{ field.label }}
+                        <label class="form-label fs-5" for="{{ field.name }}">{{ field.label }}</label>
                         {{ field }}
                     </div>
                 {% endfor %}
