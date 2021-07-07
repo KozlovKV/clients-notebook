@@ -60,9 +60,11 @@ class CreateServiceView(MyServicesListView, generic_edit_views.BaseCreateView):
     success_url = reverse_lazy('my_services')
 
     def form_valid(self, form):
-        self.object = form.save()
-        self.add_message('Форма успешно создана', messages.SUCCESS)
-        return HttpResponseRedirect(self.get_success_url())
+        self.object = form.save(commit=False)
+        self.object.provider = self.request.user
+        self.object.save()
+        self.add_message('Услуга успешно создана', messages.SUCCESS)
+        return super(CreateServiceView, self).form_valid(form)
 
 
 class MyServiceNotesListView(BaseViewWithMenu):
@@ -132,11 +134,9 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
         context.update({
             'service': self.service,
             'date': self.date,
-            'single_form': service_forms.SingleServiceNoteForm(
-                data={
-                    'date': self.date,
-                    'service': self.service,
-                }
+            'single_form': service_forms.SingleServiceNoteForm(),
+            'single_form_url': reverse_lazy(
+                'create_single_note', kwargs=self.kwargs
             ),
             'multi_form': service_forms.MultiServiceNoteForm(
                 data={
@@ -150,3 +150,18 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         return super(OneServiceDayView, self).get(request, *args, **kwargs)
+
+
+class CreateSingleServiceNote(OneServiceDayView, generic_edit_views.CreateView):
+    template_name = 'one_service_day.html'
+    model = service_models.ServiceNote
+    object = None
+    form_class = service_forms.SingleServiceNoteForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.service = self.service
+        self.object.date = self.date
+        self.object.save()
+        self.add_message('Запись успешно создана', messages.SUCCESS)
+        return super(CreateSingleServiceNote, self).form_valid(form)

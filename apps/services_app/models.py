@@ -85,7 +85,7 @@ class ServiceNote(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy('one_service_day', kwargs={
-            'pk': self.pk,
+            'pk': self.service.pk,
             'Y': self.date.year,
             'm': self.date.month,
             'd': self.date.day,

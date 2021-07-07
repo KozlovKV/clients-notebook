@@ -8,7 +8,6 @@ class ServiceForm(forms.ModelForm):
     class Meta:
         model = service_models.Service
         fields = [
-            'provider',
             'label',
             'image',
             'description',
@@ -19,7 +18,6 @@ class ServiceForm(forms.ModelForm):
             'description': 'Описание',
         }
         widgets = {
-            'provider': forms.HiddenInput(),
             'label': forms.TextInput(attrs={
                 'class': 'form-control-lg w-100',
                 'placeholder': 'Название',
@@ -39,8 +37,6 @@ class SingleServiceNoteForm(forms.ModelForm):
     class Meta:
         model = service_models.ServiceNote
         fields = [
-            'service',
-            'date',
             'time_start',
             'time_end',
             'addition',
@@ -51,8 +47,6 @@ class SingleServiceNoteForm(forms.ModelForm):
             'addition': 'Дополнительная информация',
         }
         widgets = {
-            'service': forms.HiddenInput(),
-            'date': forms.HiddenInput(),
             'time_start': forms.TimeInput(attrs={
                 'type': 'time',
                 'class': 'form-control',

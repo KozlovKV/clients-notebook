@@ -35,7 +35,8 @@
             </div>
             <div class="card-body row g-3 collapse" id="manageForms">
                 <div class="col-md-6">
-                    <form action="" class="card border-2">
+                    <form method="post" action="{{ single_form_url }}" class="card border-2">
+                        {% csrf_token %}
                         <h4 class="card-header">Добавить одну карточку для записи</h4>
                         <div class="card-body p-3">
                             <div class="row row-cols-2 mb-2">
@@ -58,6 +59,7 @@
                 </div>
                 <div class="col-md-6">
                     <form action="" class="card border-2">
+                        {% csrf_token %}
                         <h4 class="card-header">Сгенерировать список карточек для записи</h4>
                         <div class="card-body p-3">
                             <div class="row row-cols-3 mb-2">
