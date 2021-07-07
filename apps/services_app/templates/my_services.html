@@ -15,19 +15,19 @@
                 </button>
             </div>
             <div class="collapse" id="serviceCreateForm">
-                <form action="" class="card-body row g-2">
+                <form method="post" action="{% url 'my_services' %}" enctype="multipart/form-data" class="card-body row g-2">
+                    {% csrf_token %}
                     <div class="col-md-6">
-                        <label class="form-label" for="header">Название</label>
-                        <input class="form-control" type="text" placeholder="Название" name="header" id="header">
+                        {{ service_form.label.label }}
+                        {{ service_form.label }}
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label" for="image">Картинка</label>
-                        <input class="form-control" type="file" name="image" id="image">
+                        {{ service_form.image.label }}
+                        {{ service_form.image }}
                     </div>
                     <div class="col-12">
-                        <label class="form-label" for="description">Описание</label>
-                        <textarea class="form-control" placeholder="Описание" name="description"
-                            id="description"></textarea>
+                        {{ service_form.description.label }}
+                        {{ service_form.description }}
                     </div>
                     <input class="btn btn-success" type="submit" value="Добавить">
                 </form>
