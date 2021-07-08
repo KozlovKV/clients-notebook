@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.text import slugify
 
 
 class Service(models.Model):
@@ -36,6 +37,34 @@ class Service(models.Model):
             return self.image.url
         except ValueError:
             return ''
+
+    @staticmethod
+    def get_timedelta_from_time(time: datetime.time):
+        return datetime.timedelta(
+            hours=time.hour, minutes=time.minute
+        )
+
+    @staticmethod
+    def get_time_from_timedelta(timedelta: datetime.timedelta):
+        return datetime.time(
+            hour=timedelta.seconds // 3600,
+            minute=timedelta.seconds % 3600 // 60
+        )
+
+    def generate_service_notes(self, date: datetime.date, pattern_kwargs: dict):
+        current = self.get_timedelta_from_time(pattern_kwargs['day_time_start'])
+        interval = self.get_timedelta_from_time(pattern_kwargs['time_interval'])
+        end = self.get_timedelta_from_time(pattern_kwargs['day_time_end'])
+        addition = pattern_kwargs.get('multi_addition', None)
+        while current < end:
+            obj = ServiceNote(service=self, date=date, addition=addition,
+                              time_start=self.get_time_from_timedelta(current),
+                              time_end=self.get_time_from_timedelta(
+                                      current + interval
+                                  )
+                              )
+            obj.save()
+            current += interval
 
 
 class ServiceNote(models.Model):

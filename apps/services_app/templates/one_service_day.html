@@ -58,7 +58,7 @@
                     </form>
                 </div>
                 <div class="col-md-6">
-                    <form action="" class="card border-2">
+                    <form method="post" action="{{ multi_form_url }}" class="card border-2">
                         {% csrf_token %}
                         <h4 class="card-header">Сгенерировать список карточек для записи</h4>
                         <div class="card-body p-3">
@@ -111,14 +111,14 @@
                                 {% endif %}
                                 <div class="card-text mb-3">
                                     <button class="btn btn-primary" type="button" data-toggle="collapse"
-                                        data-target="#collapseForm1">
+                                        data-target="#collapseForm{{ object.pk }}">
                                         <i class="fas fa-arrow-circle-down"></i>
                                     </button>
                                 </div>
-                                <form action="" class="card collapse" id="collapseForm1">
+                                <form action="" class="card collapse" id="collapseForm{{ object.pk }}">
                                     <div class="card-body">
                                         <input class="form-control m-2" type="text" name="additional_info"
-                                            placeholder="Дополнительная информация">
+                                            placeholder="Дополнительная информация для поставщика">
                                         <input class="btn btn-success m-2" type="submit" value="Записаться">
                                     </div>
                                 </form>

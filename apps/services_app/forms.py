@@ -64,8 +64,6 @@ class SingleServiceNoteForm(forms.ModelForm):
 
 
 class MultiServiceNoteForm(forms.Form):
-    service = forms.Field(show_hidden_initial=True)
-    date = forms.DateField(show_hidden_initial=True)
     day_time_start = forms.TimeField(
         label='Время начала дня *',
         widget=forms.TimeInput(attrs={

@@ -3,7 +3,7 @@ from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse_lazy
 from django.contrib import messages as messages
 
-from django.views.generic import list as generic_list_views
+from django.views.generic import list as generic_list_views, FormView
 from django.views.generic import detail as generic_detail_views
 from django.views.generic import edit as generic_edit_views
 from apps.front_app.views import BaseViewWithMenu
@@ -144,6 +144,9 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
                     'service': self.service,
                 }
             ),
+            'multi_form_url': reverse_lazy(
+                'create_multi_note', kwargs=self.kwargs
+            ),
         })
         return context
 
@@ -165,3 +168,16 @@ class CreateSingleServiceNote(OneServiceDayView, generic_edit_views.CreateView):
         self.object.save()
         self.add_message('Запись успешно создана', messages.SUCCESS)
         return super(CreateSingleServiceNote, self).form_valid(form)
+
+
+class CreateMultiServiceNote(OneServiceDayView, generic_edit_views.BaseFormView):
+    template_name = 'one_service_day.html'
+    form_class = service_forms.MultiServiceNoteForm
+
+    def form_valid(self, form):
+        self.service.generate_service_notes(self.date, form.cleaned_data)
+        self.add_message('Записи успешно созданы', messages.SUCCESS)
+        return super(CreateMultiServiceNote, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('one_service_day', kwargs=self.kwargs)
