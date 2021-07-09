@@ -4,7 +4,6 @@ from django.urls import reverse_lazy
 
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils.text import slugify
 
 
 class Service(models.Model):
@@ -37,34 +36,6 @@ class Service(models.Model):
             return self.image.url
         except ValueError:
             return ''
-
-    @staticmethod
-    def get_timedelta_from_time(time: datetime.time):
-        return datetime.timedelta(
-            hours=time.hour, minutes=time.minute
-        )
-
-    @staticmethod
-    def get_time_from_timedelta(timedelta: datetime.timedelta):
-        return datetime.time(
-            hour=timedelta.seconds // 3600,
-            minute=timedelta.seconds % 3600 // 60
-        )
-
-    def generate_service_notes(self, date: datetime.date, pattern_kwargs: dict):
-        current = self.get_timedelta_from_time(pattern_kwargs['day_time_start'])
-        interval = self.get_timedelta_from_time(pattern_kwargs['time_interval'])
-        end = self.get_timedelta_from_time(pattern_kwargs['day_time_end'])
-        addition = pattern_kwargs.get('multi_addition', None)
-        while current < end:
-            obj = ServiceNote(service=self, date=date, addition=addition,
-                              time_start=self.get_time_from_timedelta(current),
-                              time_end=self.get_time_from_timedelta(
-                                      current + interval
-                                  )
-                              )
-            obj.save()
-            current += interval
 
 
 class ServiceNote(models.Model):
@@ -119,3 +90,47 @@ class ServiceNote(models.Model):
             'm': self.date.month,
             'd': self.date.day,
         })
+
+
+class ServiceNoteGenerationPattern(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    time_start = models.TimeField()
+    time_interval = models.TimeField()
+    time_end = models.TimeField()
+    addition = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f'From {self.time_start} to {self.time_end} with interval {self.time_interval}'
+
+    @staticmethod
+    def get_timedelta_from_time(time: datetime.time):
+        return datetime.timedelta(
+            hours=time.hour, minutes=time.minute
+        )
+
+    @staticmethod
+    def get_time_from_timedelta(timedelta: datetime.timedelta):
+        return datetime.time(
+            hour=timedelta.seconds // 3600,
+            minute=timedelta.seconds % 3600 // 60
+        )
+
+    @staticmethod
+    def create_single_note(service, date, start, end, addition=None):
+        obj = ServiceNote(service=service, date=date, addition=addition,
+                          time_start=start, time_end=end)
+        obj.save()
+
+    def generate_service_notes(self, service: Service, date: datetime.date):
+        current = self.get_timedelta_from_time(self.time_start)
+        interval = self.get_timedelta_from_time(self.time_interval)
+        end = self.get_timedelta_from_time(self.time_end)
+        addition = self.addition
+        while current < end:
+            current_end = self.get_time_from_timedelta(current + interval)
+            self.create_single_note(service, date,
+                                    self.get_time_from_timedelta(current),
+                                    current_end, addition)
+            current = self.get_timedelta_from_time(current_end)
+
+
