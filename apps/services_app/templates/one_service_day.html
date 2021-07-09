@@ -108,7 +108,10 @@
                                     {% for pattern in patterns %}
                                         <li class="list-group-item">
                                             <span>{{ pattern.object }}</span>
-                                            <a class="btn btn-primary" href="{{ pattern.url }}">
+                                            <a class="btn btn-success" href="{{ pattern.execute_url }}">
+                                                Использовать паттерн
+                                            </a>
+                                            <a class="btn btn-primary" href="{{ pattern.edit_url }}">
                                                 Редактировать в форме
                                             </a>
                                         </li>

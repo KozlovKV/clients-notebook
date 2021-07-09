@@ -14,12 +14,17 @@ urlpatterns = [
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/single/',
-        service_views.CreateSingleServiceNote.as_view(),
+        service_views.CreateSingleServiceNoteView.as_view(),
         name='create_single_note'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/',
-        service_views.CreateMultiServiceNote.as_view(), name='create_multi_note'
+        service_views.CreateMultiServiceNoteView.as_view(), name='create_multi_note'
+    ),
+    path(
+        '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/pattern/<int:pattern_pk>/execute/',
+        service_views.MultiServiceNoteExecutePatternView.as_view(),
+        name='pattern_execute'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/pattern/<int:pattern_pk>/edit/',

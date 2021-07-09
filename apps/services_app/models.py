@@ -105,8 +105,9 @@ class ServiceNoteGenerationPattern(models.Model):
             string += f', примечание: {self.multi_addition}'
         return string
 
-    def get_edit_url(self, service: Service, date: datetime.date):
-        return reverse_lazy('pattern_edit', kwargs={
+    def get_url(self, service: Service, date: datetime.date,
+                postfix: str = 'execute'):
+        return reverse_lazy(f'pattern_{postfix}', kwargs={
             'pk': service.pk,
             'Y': date.year,
             'm': date.month,
