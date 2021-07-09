@@ -94,13 +94,13 @@ class ServiceNote(models.Model):
 
 class ServiceNoteGenerationPattern(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    time_start = models.TimeField()
+    day_time_start = models.TimeField()
     time_interval = models.TimeField()
-    time_end = models.TimeField()
-    addition = models.CharField(max_length=255, blank=True, null=True)
+    day_time_end = models.TimeField()
+    multi_addition = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return f'From {self.time_start} to {self.time_end} with interval {self.time_interval}'
+        return f'From {self.day_time_start} to {self.day_time_end} with interval {self.time_interval}'
 
     @staticmethod
     def get_timedelta_from_time(time: datetime.time):
@@ -122,10 +122,10 @@ class ServiceNoteGenerationPattern(models.Model):
         obj.save()
 
     def generate_service_notes(self, service: Service, date: datetime.date):
-        current = self.get_timedelta_from_time(self.time_start)
+        current = self.get_timedelta_from_time(self.day_time_start)
         interval = self.get_timedelta_from_time(self.time_interval)
-        end = self.get_timedelta_from_time(self.time_end)
-        addition = self.addition
+        end = self.get_timedelta_from_time(self.day_time_end)
+        addition = self.multi_addition
         while current < end:
             current_end = self.get_time_from_timedelta(current + interval)
             self.create_single_note(service, date,

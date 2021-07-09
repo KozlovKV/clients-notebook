@@ -63,34 +63,37 @@ class SingleServiceNoteForm(forms.ModelForm):
         }
 
 
-class MultiServiceNoteForm(forms.Form):
-    day_time_start = forms.TimeField(
-        label='Время начала дня *',
-        widget=forms.TimeInput(attrs={
-            'type': 'time',
-            'class': 'form-control',
-        }),
-    )
-    time_interval = forms.TimeField(
-        label='Интервал записи *',
-        widget=forms.TimeInput(attrs={
-            'type': 'time',
-            'class': 'form-control',
-        }),
-    )
-    day_time_end = forms.TimeField(
-        label='Время окончания дня *',
-        widget=forms.TimeInput(attrs={
-            'type': 'time',
-            'class': 'form-control',
-        }),
-    )
-    multi_addition = forms.CharField(
-        label='Дополнительная информация для всех карточек',
-        required=False,
-        widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'rows': 2,
-            'placeholder': 'Дополнительная информация для всех карточек',
-        })
-    )
+class MultiServiceNoteForm(forms.ModelForm):
+    class Meta:
+        model = service_models.ServiceNoteGenerationPattern
+        fields = [
+            'day_time_start',
+            'time_interval',
+            'day_time_end',
+            'multi_addition',
+        ]
+        labels = {
+            'day_time_start': 'Время начала дня *',
+            'time_interval': 'Интервал записи *',
+            'day_time_end': 'Время окончания дня *',
+            'multi_addition': 'Дополнительная информация для всех карточек',
+        }
+        widgets = {
+            'day_time_start': forms.TimeInput(attrs={
+                'type': 'time',
+                'class': 'form-control',
+            }),
+            'time_interval': forms.TimeInput(attrs={
+                'type': 'time',
+                'class': 'form-control',
+            }),
+            'day_time_end': forms.TimeInput(attrs={
+                'type': 'time',
+                'class': 'form-control',
+            }),
+            'multi_addition': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 2,
+                'placeholder': 'Дополнительная информация для всех карточек',
+            }),
+        }

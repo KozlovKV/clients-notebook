@@ -175,7 +175,8 @@ class CreateMultiServiceNote(OneServiceDayView, generic_edit_views.BaseFormView)
     form_class = service_forms.MultiServiceNoteForm
 
     def form_valid(self, form):
-        self.service.generate_service_notes(self.date, form.cleaned_data)
+        pattern = form.save(commit=False)
+        pattern.generate_service_notes(self.service, self.date)
         self.add_message('Записи успешно созданы', messages.SUCCESS)
         return super(CreateMultiServiceNote, self).form_valid(form)
 
