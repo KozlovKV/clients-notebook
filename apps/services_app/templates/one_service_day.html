@@ -88,8 +88,14 @@
                             {{ multi_form.multi_addition }}
                         </div>
                         <div class="card-footer text-center">
-                            <input class="btn btn-success" type="submit" name="create" value="Добавить">
-                            <input class="btn btn-primary" type="submit" name="save" value="Добавить записи и сохранить паттерн">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <input class="btn btn-success" type="submit" name="create" value="Добавить">
+                                </div>
+                                <div class="col-md-9">
+                                    <input class=" btn btn-primary" type="submit" name="save" value="Добавить записи и сохранить паттерн">
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -100,7 +106,12 @@
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
                                     {% for pattern in patterns %}
-                                        <li class="list-group-item">{{ pattern }}</li>
+                                        <li class="list-group-item">
+                                            <span>{{ pattern.object }}</span>
+                                            <a class="btn btn-primary" href="{{ pattern.url }}">
+                                                Редактировать в форме
+                                            </a>
+                                        </li>
                                     {% endfor %}
                                 </ul>
                             </div>

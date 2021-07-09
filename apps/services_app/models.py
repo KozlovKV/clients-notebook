@@ -100,7 +100,19 @@ class ServiceNoteGenerationPattern(models.Model):
     multi_addition = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return f'From {self.day_time_start} to {self.day_time_end} with interval {self.time_interval}'
+        string = f'С {self.day_time_start} до {self.day_time_end} с интервалом {self.time_interval}'
+        if self.multi_addition is not None:
+            string += f', примечание: {self.multi_addition}'
+        return string
+
+    def get_edit_url(self, service: Service, date: datetime.date):
+        return reverse_lazy('pattern_edit', kwargs={
+            'pk': service.pk,
+            'Y': date.year,
+            'm': date.month,
+            'd': date.day,
+            'pattern_pk': self.pk,
+        })
 
     @staticmethod
     def get_timedelta_from_time(time: datetime.time):

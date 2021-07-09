@@ -129,6 +129,18 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
     def get_queryset(self):
         return self.service.get_notes_by_date(self.date)
 
+    def get_patterns(self):
+        patterns_with_urls = []
+        patterns_objects_list = service_models.ServiceNoteGenerationPattern.objects.filter(
+            user=self.request.user)
+        for pattern in patterns_objects_list:
+            pattern_dict = {
+                'object': pattern,
+                'url': pattern.get_edit_url(self.service, self.date),
+            }
+            patterns_with_urls.append(pattern_dict)
+        return patterns_with_urls
+
     def get_context_data(self, **kwargs):
         context = super(OneServiceDayView, self).get_context_data(**kwargs)
         context.update({
@@ -136,13 +148,19 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
             'date': self.date,
             'single_form': service_forms.SingleServiceNoteForm(),
             'single_form_url': reverse_lazy(
-                'create_single_note', kwargs=self.kwargs
+                'create_single_note', args=(
+                    self.kwargs['pk'], self.kwargs['Y'],
+                    self.kwargs['m'], self.kwargs['d'],
+                )
             ),
             'multi_form': service_forms.MultiServiceNoteForm(),
             'multi_form_url': reverse_lazy(
-                'create_multi_note', kwargs=self.kwargs
+                'create_multi_note', args=(
+                    self.kwargs['pk'], self.kwargs['Y'],
+                    self.kwargs['m'], self.kwargs['d'],
+                )
             ),
-            'patterns': service_models.ServiceNoteGenerationPattern.objects.filter(user=self.request.user)
+            'patterns': self.get_patterns(),
         })
         return context
 
@@ -181,3 +199,17 @@ class CreateMultiServiceNote(OneServiceDayView, generic_edit_views.BaseFormView)
 
     def get_success_url(self):
         return reverse_lazy('one_service_day', kwargs=self.kwargs)
+
+
+class MultiServiceNoteEditPatternView(OneServiceDayView):
+    def get_object(self):
+        return service_models.ServiceNoteGenerationPattern.objects.get(
+            pk=self.kwargs['pattern_pk']
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super(MultiServiceNoteEditPatternView, self).get_context_data(**kwargs)
+        context['multi_form'] = service_forms.MultiServiceNoteForm(
+            instance=self.get_object()
+        )
+        return context
