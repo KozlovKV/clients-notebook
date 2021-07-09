@@ -138,15 +138,11 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
             'single_form_url': reverse_lazy(
                 'create_single_note', kwargs=self.kwargs
             ),
-            'multi_form': service_forms.MultiServiceNoteForm(
-                data={
-                    'date': self.date,
-                    'service': self.service,
-                }
-            ),
+            'multi_form': service_forms.MultiServiceNoteForm(),
             'multi_form_url': reverse_lazy(
                 'create_multi_note', kwargs=self.kwargs
             ),
+            'patterns': service_models.ServiceNoteGenerationPattern.objects.filter(user=self.request.user)
         })
         return context
 
@@ -176,6 +172,9 @@ class CreateMultiServiceNote(OneServiceDayView, generic_edit_views.BaseFormView)
 
     def form_valid(self, form):
         pattern = form.save(commit=False)
+        if form.data.get('save', False):
+            pattern.user = self.request.user
+            pattern.save()
         pattern.generate_service_notes(self.service, self.date)
         self.add_message('Записи успешно созданы', messages.SUCCESS)
         return super(CreateMultiServiceNote, self).form_valid(form)
