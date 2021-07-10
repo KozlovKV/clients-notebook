@@ -6,25 +6,7 @@
 
 
 {% block main_content %}
-    <div class="card mt-5 text-center border-3">
-        <h1 class="card-header">{{ service.label }}</h1>
-        <div class="card-body row">
-            {% if service.get_image_url != '' %}
-            <img class="col-md-4" src="{{ service.get_image_url }}"
-                 alt="Картинка услуги {{ service.label }}">
-            <div class="col-md-8 card-text p-3">
-            {% else %}
-            <div class="col-md-12 card-text p-3">
-            {% endif %}
-                {{ service.description }}
-            </div>
-        </div>
-        <div class="card-footer text-end">
-            <a class="card-link text-muted" href="{% url 'profile' service.provider.pk %}">
-                Поставщик ({{ service.provider }})
-            </a>
-        </div>
-    </div>
+    {% include 'base/service_wide_card.html' %}
     {% if service.provider == user %}
         <div class="card mt-3 border-3">
             <div class="card-header d-flex justify-content-between">
@@ -93,7 +75,7 @@
                                     <input class="btn btn-success" type="submit" name="create" value="Добавить">
                                 </div>
                                 <div class="col-md-9">
-                                    <input class=" btn btn-primary" type="submit" name="save" value="Добавить записи и сохранить паттерн">
+                                    <input class="btn btn-primary" type="submit" name="save" value="Добавить записи и сохранить паттерн">
                                 </div>
                             </div>
                         </div>
@@ -131,27 +113,42 @@
                 {% for object in object_list %}
                     <div class="col-md-4">
                         <div class="card border-2">
+                            <h3 class="card-header font-monospace m-1">
+                                {{ object.time_start }} - {{ object.time_end }}
+                            </h3>
                             <div class="card-body">
-                                <div class="card-text font-monospace m-1">
-                                    {{ object.time_start }} - {{ object.time_end }}
-                                </div>
-                                {% if object.addition is not None %}
-                                    <div class="card-text m-2">{{ object.addition }}</div>
-                                {% endif %}
-                                <div class="card-text mb-3">
-                                    <button class="btn btn-primary" type="button" data-toggle="collapse"
-                                        data-target="#collapseForm{{ object.pk }}">
-                                        <i class="fas fa-arrow-circle-down"></i>
-                                    </button>
-                                </div>
-                                <form action="" class="card collapse" id="collapseForm{{ object.pk }}">
-                                    <div class="card-body">
-                                        <input class="form-control m-2" type="text" name="additional_info"
-                                            placeholder="Дополнительная информация для поставщика">
-                                        <input class="btn btn-success m-2" type="submit" value="Записаться">
-                                    </div>
-                                </form>
+                                <ul class="list-group list-group-flush">
+                                    {% if object.addition is not None %}
+                                        <li class="list-group-item">
+                                            <span>{{ object.addition }}</span>
+                                        </li>
+                                    {% endif %}
+                                    <li class="list-group-item">
+                                        <span class="{{ object.status_css }}">{{ object.status_name }}</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <form method="post" action="">
+                                            <div class="row row-cols-1 g-2">
+                                                <div class="col">
+                                                    <input class="form-control" type="text" name="additional_info"
+                                                        placeholder="Дополнительная информация для поставщика">
+                                                </div>
+                                                <div class="col text-center">
+                                                    <input class="btn btn-success" type="submit" value="Записаться">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </li>
+                                </ul>
                             </div>
+                            {% if service.provider == user %}
+                                <div class="card-footer text-center">
+                                    <form method="post" action="{{ object.get_delete_url }}">
+                                        {% csrf_token %}
+                                        <input class="btn btn-danger" type="submit" value="Удалить запись">
+                                    </form>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}

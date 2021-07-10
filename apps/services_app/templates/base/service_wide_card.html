@@ -1,0 +1,19 @@
+<div class="card mt-5 text-center border-3">
+    <h1 class="card-header">{{ service.label }}</h1>
+    <div class="card-body row">
+        {% if service.get_image_url != '' %}
+        <img class="col-md-4" src="{{ service.get_image_url }}"
+             alt="Картинка услуги {{ service.label }}">
+        <div class="col-md-8 card-text p-3">
+        {% else %}
+        <div class="col-md-12 card-text p-3">
+        {% endif %}
+            {{ service.description }}
+        </div>
+    </div>
+    <div class="card-footer text-end">
+        <a class="card-link text-muted" href="{% url 'profile' service.provider.pk %}">
+            Поставщик ({{ service.provider }})
+        </a>
+    </div>
+</div>

@@ -71,10 +71,12 @@ class MyServiceNotesListView(BaseViewWithMenu):
     template_name = 'my_notes.html'
 
     def get_notes_me2other(self):
-        return service_models.ServiceNote.objects.filter(client=self.request.user)
+        return service_models.ServiceNote.objects.filter(
+            client=self.request.user)
 
     def get_notes_other2me(self):
-        my_services = service_models.Service.objects.filter(provider=self.request.user)
+        my_services = service_models.Service.objects.filter(
+            provider=self.request.user)
         notes = []
         for service in my_services:
             notes += service_models.ServiceNote.objects.filter(service=service)
@@ -93,6 +95,7 @@ class OneServiceCalendarView(BaseViewWithMenu, generic_detail_views.DetailView):
     template_name = 'one_service_calendar.html'
     object = None
     model = service_models.Service
+    context_object_name = 'service'
 
     @staticmethod
     def get_dates_for_js(dates: list) -> list:
@@ -120,7 +123,8 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
 
     @property
     def date(self):
-        return datetime.date(self.kwargs['Y'], self.kwargs['m'], self.kwargs['d'])
+        return datetime.date(self.kwargs['Y'], self.kwargs['m'],
+                             self.kwargs['d'])
 
     @property
     def service(self):
@@ -136,7 +140,8 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
         for pattern in patterns_objects_list:
             pattern_dict = {
                 'object': pattern,
-                'execute_url': pattern.get_url(self.service, self.date, 'execute'),
+                'execute_url': pattern.get_url(self.service, self.date,
+                                               'execute'),
                 'edit_url': pattern.get_url(self.service, self.date, 'edit'),
             }
             patterns_with_urls.append(pattern_dict)
@@ -170,7 +175,8 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
         return super(OneServiceDayView, self).get(request, *args, **kwargs)
 
 
-class CreateSingleServiceNoteView(OneServiceDayView, generic_edit_views.CreateView):
+class CreateSingleServiceNoteView(OneServiceDayView,
+                                  generic_edit_views.CreateView):
     template_name = 'one_service_day.html'
     model = service_models.ServiceNote
     object = None
@@ -185,7 +191,31 @@ class CreateSingleServiceNoteView(OneServiceDayView, generic_edit_views.CreateVi
         return super(CreateSingleServiceNoteView, self).form_valid(form)
 
 
-class CreateMultiServiceNoteView(OneServiceDayView, generic_edit_views.BaseFormView):
+class DeleteSingleServiceNoteView(BaseViewWithMenu,
+                                  generic_edit_views.BaseDeleteView):
+    template_name = 'index.html'
+    model = service_models.ServiceNote
+    object = None
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        if self.request.user == self.object.service.provider:
+            self.object.delete()
+            self.add_message('Запись успешно удалена', messages.SUCCESS)
+        else:
+            self.add_message(
+                'Вы не можете удалять записи, созданные другим пользователем',
+                messages.ERROR
+            )
+        return HttpResponseRedirect(success_url)
+
+
+class CreateMultiServiceNoteView(OneServiceDayView,
+                                 generic_edit_views.BaseFormView):
     template_name = 'one_service_day.html'
     form_class = service_forms.MultiServiceNoteForm
 
@@ -200,9 +230,9 @@ class CreateMultiServiceNoteView(OneServiceDayView, generic_edit_views.BaseFormV
 
     def get_success_url(self):
         return reverse_lazy('one_service_day', args=(
-                    self.kwargs['pk'], self.kwargs['Y'],
-                    self.kwargs['m'], self.kwargs['d'],
-                ))
+            self.kwargs['pk'], self.kwargs['Y'],
+            self.kwargs['m'], self.kwargs['d'],
+        ))
 
 
 class MultiServiceNoteEditPatternView(OneServiceDayView):
@@ -212,16 +242,20 @@ class MultiServiceNoteEditPatternView(OneServiceDayView):
         )
 
     def get_context_data(self, **kwargs):
-        context = super(MultiServiceNoteEditPatternView, self).get_context_data(**kwargs)
+        context = super(MultiServiceNoteEditPatternView, self).get_context_data(
+            **kwargs)
         context['multi_form'] = service_forms.MultiServiceNoteForm(
             instance=self.get_object()
         )
         return context
 
 
-class MultiServiceNoteExecutePatternView(MultiServiceNoteEditPatternView, CreateMultiServiceNoteView):
+class MultiServiceNoteExecutePatternView(MultiServiceNoteEditPatternView,
+                                         CreateMultiServiceNoteView):
     def get(self, request, *args, **kwargs):
-        response = super(MultiServiceNoteExecutePatternView, self).get(request, *args, **kwargs)
+        response = super(MultiServiceNoteExecutePatternView, self).get(request,
+                                                                       *args,
+                                                                       **kwargs)
         pattern = self.get_object()
         form = service_forms.MultiServiceNoteForm(instance=pattern)
         self.form_valid(form)

@@ -26,25 +26,7 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="card mt-5 text-center border-3">
-        <h1 class="card-header">{{ object.label }}</h1>
-        <div class="card-body row">
-            {% if object.get_image_url != '' %}
-            <img class="col-md-4" src="{{ object.get_image_url }}"
-                 alt="Картинка услуги {{ object.label }}">
-            <div class="col-md-8 card-text p-3">
-            {% else %}
-            <div class="col-md-12 card-text p-3">
-            {% endif %}
-                {{ object.description }}
-            </div>
-        </div>
-        <div class="card-footer text-end">
-            <a class="card-link text-muted" href="{% url 'profile' object.provider.pk %}">
-                Поставщик ({{ object.provider }})
-            </a>
-        </div>
-    </div>
+    {% include 'base/service_wide_card.html' %}
     <div class="card mt-2 text-center border-3">
         <h2 class="card-header">Зелёным обозначены дни, в которые можно записаться</h2>
         <div class="card-body">

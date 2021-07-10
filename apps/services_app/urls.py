@@ -43,4 +43,9 @@ urlpatterns = [
         'my/notes/', service_views.MyServiceNotesListView.as_view(),
         name='my_notes'
     ),
+    path(
+        'my/notes/delete/<int:pk>/',
+        service_views.DeleteSingleServiceNoteView.as_view(),
+        name='delete_single_note'
+    ),
 ]

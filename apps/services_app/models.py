@@ -91,6 +91,11 @@ class ServiceNote(models.Model):
             'd': self.date.day,
         })
 
+    def get_delete_url(self):
+        return reverse_lazy('delete_single_note', kwargs={
+            'pk': self.pk,
+        })
+
 
 class ServiceNoteGenerationPattern(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
