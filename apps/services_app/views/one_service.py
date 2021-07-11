@@ -69,16 +69,17 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
 
     def get_patterns(self):
         patterns_with_urls = []
-        patterns_objects_list = service_models.ServiceNoteGenerationPattern.objects.filter(
-            user=self.request.user)
-        for pattern in patterns_objects_list:
-            pattern_dict = {
-                'object': pattern,
-                'execute_url': pattern.get_url(self.service, self.date,
-                                               'execute'),
-                'edit_url': pattern.get_url(self.service, self.date, 'edit'),
-            }
-            patterns_with_urls.append(pattern_dict)
+        if self.request.user.is_authenticated:
+            patterns_objects_list = service_models.ServiceNoteGenerationPattern.objects.filter(
+                user=self.request.user)
+            for pattern in patterns_objects_list:
+                pattern_dict = {
+                    'object': pattern,
+                    'execute_url': pattern.get_url(self.service, self.date,
+                                                   'execute'),
+                    'edit_url': pattern.get_url(self.service, self.date, 'edit'),
+                }
+                patterns_with_urls.append(pattern_dict)
         return patterns_with_urls
 
     def get_context_data(self, **kwargs):

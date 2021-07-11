@@ -1,23 +1,27 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand h1" href="{% url 'index' %}">Название</a>
-        <button class="navbar-toggler mb-2" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse row row-cols-1 row-cols-md-2 justify-content-between" id="navbarSupportedContent">
-            <div class="navbar-nav col md-justify-content-start">
+    <div class="container">
+        <div class="row row-cols-2 col-12 col-md-2 d-flex align-items-center">
+            <div class="col">
+                <a class="navbar-brand h1" href="{% url 'index' %}">Simple Notebook</a>
+            </div>
+            <button class="navbar-toggler border-2 col" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse row col-12 col-md-10 justify-content-between" id="navbarSupportedContent">
+            <div class="navbar-nav col-12 col-md-10 md-justify-content-start">
                 {% for link in menu %}
-                    <a class="nav-link" href="{{ link.url }}">{{ link.name }}</a>
+                    <a class="nav-link ms-3 ms-md-0" href="{{ link.url }}">{{ link.name }}</a>
                 {% endfor %}
             </div>
             {% if user.is_authenticated %}
-                <div class="text-end col">
+                <div class="text-end col-12 col-md-2">
                     <a class="btn btn-danger" href="{% url 'logout' %}">Выйти</a>
                 </div>
             {% else %}
-                <div class="col row row-cols-2 d-flex justify-content-end">
+                <div class="d-flex justify-content-end col-12 col-md-2 row row-cols-2">
                     <div class="text-center col">
                         <button class="btn btn-success" type="submit" data-target="#loginForm" data-toggle="modal">Вход</button>
                     </div>
