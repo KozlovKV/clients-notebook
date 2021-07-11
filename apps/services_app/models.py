@@ -25,9 +25,6 @@ class Service(models.Model):
             dates.add(note.date)
         return dates
 
-    def get_notes_by_date(self, date: datetime.date):
-        return self.notes.filter(date=date)
-
     def get_absolute_url(self):
         return reverse_lazy('one_service_calendar', kwargs={'pk': self.pk})
 

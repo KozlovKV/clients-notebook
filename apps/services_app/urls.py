@@ -22,6 +22,10 @@ urlpatterns = [
         service_views.CreateMultiServiceNoteView.as_view(), name='create_multi_note'
     ),
     path(
+        '<int:pk>/<int:Y>/<int:m>/<int:d>/delete/multi/',
+        service_views.DeleteMultiServiceNoteView.as_view(), name='delete_multi_note'
+    ),
+    path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/pattern/<int:pattern_pk>/execute/',
         service_views.MultiServiceNoteExecutePatternView.as_view(),
         name='pattern_execute'
