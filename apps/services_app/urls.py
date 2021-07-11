@@ -1,55 +1,56 @@
 from django.urls import path
 
-from apps.services_app import views as service_views
+import apps.services_app.views as service_views
+
 
 urlpatterns = [
-    path('list/', service_views.ServicesListView.as_view(), name='services_list'),
+    path('list/', service_views.lists.ServicesListView.as_view(), name='services_list'),
     path(
-        '<int:pk>/', service_views.OneServiceCalendarView.as_view(),
+        '<int:pk>/', service_views.one_service.OneServiceCalendarView.as_view(),
         name='one_service_calendar'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/',
-        service_views.OneServiceDayView.as_view(), name='one_service_day'
+        service_views.one_service.OneServiceDayView.as_view(), name='one_service_day'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/single/',
-        service_views.CreateSingleServiceNoteView.as_view(),
+        service_views.single_note.CreateSingleServiceNoteView.as_view(),
         name='create_single_note'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/',
-        service_views.CreateMultiServiceNoteView.as_view(), name='create_multi_note'
+        service_views.multi_notes.CreateMultiServiceNoteView.as_view(), name='create_multi_note'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/delete/multi/',
-        service_views.DeleteMultiServiceNoteView.as_view(), name='delete_multi_note'
+        service_views.multi_notes.DeleteMultiServiceNoteView.as_view(), name='delete_multi_note'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/pattern/<int:pattern_pk>/execute/',
-        service_views.MultiServiceNoteExecutePatternView.as_view(),
+        service_views.multi_notes_pattern.MultiServiceNoteExecutePatternView.as_view(),
         name='pattern_execute'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/pattern/<int:pattern_pk>/edit/',
-        service_views.MultiServiceNoteEditPatternView.as_view(),
+        service_views.multi_notes_pattern.MultiServiceNoteEditPatternView.as_view(),
         name='pattern_edit'
     ),
     path(
-        'my/services/', service_views.MyServicesListView.as_view(),
+        'my/services/', service_views.lists.MyServicesListView.as_view(),
         name='my_services'
     ),
     path(
-        'my/services/create/', service_views.CreateServiceView.as_view(),
+        'my/services/create/', service_views.one_service.CreateServiceView.as_view(),
         name='create_service'
     ),
     path(
-        'my/notes/', service_views.MyServiceNotesListView.as_view(),
+        'my/notes/', service_views.lists.MyServiceNotesListView.as_view(),
         name='my_notes'
     ),
     path(
         'my/notes/delete/<int:pk>/',
-        service_views.DeleteSingleServiceNoteView.as_view(),
+        service_views.single_note.DeleteSingleServiceNoteView.as_view(),
         name='delete_single_note'
     ),
 ]
