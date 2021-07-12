@@ -14,9 +14,7 @@
         </button>
     </div>
     <div class="card-body collapse row row-cols-1 g-3" id="me2other">
-        {% for notes_dict in me2other %}
-            {% include 'base/notes_collapsing_cards_by_statuses.html' %}
-        {% endfor %}
+        {% include 'base/notes_me2other.html' %}
     </div>
 </div>
 
@@ -28,9 +26,7 @@
         </button>
     </div>
     <div class="card-body collapse row row-cols-1 g-3" id="other2me">
-        {% for notes_dict in other2me %}
-            {% include 'base/notes_collapsing_cards_by_statuses.html' %}
-        {% endfor %}
+        {% include 'base/notes_other2me.html' %}
     </div>
 </div>
 {% endblock %}

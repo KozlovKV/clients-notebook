@@ -88,14 +88,16 @@
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
                                     {% for pattern in patterns %}
-                                        <li class="list-group-item">
-                                            <span>{{ pattern.object }}</span>
-                                            <a class="btn btn-success" href="{{ pattern.execute_url }}">
-                                                Использовать паттерн
-                                            </a>
-                                            <a class="btn btn-primary" href="{{ pattern.edit_url }}">
-                                                Редактировать в форме
-                                            </a>
+                                        <li class="list-group-item d-flex justify-content-between row row-cols-2">
+                                            <span class="col fs-5">{{ pattern.object }}</span>
+                                            <div class="col text-end">
+                                                <a class="btn btn-success" href="{{ pattern.execute_url }}">
+                                                    Использовать паттерн
+                                                </a>
+                                                <a class="btn btn-primary" href="{{ pattern.edit_url }}">
+                                                    Редактировать в форме
+                                                </a>
+                                            </div>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -108,7 +110,7 @@
                         <div class="card-header d-flex justify-content-between">         
                             <h3>Удалить все записи</h3>
                             <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#multiDelete">
-                                <i id="arrow" class="fs-3 fas fa-arrow-circle-down"></i>
+                                <i class="fs-3 fas fa-arrow-circle-down"></i>
                             </button>
                         </div>
                         <div class="card-body collapse" id="multiDelete">
