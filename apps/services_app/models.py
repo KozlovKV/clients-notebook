@@ -7,7 +7,7 @@ from django.db import models
 
 
 class Service(models.Model):
-    provider = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    provider = models.ForeignKey(User, on_delete=models.SET(-1))
     label = models.CharField(max_length=255)
     image = models.ImageField(upload_to='services_images/', blank=True, null=True)
     description = models.TextField()
@@ -36,8 +36,8 @@ class Service(models.Model):
 
 
 class ServiceNote(models.Model):
-    service = models.ForeignKey(Service, on_delete=models.DO_NOTHING)
-    client = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    client = models.ForeignKey(User, on_delete=models.SET(-1), blank=True, null=True)
     date = models.DateField()
     time_start = models.TimeField()
     time_end = models.TimeField()

@@ -46,16 +46,3 @@ class UserAdditionInfo(models.Model):
         if len(self.feedbacks) <= 0:
             return 0
         return sum([feedback.mark for feedback in self.feedbacks]) / len(self.feedbacks)
-
-
-class Feedback(models.Model):
-    service_note = models.OneToOneField(services_models.ServiceNote, on_delete=models.DO_NOTHING)
-    mark = models.IntegerField(
-        validators=[
-            validators.MinValueValidator(0), validators.MaxValueValidator(10)
-        ]
-    )
-    text = models.TextField()
-
-    def __str__(self):
-        return f'Feedback on {self.service_note} ({self.mark}/10)'

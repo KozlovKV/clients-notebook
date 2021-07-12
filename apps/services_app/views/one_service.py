@@ -54,9 +54,13 @@ class OneServiceCalendarView(BaseViewWithMenu, generic_detail_views.DetailView):
 
 
 class EditServiceView(OneServiceCalendarView, generic_edit_views.BaseUpdateView):
-    object = None
-    model = service_models.Service
     form_class = service_forms.ServiceForm
+
+
+class DeleteServiceView(OneServiceCalendarView, generic_edit_views.BaseDeleteView):
+    def get_success_url(self):
+        self.add_message('Услуга успешно удалена', messages.SUCCESS)
+        return reverse_lazy('my_services')
 
 
 class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):

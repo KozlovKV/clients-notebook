@@ -4,9 +4,9 @@
         {% if service.get_image_url != '' %}
         <img class="col-md-4" src="{{ service.get_image_url }}"
              alt="Картинка услуги {{ service.label }}">
-        <div class="col-md-8 card-text p-3">
+        <div class="col-md-8 card-text fs-4 p-3">
         {% else %}
-        <div class="col-md-12 card-text p-3">
+        <div class="col-md-12 card-text fs-4 p-3">
         {% endif %}
             {{ service.description }}
         </div>

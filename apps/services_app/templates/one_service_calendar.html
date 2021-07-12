@@ -62,7 +62,7 @@
                         </button>
                     </div>
                     <div class="card-body collapse" id="serviceDelete">
-                        <form class="text-center" action="" method="post">
+                        <form class="text-center" action="{% url 'delete_service' service.pk %}" method="post">
                             {% csrf_token %}
                             <button class="btn btn-danger" type="submit">Удалить</button>
                         </form>

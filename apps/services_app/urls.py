@@ -16,6 +16,10 @@ urlpatterns = [
         name='edit_service'
     ),
     path(
+        '<int:pk>/delete/', service_views.one_service.DeleteServiceView.as_view(),
+        name='delete_service'
+    ),
+    path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/',
         service_views.one_service.OneServiceDayView.as_view(),
         name='one_service_day'
