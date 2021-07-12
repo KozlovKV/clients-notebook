@@ -27,6 +27,50 @@
 
 {% block main_content %}
     {% include 'base/service_wide_card.html' %}
+    {% if service.provider == user %}
+        <div class="card mt-3 border-3">
+            <div class="card-header d-flex justify-content-between">
+                <h2>Управление услугой</h2>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#manageForms">
+                    <i id="arrow" class="fs-3 fas fa-arrow-circle-down"></i>
+                </button>
+            </div>
+            <div class="card-body collapse" id="manageForms">
+                <form class="card" method="post" action="{% url 'edit_service' service.pk %}" enctype="multipart/form-data">
+                    <div class="card-body row g-2">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <label class="form-label fs-5" for="id_{{ service_form.label.name }}">{{ service_form.label.label }}</label>
+                            {{ service_form.label }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fs-5" for="id_{{ service_form.image.name }}">{{ service_form.image.label }}</label>
+                            {{ service_form.image }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fs-5" for="id_{{ service_form.description.name }}">{{ service_form.description.label }}</label>
+                            {{ service_form.description }}
+                        </div>
+                        <input class="btn btn-success" type="submit" value="Изменить">
+                    </div>
+                </form>
+                <div class="card border-2 border-danger mt-3">
+                    <div class="card-header d-flex justify-content-between">
+                        <h3>Удалить услугу</h3>
+                        <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#serviceDelete">
+                            <i class="fs-3 fas fa-arrow-circle-down"></i>
+                        </button>
+                    </div>
+                    <div class="card-body collapse" id="serviceDelete">
+                        <form class="text-center" action="" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-danger" type="submit">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     <div class="card mt-2 text-center border-3">
         <h2 class="card-header">Зелёным обозначены дни, в которые можно записаться</h2>
         <div class="card-body">

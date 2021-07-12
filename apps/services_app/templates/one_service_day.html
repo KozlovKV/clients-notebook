@@ -111,13 +111,11 @@
                                 <i id="arrow" class="fs-3 fas fa-arrow-circle-down"></i>
                             </button>
                         </div>
-                        <div class="card-body row collapse" id="multiDelete">
-                            <div class="col">
-                                <form class="form text-center" action="{{ multi_delete_url }}" method="post">
-                                    {% csrf_token %}
-                                    <input class="btn btn-danger" type="submit" value="Удалить">
-                                </form>
-                            </div>
+                        <div class="card-body collapse" id="multiDelete">
+                            <form class=" text-center" action="{{ multi_delete_url }}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-danger" type="submit">Удалить</button>
+                            </form>
                         </div>
                     </div>
                 {% endif %}

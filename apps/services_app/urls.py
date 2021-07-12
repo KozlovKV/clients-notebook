@@ -12,6 +12,10 @@ urlpatterns = [
         name='one_service_calendar'
     ),
     path(
+        '<int:pk>/edit/', service_views.one_service.EditServiceView.as_view(),
+        name='edit_service'
+    ),
+    path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/',
         service_views.one_service.OneServiceDayView.as_view(),
         name='one_service_day'

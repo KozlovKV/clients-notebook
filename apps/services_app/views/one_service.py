@@ -15,7 +15,9 @@ class CreateServiceView(MyServicesListView, generic_edit_views.BaseCreateView):
     object = None
     model = service_models.Service
     form_class = service_forms.ServiceForm
-    success_url = reverse_lazy('my_services')
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -42,12 +44,19 @@ class OneServiceCalendarView(BaseViewWithMenu, generic_detail_views.DetailView):
             'dates_with_notes': self.get_dates_for_js(
                 self.object.get_dates_with_notes()
             ),
+            'service_form': service_forms.ServiceForm(instance=self.object),
         })
         return context
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super(OneServiceCalendarView, self).get(request, *args, **kwargs)
+
+
+class EditServiceView(OneServiceCalendarView, generic_edit_views.BaseUpdateView):
+    object = None
+    model = service_models.Service
+    form_class = service_forms.ServiceForm
 
 
 class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
