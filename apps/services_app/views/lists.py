@@ -1,18 +1,32 @@
 from django.urls import reverse_lazy
 from django.views.generic import list as generic_list_views
+from django.views.generic import edit as generic_edit_views
 
 from apps.front_app.views import BaseViewWithMenu
 from apps.services_app import models as service_models, forms as service_forms
 
 
-class ServicesListView(BaseViewWithMenu, generic_list_views.ListView):
+class ServicesListView(BaseViewWithMenu, generic_list_views.BaseListView,
+                       generic_edit_views.BaseFormView):
     template_name = 'services_list.html'
     object_list = []
     model = service_models.Service
+    form_class = service_forms.ServiceSearchForm
+    success_url = reverse_lazy('services_list')
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         return super(ServicesListView, self).get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        self.object_list = self.model.objects.filter(
+            label__icontains=data.get('label', ''),
+            description__icontains=data.get('description', ''),
+        )
+        self.add_message(f'Найдено совпадений: {len(self.object_list)}')
+        context = self.get_context_data(**self.kwargs)
+        return self.render_to_response(context, **self.kwargs)
 
 
 class MyServicesListView(BaseViewWithMenu, generic_list_views.ListView):

@@ -4,14 +4,17 @@ import apps.services_app.views as service_views
 
 
 urlpatterns = [
-    path('list/', service_views.lists.ServicesListView.as_view(), name='services_list'),
+    path(
+        'list/', service_views.lists.ServicesListView.as_view(),
+        name='services_list'),
     path(
         '<int:pk>/', service_views.one_service.OneServiceCalendarView.as_view(),
         name='one_service_calendar'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/',
-        service_views.one_service.OneServiceDayView.as_view(), name='one_service_day'
+        service_views.one_service.OneServiceDayView.as_view(),
+        name='one_service_day'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/single/',
@@ -20,11 +23,13 @@ urlpatterns = [
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/',
-        service_views.multi_notes.CreateMultiServiceNoteView.as_view(), name='create_multi_note'
+        service_views.multi_notes.CreateMultiServiceNoteView.as_view(),
+        name='create_multi_note'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/delete/multi/',
-        service_views.multi_notes.DeleteMultiServiceNoteView.as_view(), name='delete_multi_note'
+        service_views.multi_notes.DeleteMultiServiceNoteView.as_view(),
+        name='delete_multi_note'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/pattern/<int:pattern_pk>/execute/',

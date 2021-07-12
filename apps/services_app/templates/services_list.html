@@ -9,7 +9,18 @@
     <div class="card">
         <h2 class="card-header">Поиск</h2>
         <div class="card-body">
-            Условия для поиска...
+            <form class="row g-2" action="{% url 'services_list' %}" method="post">
+                {% csrf_token %}
+                <div class="col-md-6">
+                    <label class="form-label fs-5" for="id_{{ form.label.name }}">{{ form.label.label }}</label>
+                    {{ form.label }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fs-5" for="id_{{ form.description.name }}">{{ form.description.label }}</label>
+                    {{ form.description }}
+                </div>
+                    <button class="col-12 btn btn-primary" type="submit">Искать</button>
+            </form>
         </div>
     </div>
     <div class="card mt-3">

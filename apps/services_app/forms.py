@@ -33,6 +33,23 @@ class ServiceForm(forms.ModelForm):
         }
 
 
+class ServiceSearchForm(forms.Form):
+    label = forms.CharField(
+        label='Название', required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control-lg w-100',
+            'placeholder': 'Название',
+        })
+    )
+    description = forms.CharField(
+        label='Описание', required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control-lg w-100',
+            'placeholder': 'Описание',
+        })
+    )
+
+
 class SingleServiceNoteForm(forms.ModelForm):
     class Meta:
         model = service_models.ServiceNote
