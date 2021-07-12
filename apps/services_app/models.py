@@ -36,8 +36,9 @@ class Service(models.Model):
 
 
 class ServiceNote(models.Model):
+    provider = models.ForeignKey(User, on_delete=models.SET(-1), related_name='provider')
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    client = models.ForeignKey(User, on_delete=models.SET(-1), blank=True, null=True)
+    client = models.ForeignKey(User, on_delete=models.SET(-1), blank=True, null=True, related_name='client')
     date = models.DateField()
     time_start = models.TimeField()
     time_end = models.TimeField()
@@ -54,10 +55,10 @@ class ServiceNote(models.Model):
         (CANCELED, 'Отменено'),
     )
     STATUS_CSS_CLASSES = (
-        (EMPTY, 'text-success'),
-        (OCCUPIED, 'text-warning'),
-        (ENDED, 'text-secondary'),
-        (CANCELED, 'text-danger'),
+        (EMPTY, 'success'),
+        (OCCUPIED, 'warning'),
+        (ENDED, 'secondary'),
+        (CANCELED, 'danger'),
     )
     status = models.IntegerField(default=EMPTY, choices=STATUS_CHOICES)
 
@@ -132,8 +133,10 @@ class ServiceNoteGenerationPattern(models.Model):
 
     @staticmethod
     def create_single_note(service, date, start, end, addition=None):
-        obj = ServiceNote(service=service, date=date, addition=addition,
-                          time_start=start, time_end=end)
+        obj = ServiceNote(
+            provider=service.provider, service=service, date=date,
+            addition=addition, time_start=start, time_end=end
+        )
         obj.save()
 
     def generate_service_notes(self, service: Service, date: datetime.date):

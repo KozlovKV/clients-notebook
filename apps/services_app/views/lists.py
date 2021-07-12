@@ -61,17 +61,31 @@ class MyServicesListView(BaseViewWithMenu, generic_list_views.ListView):
 class MyServiceNotesListView(BaseViewWithMenu):
     template_name = 'my_notes.html'
 
+    @staticmethod
+    def get_status_divided_notes_dicts(notes):
+        notes_dicts = []
+        for status_id in range(len(service_models.ServiceNote.STATUS_CHOICES)):
+            status_type_dict = {
+                'name': service_models.ServiceNote.STATUS_CHOICES[status_id][1],
+                'class': service_models.ServiceNote.STATUS_CSS_CLASSES[status_id][1],
+                'list': notes.filter(
+                    status=service_models.ServiceNote.STATUS_CSS_CLASSES[status_id][0]
+                )
+            }
+            notes_dicts.append(status_type_dict)
+        return notes_dicts
+
     def get_notes_me2other(self):
-        return service_models.ServiceNote.objects.filter(
-            client=self.request.user)
+        notes = service_models.ServiceNote.objects.filter(
+            client=self.request.user
+        )
+        return self.get_status_divided_notes_dicts(notes)
 
     def get_notes_other2me(self):
-        my_services = service_models.Service.objects.filter(
-            provider=self.request.user)
-        notes = []
-        for service in my_services:
-            notes += service_models.ServiceNote.objects.filter(service=service)
-        return notes
+        notes = service_models.ServiceNote.objects.filter(
+            provider=self.request.user
+        )
+        return self.get_status_divided_notes_dicts(notes)
 
     def get_context_data(self, **kwargs):
         context = super(MyServiceNotesListView, self).get_context_data(**kwargs)

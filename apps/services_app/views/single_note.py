@@ -16,6 +16,7 @@ class CreateSingleServiceNoteView(OneServiceDayView,
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        self.object.provider = self.service.provider
         self.object.service = self.service
         self.object.date = self.date
         self.object.save()
