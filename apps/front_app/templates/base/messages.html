@@ -1,6 +1,6 @@
 {% if messages %}
     {% for message in messages %}
-        <div role="alert" class="alert alert-dismissible fade show {% if message.tags %}alert-{{ message.tags }} {% endif %}">
+        <div role="alert" class="mt-5 alert alert-dismissible fade show {% if message.tags %}alert-{{ message.tags }} {% endif %}">
             <div class="container d-flex justify-content-between align-items-center">
                 <strong class="fs-5">{{ message }}</strong>
                 <button type="button" class="btn btn-light border-dark border-1 close" data-dismiss="alert" aria-label="Закрыть сообщение">
