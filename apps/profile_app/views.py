@@ -4,6 +4,7 @@ from django.contrib import messages
 
 from django.contrib.auth.models import User
 import apps.profile_app.models as profile_models
+from apps.services_app import models as service_models
 
 from django.contrib.auth import views as auth_views
 from django.views.generic import edit as generic_edit_views
@@ -59,6 +60,15 @@ class ProfileView(generic_edit_views.UpdateView, BaseViewWithMenu):
     def get_success_url(self):
         self.add_message('Данные успешно изменены', messages.SUCCESS)
         return super(ProfileView, self).get_success_url()
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context.update({
+            'object_list': service_models.Service.objects.filter(
+                provider=self.object.user
+            )
+        })
+        return context
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()

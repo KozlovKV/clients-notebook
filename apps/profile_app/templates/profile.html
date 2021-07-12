@@ -34,7 +34,7 @@
                 {% csrf_token %}
                 {% for field in form %}
                     <div class="col-md-6">
-                        <label class="form-label fs-5" for="{{ field.name }}">{{ field.label }}</label>
+                        <label class="form-label fs-5" for="id_{{ field.name }}">{{ field.label }}</label>
                         {{ field }}
                     </div>
                 {% endfor %}
@@ -42,26 +42,8 @@
             </form>
         </div>
     {% endif %}
-    <div class="card border-3 border-warning m-md-4 mt-3">
-        <h2 class="card-header">Отзывы</h2>
-        <div class="card-body">
-            <div class="row g-3 justify-content-around">
-                {% for feedback in object.feedbacks %}
-                    <div class="col-md-4">
-                        <div class="card border-2">
-                            <div class="card-body">
-                                <p class="font-monospace fs-2 text-center">{{ feedback.mark }}/10</p>
-                                <p class="card-text">{{ feedback.text }}</p>
-                            </div>
-                            <div class="card-footer text-end">
-                                <a href="{{ feedback.service_note.service.get_absolute_url }}" class="text-muted">
-                                    {{ feedback.service_note.service.label }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
+    <div class="card border-3 m-md-4 mt-3">
+        <h2 class="card-header">Услуги пользователя</h2>
+        {% include 'base/services_list_card_body.html' %}
     </div>
 {% endblock %}
