@@ -46,17 +46,20 @@ class ServiceNote(models.Model):
     client_addition = models.CharField(max_length=255, blank=True, null=True)
 
     EMPTY = 0
-    OCCUPIED = 1
-    ENDED = 2
-    CANCELED = 3
+    NEED_APPROVE = 1
+    OCCUPIED = 2
+    ENDED = 3
+    CANCELED = 4
     STATUS_CHOICES = (
         (EMPTY, 'Свободно'),
-        (OCCUPIED, 'Заято'),
+        (NEED_APPROVE, 'Ожидает подтверждения'),
+        (OCCUPIED, 'Занято'),
         (ENDED, 'Прошло'),
         (CANCELED, 'Отменено'),
     )
     STATUS_CSS_CLASSES = (
         (EMPTY, 'success'),
+        (NEED_APPROVE, 'info'),
         (OCCUPIED, 'warning'),
         (ENDED, 'secondary'),
         (CANCELED, 'danger'),
@@ -141,7 +144,7 @@ class ServiceNoteGenerationPattern(models.Model):
     def create_single_note(service, date, start, end, addition=None):
         obj = ServiceNote(
             provider=service.provider, service=service, date=date,
-            addition=addition, time_start=start, time_end=end
+            provider_addition=addition, time_start=start, time_end=end
         )
         obj.save()
 

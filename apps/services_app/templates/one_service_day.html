@@ -142,20 +142,23 @@
                                         </li>
                                     {% endif %}
                                     <li class="list-group-item">
-                                        <span class="{{ object.status_css }}">{{ object.status_name }}</span>
+                                        <span class="fs-5 text-{{ object.status_css }}">{{ object.status_name }}</span>
                                     </li>
-                                    <li class="list-group-item">
-                                        <form method="post" action="{{ object.get_record_url }}">
-                                            <div class="row row-cols-1 g-2">
-                                                <div class="col">
-                                                    {{ record_form.client_addition }}
+                                    {% if object.is_free %}
+                                        <li class="list-group-item">
+                                            <form method="post" action="{{ object.get_record_url }}">
+                                                {% csrf_token %}
+                                                <div class="row row-cols-1 g-2">
+                                                    <div class="col">
+                                                        {{ record_form.client_addition }}
+                                                    </div>
+                                                    <div class="col text-center">
+                                                        <input class="btn btn-success" type="submit" value="Записаться">
+                                                    </div>
                                                 </div>
-                                                <div class="col text-center">
-                                                    <input class="btn btn-success" type="submit" value="Записаться">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </li>
+                                            </form>
+                                        </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                             {% if service.provider == user %}

@@ -68,7 +68,7 @@ urlpatterns = [
     ),
     path(
         'my/notes/record/<int:pk>/',
-        service_views.single_note.OneServiceDayView.as_view(),
+        service_views.single_note.RecordToServiceNoteView.as_view(),
         name='record_to_note'
     ),
 ]

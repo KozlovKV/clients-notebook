@@ -9,7 +9,6 @@ from apps.services_app.views.one_service import OneServiceDayView
 
 class CreateSingleServiceNoteView(OneServiceDayView,
                                   generic_edit_views.CreateView):
-    template_name = 'one_service_day.html'
     model = service_models.ServiceNote
     object = None
     form_class = service_forms.SingleServiceNoteForm
@@ -24,6 +23,28 @@ class CreateSingleServiceNoteView(OneServiceDayView,
         return super(CreateSingleServiceNoteView, self).form_valid(form)
 
 
+class RecordToServiceNoteView(BaseViewWithMenu,
+                              generic_edit_views.BaseUpdateView):
+    template_name = 'my_notes.html'
+    model = service_models.ServiceNote
+    object = None
+    form_class = service_forms.RecordServiceNoteForm
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        if self.request.user == self.object.provider:
+            self.object.status = self.model.OCCUPIED
+            self.add_message('Запись успешно произведена', messages.SUCCESS)
+        else:
+            self.object.status = self.model.NEED_APPROVE
+            self.add_message('Запись отправлена на одобрение поставщику', messages.INFO)
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class DeleteSingleServiceNoteView(BaseViewWithMenu,
                                   generic_edit_views.BaseDeleteView):
     template_name = 'my_notes.html'
@@ -35,7 +56,6 @@ class DeleteSingleServiceNoteView(BaseViewWithMenu,
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
-        success_url = self.get_success_url()
         if self.request.user == self.object.service.provider:
             self.object.delete()
             self.add_message('Запись успешно удалена', messages.SUCCESS)
@@ -44,4 +64,4 @@ class DeleteSingleServiceNoteView(BaseViewWithMenu,
                 'Вы не можете удалять записи, созданные другим пользователем',
                 messages.ERROR
             )
-        return HttpResponseRedirect(success_url)
+        return HttpResponseRedirect(self.get_success_url())
