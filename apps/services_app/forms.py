@@ -56,12 +56,12 @@ class SingleServiceNoteForm(forms.ModelForm):
         fields = [
             'time_start',
             'time_end',
-            'addition',
+            'provider_addition',
         ]
         labels = {
             'time_start': 'Время начала',
             'time_end': 'Время конца',
-            'addition': 'Дополнительная информация',
+            'provider_addition': 'Дополнительная информация',
         }
         widgets = {
             'time_start': forms.TimeInput(attrs={
@@ -72,7 +72,7 @@ class SingleServiceNoteForm(forms.ModelForm):
                 'type': 'time',
                 'class': 'form-control',
             }),
-            'addition': forms.Textarea(attrs={
+            'provider_addition': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 2,
                 'placeholder': 'Дополнительная информация',
@@ -113,4 +113,18 @@ class MultiServiceNoteForm(forms.ModelForm):
                 'rows': 2,
                 'placeholder': 'Дополнительная информация для всех карточек',
             }),
+        }
+
+
+class RecordServiceNoteForm(forms.ModelForm):
+    class Meta:
+        model = service_models.ServiceNote
+        fields = [
+            'client_addition'
+        ]
+        widgets = {
+            'client_addition': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Дополнительная информация для поставщика',
+            })
         }

@@ -42,7 +42,8 @@ class ServiceNote(models.Model):
     date = models.DateField()
     time_start = models.TimeField()
     time_end = models.TimeField()
-    addition = models.CharField(max_length=255, blank=True, null=True)
+    provider_addition = models.CharField(max_length=255, blank=True, null=True)
+    client_addition = models.CharField(max_length=255, blank=True, null=True)
 
     EMPTY = 0
     OCCUPIED = 1
@@ -91,6 +92,11 @@ class ServiceNote(models.Model):
 
     def get_delete_url(self):
         return reverse_lazy('delete_single_note', kwargs={
+            'pk': self.pk,
+        })
+
+    def get_record_url(self):
+        return reverse_lazy('record_to_note', kwargs={
             'pk': self.pk,
         })
 

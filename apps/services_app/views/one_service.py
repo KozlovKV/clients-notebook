@@ -53,11 +53,13 @@ class OneServiceCalendarView(BaseViewWithMenu, generic_detail_views.DetailView):
         return super(OneServiceCalendarView, self).get(request, *args, **kwargs)
 
 
-class EditServiceView(OneServiceCalendarView, generic_edit_views.BaseUpdateView):
+class EditServiceView(OneServiceCalendarView,
+                      generic_edit_views.BaseUpdateView):
     form_class = service_forms.ServiceForm
 
 
-class DeleteServiceView(OneServiceCalendarView, generic_edit_views.BaseDeleteView):
+class DeleteServiceView(OneServiceCalendarView,
+                        generic_edit_views.BaseDeleteView):
     def get_success_url(self):
         self.add_message('Услуга успешно удалена', messages.SUCCESS)
         return reverse_lazy('my_services')
@@ -90,7 +92,8 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
                     'object': pattern,
                     'execute_url': pattern.get_url(self.service, self.date,
                                                    'execute'),
-                    'edit_url': pattern.get_url(self.service, self.date, 'edit'),
+                    'edit_url': pattern.get_url(self.service, self.date,
+                                                'edit'),
                 }
                 patterns_with_urls.append(pattern_dict)
         return patterns_with_urls
@@ -107,11 +110,19 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
             'service': self.service,
             'date': self.date,
             'single_form': service_forms.SingleServiceNoteForm(),
-            'single_form_url': reverse_lazy('create_single_note', kwargs=base_url_kwargs),
+            'single_form_url': reverse_lazy('create_single_note',
+                                            kwargs=base_url_kwargs),
             'multi_form': service_forms.MultiServiceNoteForm(),
-            'multi_form_url': reverse_lazy('create_multi_note', kwargs=base_url_kwargs),
-            'multi_delete_url': reverse_lazy('delete_multi_note', kwargs=base_url_kwargs),
+            'multi_form_url': reverse_lazy('create_multi_note',
+                                           kwargs=base_url_kwargs),
+            'multi_delete_url': reverse_lazy('delete_multi_note',
+                                             kwargs=base_url_kwargs),
             'patterns': self.get_patterns(),
+            'record_form': service_forms.RecordServiceNoteForm(initial={
+                'provider_addition':
+                    self.request.user.get_full_name() if
+                    self.request.user.is_authenticated else '',
+            }),
         })
         return context
 

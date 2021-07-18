@@ -31,8 +31,8 @@
                                     {{ single_form.time_end }}
                                 </div>
                             </div>
-                            <label class="form-label fs-6" for="id_{{ single_form.addition.name }}">{{ single_form.addition.label }}</label>
-                            {{ single_form.addition }}
+                            <label class="form-label fs-6" for="id_{{ single_form.provider_addition.name }}">{{ single_form.provider_addition.label }}</label>
+                            {{ single_form.provider_addition }}
                         </div>
                         <div class="card-footer text-center">
                             <input class="btn btn-success" type="submit" value="Добавить">
@@ -136,20 +136,19 @@
                             </h3>
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
-                                    {% if object.addition is not None %}
+                                    {% if object.provider_addition is not None %}
                                         <li class="list-group-item">
-                                            <span>{{ object.addition }}</span>
+                                            <span>{{ object.provider_addition }}</span>
                                         </li>
                                     {% endif %}
                                     <li class="list-group-item">
                                         <span class="{{ object.status_css }}">{{ object.status_name }}</span>
                                     </li>
                                     <li class="list-group-item">
-                                        <form method="post" action="">
+                                        <form method="post" action="{{ object.get_record_url }}">
                                             <div class="row row-cols-1 g-2">
                                                 <div class="col">
-                                                    <input class="form-control" type="text" name="additional_info"
-                                                        placeholder="Дополнительная информация для поставщика">
+                                                    {{ record_form.client_addition }}
                                                 </div>
                                                 <div class="col text-center">
                                                     <input class="btn btn-success" type="submit" value="Записаться">
