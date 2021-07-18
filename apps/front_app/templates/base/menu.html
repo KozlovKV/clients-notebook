@@ -23,14 +23,14 @@
             {% else %}
                 <div class="d-flex justify-content-end col-12 col-md-2 row row-cols-2">
                     <div class="text-center col">
-                        <button class="btn btn-success" type="submit" data-target="#loginForm" data-toggle="modal">Вход</button>
+                        <button class="btn btn-success" type="button" data-target="#loginForm" data-toggle="modal">Вход</button>
                     </div>
                     <div class="text-center col">
                         <a class="btn btn-warning" href="{% url 'register' %}">Регистрация</a>
                     </div>
                 </div>
-                {% include 'auth/login_form_modal.html' %}
             {% endif %}
         </div>
     </div>
 </nav>
+{% include 'auth/login_form_modal.html' %}
