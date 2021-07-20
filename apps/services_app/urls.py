@@ -71,4 +71,14 @@ urlpatterns = [
         service_views.single_note.RecordToServiceNoteView.as_view(),
         name='record_to_note'
     ),
+    path(
+        'my/notes/approve/<int:pk>/',
+        service_views.single_note.ApproveServiceNoteView.as_view(),
+        name='approve_record_to_note'
+    ),
+    path(
+        'my/notes/cancel/<int:pk>/',
+        service_views.single_note.CancelServiceNoteView.as_view(),
+        name='cancel_record_to_note'
+    ),
 ]

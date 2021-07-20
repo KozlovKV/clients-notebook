@@ -66,10 +66,11 @@ class ServiceNote(models.Model):
     status = models.IntegerField(default=EMPTY, choices=STATUS_CHOICES)
 
     def set_status(self, new_status):
-        if self.date >= timezone.now():
+        if self.date >= timezone.now().date():
             self.status = new_status
         else:
             self.status = self.ENDED
+        self.save()
 
     @property
     def status_name(self):
@@ -94,6 +95,9 @@ class ServiceNote(models.Model):
             self.set_status(self.OCCUPIED)
         else:
             raise PermissionDenied()
+
+    def can_be_canceled(self):
+        return self.status == self.OCCUPIED
 
     def cancel(self, user):
         if user == self.provider or user == self.client:
@@ -121,6 +125,16 @@ class ServiceNote(models.Model):
 
     def get_record_url(self):
         return reverse_lazy('record_to_note', kwargs={
+            'pk': self.pk,
+        })
+
+    def get_approve_url(self):
+        return reverse_lazy('approve_record_to_note', kwargs={
+            'pk': self.pk,
+        })
+
+    def get_cancel_url(self):
+        return reverse_lazy('cancel_record_to_note', kwargs={
             'pk': self.pk,
         })
 

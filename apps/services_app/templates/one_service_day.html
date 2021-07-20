@@ -163,10 +163,24 @@
                             </div>
                             {% if service.provider == user %}
                                 <div class="card-footer text-center">
-                                    <form method="post" action="{{ object.get_delete_url }}">
-                                        {% csrf_token %}
-                                        <input class="btn btn-danger" type="submit" value="Удалить запись">
-                                    </form>
+                                    <div class="row row-cols-md-3">
+                                        <form class="col" method="post" action="{{ object.get_delete_url }}">
+                                            {% csrf_token %}
+                                            <input class="btn btn-danger" type="submit" value="Удалить запись">
+                                        </form>
+                                        {% if object.is_need_approve %}
+                                        <form class="col" method="post" action="{{ object.get_approve_url }}">
+                                            {% csrf_token %}
+                                            <input class="btn btn-info" type="submit" value="Подтвердить запись пользователя">
+                                        </form>
+                                        {% endif %}
+                                        {% if object.can_be_canceled %}
+                                        <form class="col" method="post" action="{{ object.get_cancel_url }}">
+                                            {% csrf_token %}
+                                            <input class="btn btn-warning" type="submit" value="Отменить запись пользователя">
+                                        </form>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             {% endif %}
                         </div>

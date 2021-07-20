@@ -23,15 +23,19 @@ class CreateSingleServiceNoteView(OneServiceDayView,
         return super(CreateSingleServiceNoteView, self).form_valid(form)
 
 
-class RecordToServiceNoteView(BaseViewWithMenu,
-                              generic_edit_views.BaseUpdateView):
-    template_name = 'my_notes.html'
+class BaseServiceNoteEditView(BaseViewWithMenu,
+                              generic_edit_views.BaseDetailView):
+    template_name = 'index.html'
     model = service_models.ServiceNote
     object = None
-    form_class = service_forms.RecordServiceNoteForm
 
     def get_success_url(self):
         return self.object.get_absolute_url()
+
+
+class RecordToServiceNoteView(BaseServiceNoteEditView,
+                              generic_edit_views.BaseUpdateView):
+    form_class = service_forms.RecordServiceNoteForm
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -40,20 +44,28 @@ class RecordToServiceNoteView(BaseViewWithMenu,
             self.add_message('Запись успешно произведена', messages.SUCCESS)
         else:
             self.object.status = self.model.NEED_APPROVE
-            self.add_message('Запись отправлена на одобрение поставщику', messages.INFO)
+            self.add_message('Запись отправлена на одобрение поставщику',
+                             messages.INFO)
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
 
-class DeleteSingleServiceNoteView(BaseViewWithMenu,
-                                  generic_edit_views.BaseDeleteView):
-    template_name = 'my_notes.html'
-    model = service_models.ServiceNote
-    object = None
+class ApproveServiceNoteView(BaseServiceNoteEditView):
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.approve(self.request.user)
+        return HttpResponseRedirect(self.get_success_url())
 
-    def get_success_url(self):
-        return self.object.get_absolute_url()
 
+class CancelServiceNoteView(BaseServiceNoteEditView,
+                            generic_edit_views.BaseDetailView):
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.cancel(self.request.user)
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class DeleteSingleServiceNoteView(BaseServiceNoteEditView):
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         if self.request.user == self.object.service.provider:
