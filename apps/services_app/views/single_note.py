@@ -43,6 +43,8 @@ class RecordToServiceNoteView(BaseServiceNoteEditView,
             self.object.status = self.model.OCCUPIED
             self.add_message('Запись успешно произведена', messages.SUCCESS)
         else:
+            if self.request.user.is_authenticated:
+                self.object.client = self.request.user
             self.object.status = self.model.NEED_APPROVE
             self.add_message('Запись отправлена на одобрение поставщику',
                              messages.INFO)

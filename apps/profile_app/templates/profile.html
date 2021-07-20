@@ -16,8 +16,9 @@
                 <div class="card-body">
                     <p class="list-group-item">{{ object.user.get_full_name }}</p>
                     <p class="font-monospace list-group-item">{{ object.user.email }}</p>
-                    <p class="font-monospace list-group-item">Средняя оценка - {{ object.avg_mark }}/10</p>
-                    <p class="list-group-item">{{ object.about }}</p>
+                    {% if object.about %}
+                        <p class="list-group-item">{{ object.about }}</p>
+                    {% endif %}
                     <div class="list-group-item">
                         <a href="#" class="btn btn-success fs-4">
                             Посмотреть услуги пользователя <i class="fas fa-arrow-alt-circle-right"></i>

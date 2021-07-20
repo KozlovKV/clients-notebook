@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 import apps.services_app.models as services_models
 
 from django.db import models
-from django.core import validators
 from django.urls import reverse_lazy
 
 
@@ -33,16 +32,3 @@ class UserAdditionInfo(models.Model):
         for service in self.services:
             notes += services_models.ServiceNote.objects.filter(service=service)
         return notes
-
-    @property
-    def feedbacks(self):
-        feedbacks = []
-        for note in self.service_notes:
-            feedbacks += Feedback.objects.filter(service_note=note)
-        return feedbacks
-
-    @property
-    def avg_mark(self):
-        if len(self.feedbacks) <= 0:
-            return 0
-        return sum([feedback.mark for feedback in self.feedbacks]) / len(self.feedbacks)

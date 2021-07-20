@@ -25,7 +25,10 @@ class BaseViewWithMenu(TemplateView):
         ]
         if self.request.user.is_authenticated:
             links += [
-                self.get_link_dict('profile', 'Личный кабинет', {'pk': self.request.user.pk}),
+                self.get_link_dict(
+                    'profile', f'Личный кабинет ({self.request.user})',
+                    {'pk': self.request.user.pk}
+                ),
                 self.get_link_dict('my_services', 'Мои услуги'),
                 self.get_link_dict('my_notes', 'Мои записи'),
             ]
