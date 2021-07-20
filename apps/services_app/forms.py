@@ -125,6 +125,6 @@ class RecordServiceNoteForm(forms.ModelForm):
         widgets = {
             'client_addition': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Дополнительная информация для поставщика',
+                'placeholder': 'Дополнительная информация',
             })
         }
