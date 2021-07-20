@@ -90,7 +90,7 @@ class MyServiceNotesListView(BaseViewWithMenu):
     def get_context_data(self, **kwargs):
         context = super(MyServiceNotesListView, self).get_context_data(**kwargs)
         context.update({
-            'me2other': self.get_notes_me2other(),
+            'object_list': self.get_notes_me2other(),
             'other2me': self.get_notes_other2me(),
         })
         return context
