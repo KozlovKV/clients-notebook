@@ -1,6 +1,8 @@
 import datetime
 
 from django.urls import reverse_lazy
+from django.utils import timezone
+from django.core.exceptions import PermissionDenied
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -49,22 +51,25 @@ class ServiceNote(models.Model):
     NEED_APPROVE = 1
     OCCUPIED = 2
     ENDED = 3
-    CANCELED = 4
     STATUS_CHOICES = (
         (EMPTY, 'Свободно'),
         (NEED_APPROVE, 'Ожидает подтверждения'),
         (OCCUPIED, 'Занято'),
         (ENDED, 'Прошло'),
-        (CANCELED, 'Отменено'),
     )
     STATUS_CSS_CLASSES = (
         (EMPTY, 'success'),
         (NEED_APPROVE, 'info'),
         (OCCUPIED, 'warning'),
         (ENDED, 'secondary'),
-        (CANCELED, 'danger'),
     )
     status = models.IntegerField(default=EMPTY, choices=STATUS_CHOICES)
+
+    def set_status(self, new_status):
+        if self.date >= timezone.now():
+            self.status = new_status
+        else:
+            self.status = self.ENDED
 
     @property
     def status_name(self):
@@ -80,6 +85,22 @@ class ServiceNote(models.Model):
 
     def is_free(self):
         return self.status == self.EMPTY
+
+    def is_need_approve(self):
+        return self.status == self.NEED_APPROVE
+
+    def approve(self, user):
+        if user == self.provider:
+            self.set_status(self.OCCUPIED)
+        else:
+            raise PermissionDenied()
+
+    def cancel(self, user):
+        if user == self.provider or user == self.client:
+            self.client = None
+            self.set_status(self.EMPTY)
+        else:
+            raise PermissionDenied()
 
     def __str__(self):
         return f'{self.service} for {self.client} at {self.date}, {self.time_start}-{self.time_end} ' \
