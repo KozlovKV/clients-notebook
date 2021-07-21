@@ -97,7 +97,7 @@ class ServiceNote(models.Model):
             raise PermissionDenied()
 
     def can_be_canceled(self):
-        return self.status == self.OCCUPIED
+        return self.status in [self.OCCUPIED, self.NEED_APPROVE]
 
     def cancel(self, user):
         if user == self.provider or user == self.client:

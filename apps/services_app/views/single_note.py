@@ -59,8 +59,7 @@ class ApproveServiceNoteView(BaseServiceNoteEditView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class CancelServiceNoteView(BaseServiceNoteEditView,
-                            generic_edit_views.BaseDetailView):
+class CancelServiceNoteView(BaseServiceNoteEditView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.cancel(self.request.user)
