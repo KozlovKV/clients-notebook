@@ -87,6 +87,15 @@ class ServiceNote(models.Model):
     def is_free(self):
         return self.status == self.EMPTY
 
+    def record(self, client, client_addition=None):
+        self.client_addition = client_addition
+        if client == self.provider:
+            self.set_status(self.OCCUPIED)
+        else:
+            if client.is_authenticated:
+                self.client = client
+            self.set_status(self.NEED_APPROVE)
+
     def is_need_approve(self):
         return self.status == self.NEED_APPROVE
 

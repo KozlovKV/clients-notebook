@@ -32,43 +32,54 @@ class BaseServiceNoteEditView(BaseViewWithMenu,
     def get_success_url(self):
         return self.object.get_absolute_url()
 
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class RecordToServiceNoteView(BaseServiceNoteEditView,
-                              generic_edit_views.BaseUpdateView):
+                              generic_edit_views.BaseFormView):
     form_class = service_forms.RecordServiceNoteForm
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        if self.request.user == self.object.provider:
-            self.object.status = self.model.OCCUPIED
+        self.object.record(
+            self.request.user, form.cleaned_data['client_addition']
+        )
+        if self.object.status == service_models.ServiceNote.OCCUPIED:
             self.add_message('Запись успешно произведена', messages.SUCCESS)
         else:
-            if self.request.user.is_authenticated:
-                self.object.client = self.request.user
-            self.object.status = self.model.NEED_APPROVE
             self.add_message('Запись отправлена на одобрение поставщику',
                              messages.INFO)
-        self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 
 class ApproveServiceNoteView(BaseServiceNoteEditView):
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        resp = super(ApproveServiceNoteView, self).post(request, *args, **kwargs)
         self.object.approve(self.request.user)
-        return HttpResponseRedirect(self.get_success_url())
+        self.add_message('Запись успешно произведена', messages.SUCCESS)
+        return resp
 
 
 class CancelServiceNoteView(BaseServiceNoteEditView):
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        resp = super(CancelServiceNoteView, self).post(request, *args, **kwargs)
         self.object.cancel(self.request.user)
-        return HttpResponseRedirect(self.get_success_url())
+        self.add_message('Запись успешно отменена', messages.SUCCESS)
+        return resp
 
 
 class DeleteSingleServiceNoteView(BaseServiceNoteEditView):
     def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        resp = super(DeleteSingleServiceNoteView, self).post(request, *args, **kwargs)
         if self.request.user == self.object.service.provider:
             self.object.delete()
             self.add_message('Запись успешно удалена', messages.SUCCESS)
@@ -77,4 +88,4 @@ class DeleteSingleServiceNoteView(BaseServiceNoteEditView):
                 'Вы не можете удалять записи, созданные другим пользователем',
                 messages.ERROR
             )
-        return HttpResponseRedirect(self.get_success_url())
+        return resp

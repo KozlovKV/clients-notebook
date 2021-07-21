@@ -26,7 +26,7 @@ urlpatterns = [
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/single/',
-        service_views.single_note.CreateSingleServiceNoteView.as_view(),
+        service_views.one_note.CreateSingleServiceNoteView.as_view(),
         name='create_single_note'
     ),
     path(
@@ -63,22 +63,22 @@ urlpatterns = [
     ),
     path(
         'my/notes/delete/<int:pk>/',
-        service_views.single_note.DeleteSingleServiceNoteView.as_view(),
+        service_views.one_note.DeleteSingleServiceNoteView.as_view(),
         name='delete_single_note'
     ),
     path(
         'my/notes/record/<int:pk>/',
-        service_views.single_note.RecordToServiceNoteView.as_view(),
+        service_views.one_note.RecordToServiceNoteView.as_view(),
         name='record_to_note'
     ),
     path(
         'my/notes/approve/<int:pk>/',
-        service_views.single_note.ApproveServiceNoteView.as_view(),
+        service_views.one_note.ApproveServiceNoteView.as_view(),
         name='approve_record_to_note'
     ),
     path(
         'my/notes/cancel/<int:pk>/',
-        service_views.single_note.CancelServiceNoteView.as_view(),
+        service_views.one_note.CancelServiceNoteView.as_view(),
         name='cancel_record_to_note'
     ),
 ]
