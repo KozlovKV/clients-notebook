@@ -23,7 +23,7 @@ reg_patterns = [
     path(
         'activate/complete/',
         BaseViewWithMenu.as_view(
-            template_name='registration/activation_complete.html'
+            template_name='django_registration/activation_complete.html'
         ),
         name='django_registration_activation_complete',
     ),
@@ -45,7 +45,7 @@ reg_patterns = [
     path(
         'register/closed/',
         BaseViewWithMenu.as_view(
-            template_name='registration/registration_closed.html'
+            template_name='django_registration/registration_closed.html'
         ),
         name='django_registration_disallowed',
     ),

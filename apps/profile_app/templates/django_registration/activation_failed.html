@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    Ошибка активации
+{% endblock %}
+
+{% block main_content %}
+    <div class="card border-2 border-danger m-5">
+        <h1 class="card-header text-center">При активации произошла ошибка</h1>
+        <h3 class="card-body">{{ activation_error.message }}</h3>
+        <div class="card-footer row g-2 text-center justify-content-around">
+            <div class="col-md-4">
+                <a class="btn btn-primary w-100" href="{% url 'index' %}">На главную</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -21,9 +21,9 @@ class LoginViewModified(auth_views.LoginView, BaseViewWithMenu):
 
 
 class RegistrationViewModified(reg_activation_views.RegistrationView, BaseViewWithMenu):
-    email_subject_template = 'registration/activation_email_subject.txt'
-    email_body_template = 'registration/activation_email_body.txt'
-    template_name = 'registration/register.html'
+    email_subject_template = 'django_registration/activation_email_subject.txt'
+    email_body_template = 'django_registration/activation_email_body.txt'
+    template_name = 'django_registration/register.html'
     form_class = profile_forms.RegistrationFormUniqueEmailModified
 
     def register(self, form):
