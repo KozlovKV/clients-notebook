@@ -4,6 +4,19 @@
 {% endblock %}
 
 {% block main_content %}
-    <h1 class="text-center m-5">Регистрация почти завершена!</h1>
-    <h2>Для заврешения подтвердите указанный при регистрации адерс электронной почты через высланное на него письмо</h2>
+    <div class="card m-5">
+        <h1 class="card-header text-center">Регистрация прошла успешно</h1>
+        <h2 class="card-body">Поздравляю, теперь вам доступен весь функционал сайта</h2>
+        <div class="card-footer row g-2 text-center justify-content-around">
+            <div class="col-md-4">
+                <a class="btn btn-primary w-100" href="{% url 'index' %}">На главную</a>
+            </div>
+            <div class="col-md-4">
+                <a class="btn btn-success w-100" href="#">Мой профиль</a>
+            </div>
+            <div class="col-md-4">
+                <a class="btn btn-primary w-100" href="#">Мои услуги</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -30,7 +30,7 @@ class BaseViewWithMenu(TemplateView):
                     {'pk': self.request.user.pk}
                 ),
                 self.get_link_dict('my_services', 'Мои услуги'),
-                self.get_link_dict('my_notes', 'Мои записи'),
+                self.get_link_dict('my_notes', 'Я записан'),
             ]
         return links
 

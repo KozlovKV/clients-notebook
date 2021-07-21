@@ -39,9 +39,7 @@ reg_patterns = [
     ),
     path(
         'register/complete/',
-        BaseViewWithMenu.as_view(
-            template_name='registration/registration_complete.html'
-        ),
+        profile_views.RegistrationCompleteView.as_view(),
         name='django_registration_complete',
     ),
     path(

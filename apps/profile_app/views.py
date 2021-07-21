@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 
@@ -43,8 +44,14 @@ class RegistrationViewModified(reg_activation_views.RegistrationView, BaseViewWi
         return resp
 
 
+class RegistrationCompleteView(BaseViewWithMenu):
+    def get(self, request, *args, **kwargs):
+        self.add_message('Для заврешения регистрации подтвердите указанный при регистрации адерс электронной почты через высланное на него письмо', messages.INFO)
+        return HttpResponseRedirect(reverse_lazy('index'))
+
+
 class ActivationViewModified(reg_activation_views.ActivationView, BaseViewWithMenu):
-    success_url = reverse_lazy('django_registration_complete')
+    success_url = reverse_lazy('django_activation_complete')
 
 
 class ProfileView(generic_edit_views.UpdateView, BaseViewWithMenu):
