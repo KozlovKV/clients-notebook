@@ -1,5 +1,7 @@
 from typing import List
 
+import requests
+from django.core.serializers import json
 from django.urls import reverse
 import django.contrib.messages as messages
 
@@ -9,7 +11,17 @@ import apps.profile_app.forms as profile_forms
 
 
 class BaseViewWithMenu(TemplateView):
+    THEME = 'Darkly'  # more - https://bootswatch.com/
+    THEMES_JSON_URL = 'https://bootswatch.com/api/5.json'
     message_list = []
+
+    @staticmethod
+    def get_theme_css_url():
+        json_request = requests.get(BaseViewWithMenu.THEMES_JSON_URL).json()
+        for theme in json_request['themes']:
+            if theme['name'] == BaseViewWithMenu.THEME:
+                return theme['css']
+        return ''
 
     @staticmethod
     def get_link_dict(url_name: str, human_name: str, kwargs: dict = {}) -> dict:
@@ -39,9 +51,12 @@ class BaseViewWithMenu(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(BaseViewWithMenu, self).get_context_data(**kwargs)
-        context['menu'] = self.get_menu()
-        context['login_form'] = profile_forms.AuthenticationFormModified()
-        context['messages'] = messages.get_messages(self.request)
+        context.update({
+            'theme_css_url': self.get_theme_css_url(),
+            'menu': self.get_menu(),
+            'login_form': profile_forms.AuthenticationFormModified(),
+            'messages': messages.get_messages(self.request),
+        })
         return context
 
 
