@@ -102,6 +102,7 @@ class ServiceNote(models.Model):
     def cancel(self, user):
         if user == self.provider or user == self.client:
             self.client = None
+            self.client_addition = None
             self.set_status(self.EMPTY)
         else:
             raise PermissionDenied()

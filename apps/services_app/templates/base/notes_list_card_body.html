@@ -13,67 +13,7 @@
                     <div class="row row-cols-1 row-cols-md-3 g-2 g-md-3 justify-content-around">
                         {% for note in notes_dict.list %}
                             <div class="col">
-                                <div class="card border-2">
-                                    <h3 class="card-header font-monospace">
-                                        {{ note.time_start }} - {{ note.time_end }}
-                                    </h3>
-                                    <div class="card-body">
-                                        <ul class="list-group list-group-flush">
-                                            {% if note.provider_addition is not None %}
-                                                <li class="list-group-item">
-                                                    <span>{{ note.provider_addition }}</span>
-                                                </li>
-                                            {% endif %}
-                                            <li class="list-group-item">
-                                                <span class="fs-5 text-{{ note.status_css }}">{{ note.status_name }}</span>
-                                            </li>
-                                            {% if not service %}
-                                                <li class="list-group-item">
-                                                    <a class="link font-monospace" href="{{ note.get_absolute_url }}">
-                                                        {{ note.service }}, {{ note.date }}
-                                                    </a>
-                                                </li>
-                                            {% endif %}
-                                            {% if note.is_free %}
-                                                <li class="list-group-item">
-                                                    <form method="post" action="{{ note.get_record_url }}">
-                                                        {% csrf_token %}
-                                                        <div class="row row-cols-1 g-2">
-                                                            <div class="col">
-                                                                {{ record_form.client_addition }}
-                                                            </div>
-                                                            <div class="col text-center">
-                                                                <input class="btn btn-success" type="submit" value="Записаться">
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </li>
-                                            {% endif %}
-                                        </ul>
-                                    </div>
-                                    {% if note.provider == user %}
-                                        <div class="card-footer text-center">
-                                            <div class="row row-cols-md-3">
-                                                <form class="col" method="post" action="{{ note.get_delete_url }}">
-                                                    {% csrf_token %}
-                                                    <input class="btn btn-danger" type="submit" value="Удалить запись">
-                                                </form>
-                                                {% if note.is_need_approve %}
-                                                <form class="col" method="post" action="{{ note.get_approve_url }}">
-                                                    {% csrf_token %}
-                                                    <input class="btn btn-info" type="submit" value="Подтвердить запись пользователя">
-                                                </form>
-                                                {% endif %}
-                                                {% if note.can_be_canceled %}
-                                                <form class="col" method="post" action="{{ note.get_cancel_url }}">
-                                                    {% csrf_token %}
-                                                    <input class="btn btn-warning" type="submit" value="Отменить запись пользователя">
-                                                </form>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                </div>
+                                {% include 'base/one_note_card.html' %}
                             </div>
                         {% endfor %}
                     </div>
