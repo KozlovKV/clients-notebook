@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import edit as generic_edit_views, \
     detail as generic_detail_views, list as generic_list_views
 
-from apps.front_app.views import BaseViewWithMenu
+from apps.front_app.views import BaseDetailedView
 from apps.services_app import models as service_models, forms as service_forms
 from apps.services_app.views.lists import MyServicesListView, \
     MyServiceNotesListView
@@ -28,7 +28,7 @@ class CreateServiceView(MyServicesListView, generic_edit_views.BaseCreateView):
         return super(CreateServiceView, self).form_valid(form)
 
 
-class OneServiceCalendarView(BaseViewWithMenu, generic_detail_views.DetailView):
+class OneServiceCalendarView(BaseDetailedView, generic_detail_views.DetailView):
     template_name = 'one_service_calendar.html'
     object = None
     model = service_models.Service
@@ -66,7 +66,7 @@ class DeleteServiceView(OneServiceCalendarView,
         return reverse_lazy('my_services')
 
 
-class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
+class OneServiceDayView(BaseDetailedView, generic_list_views.ListView):
     template_name = 'one_service_day.html'
     object_list = []
     base_url_kwargs = {}

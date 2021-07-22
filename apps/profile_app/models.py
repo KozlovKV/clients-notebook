@@ -11,7 +11,7 @@ class UserAdditionInfo(models.Model):
     avatar = models.ImageField(upload_to='users_avatars/', blank=True, null=True)
 
     def __str__(self):
-        return f'{self.user} - addition'
+        return f'{self.user} - дополнительная информация'
 
     def get_absolute_url(self):
         return reverse_lazy('profile', kwargs={'pk': self.pk})

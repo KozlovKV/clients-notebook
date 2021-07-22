@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth import forms as auth_forms, password_validation
 from django_registration import forms as reg_forms
 
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class EditProfileForm(forms.ModelForm):
@@ -27,7 +27,7 @@ class EditProfileForm(forms.ModelForm):
         }
 
 
-class AuthenticationFormModified(auth_forms.AuthenticationForm):
+class AuthForm(auth_forms.AuthenticationForm):
     username = auth_forms.UsernameField(
         widget=forms.TextInput(
             attrs={
@@ -49,7 +49,7 @@ class AuthenticationFormModified(auth_forms.AuthenticationForm):
     )
 
 
-class SetPasswordFormModified(auth_forms.SetPasswordForm):
+class SetPasswordForm(auth_forms.SetPasswordForm):
     new_password1 = forms.CharField(
         label=_('New password'),
         widget=forms.PasswordInput(attrs={
@@ -71,7 +71,7 @@ class SetPasswordFormModified(auth_forms.SetPasswordForm):
     )
 
 
-class PasswordChangeFormModified(SetPasswordFormModified):
+class PasswordChangeForm(SetPasswordForm):
     old_password = forms.CharField(
         label=_('Old password'),
         strip=False,
@@ -96,7 +96,7 @@ class PasswordResetForm(auth_forms.PasswordResetForm):
     )
 
 
-class RegistrationFormUniqueEmailModified(reg_forms.RegistrationFormUniqueEmail):
+class RegistrationFormUniqueEmail(reg_forms.RegistrationFormUniqueEmail):
     class Meta(reg_forms.RegistrationFormUniqueEmail.Meta):
         fields = [
             'first_name',

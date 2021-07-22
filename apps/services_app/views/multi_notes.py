@@ -7,7 +7,7 @@ from apps.services_app import forms as service_forms
 from apps.services_app.views.one_service import OneServiceDayView
 
 
-class CreateMultiServiceNoteView(OneServiceDayView,
+class MultiServiceNoteCreateView(OneServiceDayView,
                                  generic_edit_views.BaseFormView):
     template_name = 'one_service_day.html'
     form_class = service_forms.MultiServiceNoteForm
@@ -19,7 +19,7 @@ class CreateMultiServiceNoteView(OneServiceDayView,
             pattern.save()
         pattern.generate_service_notes(self.service, self.date)
         self.add_message('Записи успешно созданы', messages.SUCCESS)
-        return super(CreateMultiServiceNoteView, self).form_valid(form)
+        return super(MultiServiceNoteCreateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('one_service_day', args=(
@@ -28,7 +28,7 @@ class CreateMultiServiceNoteView(OneServiceDayView,
         ))
 
 
-class DeleteMultiServiceNoteView(OneServiceDayView):
+class MultiServiceNoteDeleteView(OneServiceDayView):
     template_name = 'one_service_day.html'
 
     def delete(self, request, *args, **kwargs):

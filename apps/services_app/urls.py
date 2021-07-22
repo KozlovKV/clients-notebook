@@ -26,27 +26,27 @@ urlpatterns = [
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/single/',
-        service_views.one_note.CreateSingleServiceNoteView.as_view(),
+        service_views.one_note.SingleServiceNoteCreateView.as_view(),
         name='create_single_note'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/',
-        service_views.multi_notes.CreateMultiServiceNoteView.as_view(),
+        service_views.multi_notes.MultiServiceNoteCreateView.as_view(),
         name='create_multi_note'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/delete/multi/',
-        service_views.multi_notes.DeleteMultiServiceNoteView.as_view(),
+        service_views.multi_notes.MultiServiceNoteDeleteView.as_view(),
         name='delete_multi_note'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/pattern/<int:pattern_pk>/execute/',
-        service_views.multi_notes_pattern.MultiServiceNoteExecutePatternView.as_view(),
+        service_views.multi_notes_pattern.MultiServiceNotePatternExecuteView.as_view(),
         name='pattern_execute'
     ),
     path(
         '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/pattern/<int:pattern_pk>/edit/',
-        service_views.multi_notes_pattern.MultiServiceNoteEditPatternView.as_view(),
+        service_views.multi_notes_pattern.MultiServiceNotePatternEditView.as_view(),
         name='pattern_edit'
     ),
     path(
@@ -63,22 +63,22 @@ urlpatterns = [
     ),
     path(
         'my/notes/delete/<int:pk>/',
-        service_views.one_note.DeleteSingleServiceNoteView.as_view(),
+        service_views.one_note.SingleServiceNoteDeleteView.as_view(),
         name='delete_single_note'
     ),
     path(
         'my/notes/record/<int:pk>/',
-        service_views.one_note.RecordToServiceNoteView.as_view(),
+        service_views.one_note.ServiceNoteRecordView.as_view(),
         name='record_to_note'
     ),
     path(
         'my/notes/approve/<int:pk>/',
-        service_views.one_note.ApproveServiceNoteView.as_view(),
+        service_views.one_note.ServiceNoteApproveView.as_view(),
         name='approve_record_to_note'
     ),
     path(
         'my/notes/cancel/<int:pk>/',
-        service_views.one_note.CancelServiceNoteView.as_view(),
+        service_views.one_note.ServiceNoteCancelView.as_view(),
         name='cancel_record_to_note'
     ),
 ]

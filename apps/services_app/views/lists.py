@@ -2,11 +2,11 @@ from django.urls import reverse_lazy
 from django.views.generic import list as generic_list_views
 from django.views.generic import edit as generic_edit_views
 
-from apps.front_app.views import BaseViewWithMenu
+from apps.front_app.views import BaseDetailedView
 from apps.services_app import models as service_models, forms as service_forms
 
 
-class ServicesListView(BaseViewWithMenu, generic_list_views.BaseListView,
+class ServicesListView(BaseDetailedView, generic_list_views.BaseListView,
                        generic_edit_views.BaseFormView):
     template_name = 'services_list.html'
     object_list = []
@@ -29,7 +29,7 @@ class ServicesListView(BaseViewWithMenu, generic_list_views.BaseListView,
         return self.render_to_response(context, **self.kwargs)
 
 
-class MyServicesListView(BaseViewWithMenu, generic_list_views.ListView):
+class MyServicesListView(BaseDetailedView, generic_list_views.ListView):
     template_name = 'my_services.html'
     object_list = []
     model = service_models.Service
@@ -58,7 +58,7 @@ class MyServicesListView(BaseViewWithMenu, generic_list_views.ListView):
         return super(MyServicesListView, self).get(request, *args, **kwargs)
 
 
-class MyServiceNotesListView(BaseViewWithMenu):
+class MyServiceNotesListView(BaseDetailedView):
     template_name = 'my_notes.html'
 
     @staticmethod

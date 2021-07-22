@@ -1,7 +1,6 @@
 from typing import List
 
 import requests
-from django.core.serializers import json
 from django.urls import reverse
 import django.contrib.messages as messages
 
@@ -10,16 +9,16 @@ from django.views.generic import TemplateView
 import apps.profile_app.forms as profile_forms
 
 
-class BaseViewWithMenu(TemplateView):
+class BaseDetailedView(TemplateView):
     THEME = 'Darkly'  # more - https://bootswatch.com/
     THEMES_JSON_URL = 'https://bootswatch.com/api/5.json'
     message_list = []
 
     @staticmethod
     def get_theme_css_url():
-        json_request = requests.get(BaseViewWithMenu.THEMES_JSON_URL).json()
+        json_request = requests.get(BaseDetailedView.THEMES_JSON_URL).json()
         for theme in json_request['themes']:
-            if theme['name'] == BaseViewWithMenu.THEME:
+            if theme['name'] == BaseDetailedView.THEME:
                 return theme['css']
         return ''
 
@@ -50,15 +49,15 @@ class BaseViewWithMenu(TemplateView):
         messages.add_message(self.request, level, text)
 
     def get_context_data(self, **kwargs):
-        context = super(BaseViewWithMenu, self).get_context_data(**kwargs)
+        context = super(BaseDetailedView, self).get_context_data(**kwargs)
         context.update({
             'theme_css_url': self.get_theme_css_url(),
             'menu': self.get_menu(),
-            'login_form': profile_forms.AuthenticationFormModified(),
+            'login_form': profile_forms.AuthForm(),
             'messages': messages.get_messages(self.request),
         })
         return context
 
 
-class IndexView(BaseViewWithMenu):
+class IndexView(BaseDetailedView):
     template_name = 'index.html'

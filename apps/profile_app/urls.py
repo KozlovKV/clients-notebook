@@ -1,13 +1,13 @@
 from django.urls import path
 
 from django.contrib.auth import views as origin_auth_views
-from apps.front_app.views import BaseViewWithMenu
+from apps.front_app.views import BaseDetailedView
 from apps.profile_app import views as profile_views
 
 urlpatterns = [
     path('<int:pk>/view/', profile_views.ProfileView.as_view(), name='profile'),
 
-    path('login/', profile_views.LoginViewModified.as_view(), name='login'),
+    path('login/', profile_views.LoginView.as_view(), name='login'),
     path('logout/', origin_auth_views.LogoutView.as_view(), name='logout'),
 
     path(
@@ -31,19 +31,19 @@ urlpatterns = [
 reg_patterns = [
     path(
         'activate/complete/',
-        BaseViewWithMenu.as_view(
+        BaseDetailedView.as_view(
             template_name='django_registration/activation_complete.html'
         ),
         name='django_registration_activation_complete',
     ),
     path(
         'activate/<str:activation_key>/',
-        profile_views.ActivationViewModified.as_view(),
+        profile_views.ActivationView.as_view(),
         name='django_registration_activate',
     ),
     path(
         'register/',
-        profile_views.RegistrationViewModified.as_view(),
+        profile_views.RegistrationView.as_view(),
         name='register',
     ),
     path(
@@ -53,7 +53,7 @@ reg_patterns = [
     ),
     path(
         'register/closed/',
-        BaseViewWithMenu.as_view(
+        BaseDetailedView.as_view(
             template_name='django_registration/registration_closed.html'
         ),
         name='django_registration_disallowed',
