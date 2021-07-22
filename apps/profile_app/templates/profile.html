@@ -43,7 +43,7 @@
             </form>
         </div>
         <div class="card border-3 m-md-4 mt-3">
-            <h2 class="card-header">Изменение паролья</h2>
+            <h2 class="card-header">Изменение пароля</h2>
             <form class="card-body row g-2 d-flex justify-content-around" method="post" action="{% url 'password_change' user.pk %}">
                 {% csrf_token %}
                 {% for field in change_password_form %}

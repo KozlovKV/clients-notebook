@@ -10,7 +10,7 @@ import apps.profile_app.forms as profile_forms
 
 
 class BaseDetailedView(TemplateView):
-    THEME = 'Darkly'  # more - https://bootswatch.com/
+    THEME = 'Darkly'
     THEMES_JSON_URL = 'https://bootswatch.com/api/5.json'
     message_list = []
 
