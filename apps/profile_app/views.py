@@ -73,10 +73,22 @@ class ProfileView(generic_edit_views.UpdateView, BaseViewWithMenu):
         context.update({
             'object_list': service_models.Service.objects.filter(
                 provider=self.object.user
-            )
+            ),
+            'change_password_form': profile_forms.PasswordChangeFormModified(
+                user=self.request.user
+            ),
         })
         return context
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super(ProfileView, self).get(request, *args, **kwargs)
+
+
+class PasswordChangeView(auth_views.PasswordChangeView, BaseViewWithMenu):
+    form_class = profile_forms.PasswordChangeFormModified
+    template_name = 'index.html'
+
+    def get_success_url(self):
+        self.add_message('Пароль успешно изменён', messages.SUCCESS)
+        return reverse_lazy('profile', args=(self.request.user.pk, ))

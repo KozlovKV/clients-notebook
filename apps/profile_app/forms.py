@@ -5,6 +5,8 @@ from django import forms
 from django.contrib.auth import forms as auth_forms, password_validation
 from django_registration import forms as reg_forms
 
+from django.utils.translation import gettext, gettext_lazy as _
+
 
 class EditProfileForm(forms.ModelForm):
     class Meta:
@@ -44,6 +46,41 @@ class AuthenticationFormModified(auth_forms.AuthenticationForm):
                 'placeholder': 'Пароль',
             }
         ),
+    )
+
+
+class SetPasswordFormModified(auth_forms.SetPasswordForm):
+    new_password1 = forms.CharField(
+        label=_('New password'),
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control-lg w-100',
+            'placeholder': _('New password'),
+            'autocomplete': 'new-password',
+        }),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_('New password confirmation'),
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control-lg w-100',
+            'placeholder': _('New password confirmation'),
+            'autocomplete': 'new-password',
+        }),
+    )
+
+
+class PasswordChangeFormModified(SetPasswordFormModified):
+    old_password = forms.CharField(
+        label=_('Old password'),
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control-lg w-100',
+            'placeholder': _('Old password'),
+            'autocomplete': 'current-password',
+            'autofocus': True
+        }),
     )
 
 
