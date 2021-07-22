@@ -9,7 +9,7 @@
     <div class="card">
         <h2 class="card-header">Поиск</h2>
         <div class="card-body">
-            <form class="row g-2" action="{% url 'services_list' %}" method="post">
+            <form class="row g-2" method="post">
                 {% csrf_token %}
                 <div class="col-md-6">
                     <label class="form-label fs-5" for="id_{{ form.label.name }}">{{ form.label.label }}</label>

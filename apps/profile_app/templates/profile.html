@@ -31,7 +31,7 @@
     {% if user == object.user %}
         <div class="card border-3 m-md-4 mt-3">
             <h2 class="card-header">Редактирование профиля</h2>
-            <form class="card-body row g-2" method="post" action="{% url 'profile' object.pk %}" enctype="multipart/form-data">
+            <form class="card-body row g-2" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for field in form %}
                     <div class="col-md-6">

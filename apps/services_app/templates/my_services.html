@@ -15,7 +15,7 @@
                 </button>
             </div>
             <div class="collapse" id="serviceCreateForm">
-                <form method="post" action="{% url 'create_service' %}" enctype="multipart/form-data" class="card-body row g-2">
+                <form class="card-body row g-2" method="post" action="{% url 'create_service' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="col-md-6">
                         <label class="form-label fs-5" for="id_{{ service_form.label.name }}">{{ service_form.label.label }}</label>

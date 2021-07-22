@@ -111,7 +111,7 @@
                         </button>
                     </div>
                     <div class="card-body collapse" id="multiDelete">
-                        <form class=" text-center" action="{{ multi_delete_url }}" method="post">
+                        <form class="text-center" action="{{ multi_delete_url }}" method="post">
                             {% csrf_token %}
                             <button class="btn btn-danger" type="submit">Удалить</button>
                         </form>
