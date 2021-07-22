@@ -67,11 +67,14 @@ class MyServiceNotesListView(BaseViewWithMenu):
         for status_id in range(len(service_models.ServiceNote.STATUS_CHOICES)):
             status_type_dict = {
                 'name': service_models.ServiceNote.STATUS_CHOICES[status_id][1],
-                'class': service_models.ServiceNote.STATUS_CSS_CLASSES[status_id][1],
-                'list': notes.filter(
-                    status=service_models.ServiceNote.STATUS_CSS_CLASSES[status_id][0]
-                )
+                'class':
+                    service_models.ServiceNote.STATUS_CSS_CLASSES[status_id][1],
+                'list': list(notes.filter(
+                    status=
+                    service_models.ServiceNote.STATUS_CSS_CLASSES[status_id][0]
+                ))
             }
+            status_type_dict['list'].sort(key=lambda x: (x.date, x.time_start))
             notes_dicts.append(status_type_dict)
         return notes_dicts
 

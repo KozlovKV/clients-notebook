@@ -7,7 +7,8 @@ from django.views.generic import edit as generic_edit_views, \
 
 from apps.front_app.views import BaseViewWithMenu
 from apps.services_app import models as service_models, forms as service_forms
-from apps.services_app.views.lists import MyServicesListView
+from apps.services_app.views.lists import MyServicesListView, \
+    MyServiceNotesListView
 
 
 class CreateServiceView(MyServicesListView, generic_edit_views.BaseCreateView):
@@ -79,22 +80,8 @@ class OneServiceDayView(BaseViewWithMenu, generic_list_views.ListView):
     def service(self):
         return service_models.Service.objects.get(pk=self.kwargs['pk'])
 
-    @staticmethod
-    def get_status_divided_notes_dicts(notes):
-        notes_dicts = []
-        for status_id in range(len(service_models.ServiceNote.STATUS_CHOICES)):
-            status_type_dict = {
-                'name': service_models.ServiceNote.STATUS_CHOICES[status_id][1],
-                'class': service_models.ServiceNote.STATUS_CSS_CLASSES[status_id][1],
-                'list': notes.filter(
-                    status=service_models.ServiceNote.STATUS_CSS_CLASSES[status_id][0]
-                )
-            }
-            notes_dicts.append(status_type_dict)
-        return notes_dicts
-
     def get_queryset(self):
-        return self.get_status_divided_notes_dicts(self.service.notes.filter(
+        return MyServiceNotesListView.get_status_divided_notes_dicts(self.service.notes.filter(
             date=self.date
         ))
 
