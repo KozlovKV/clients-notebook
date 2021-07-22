@@ -23,11 +23,11 @@
         {% block extra_header %}
 
         {% endblock %}
-        {% include 'base/messages.html' %}
     </header>
 
     <main>
         <div class="container pt-5">
+            {% include 'base/messages.html' %}
             {% include 'base/form_errors.html' %}
             {% block main_content %}
 

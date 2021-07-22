@@ -9,18 +9,18 @@
         <div class="row">
             {% if object.get_avatar_url != '' %}
             <img class="col-md-6 img-fluid" src="{{ object.get_avatar_url }}" alt="Аватарка">
-            <div class="col-md-6 card-text fs-3 list-group list-group-flush">
+            <div class="col-md-6 card-text fs-5 list-group list-group-flush">
             {% else %}
-            <div class="col-md-12 card-text fs-3 list-group list-group-flush">
+            <div class="col-md-12 card-text fs-5 list-group list-group-flush">
             {% endif %}
                 <div class="card-body">
                     <p class="list-group-item">{{ object.user.get_full_name }}</p>
                     <p class="font-monospace list-group-item">{{ object.user.email }}</p>
                     {% if object.about %}
-                        <p class="list-group-item">{{ object.about }}</p>
+                        <p class="list-group-item fs-6">{{ object.about }}</p>
                     {% endif %}
                     <div class="list-group-item">
-                        <a href="#" class="btn btn-success fs-4">
+                        <a href="#user_services" class="btn btn-success fs-4">
                             Посмотреть услуги пользователя <i class="fas fa-arrow-alt-circle-right"></i>
                         </a>
                     </div>
@@ -56,7 +56,7 @@
             </form>
         </div>
     {% endif %}
-    <div class="card border-3 m-md-4 mt-3">
+    <div class="card border-3 m-md-4 mt-3" id="user_services">
         <h2 class="card-header">Услуги пользователя</h2>
         {% include 'base/services_list_card_body.html' %}
     </div>
