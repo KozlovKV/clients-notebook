@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib import messages
 
 
@@ -54,6 +55,33 @@ class ActivationViewModified(reg_activation_views.ActivationView, BaseViewWithMe
     success_url = reverse_lazy('django_activation_complete')
 
 
+class PasswordChangeView(auth_views.PasswordChangeView, BaseViewWithMenu):
+    form_class = profile_forms.PasswordChangeFormModified
+    template_name = 'index.html'
+
+    def get_success_url(self):
+        self.add_message('Пароль успешно изменён', messages.SUCCESS)
+        return reverse_lazy('profile', args=(self.request.user.pk, ))
+
+
+class PasswordResetView(auth_views.PasswordResetView, BaseViewWithMenu):
+    form_class = profile_forms.PasswordResetForm
+    template_name = 'auth/password_reset_form.html'
+
+    def get_success_url(self):
+        self.add_message('Письмо отправлено', messages.INFO)
+        return reverse_lazy('index')
+
+
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView, BaseViewWithMenu):
+    form_class = profile_forms.SetPasswordFormModified
+    template_name = 'auth/password_reset_confirm.html'
+
+    def get_success_url(self):
+        self.add_message('Пароль успешно изменён', messages.SUCCESS)
+        return reverse_lazy('index')
+
+
 class ProfileView(generic_edit_views.UpdateView, BaseViewWithMenu):
     object = None
     template_name = 'profile.html'
@@ -83,12 +111,3 @@ class ProfileView(generic_edit_views.UpdateView, BaseViewWithMenu):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super(ProfileView, self).get(request, *args, **kwargs)
-
-
-class PasswordChangeView(auth_views.PasswordChangeView, BaseViewWithMenu):
-    form_class = profile_forms.PasswordChangeFormModified
-    template_name = 'index.html'
-
-    def get_success_url(self):
-        self.add_message('Пароль успешно изменён', messages.SUCCESS)
-        return reverse_lazy('profile', args=(self.request.user.pk, ))

@@ -10,12 +10,22 @@ urlpatterns = [
     path('login/', profile_views.LoginViewModified.as_view(), name='login'),
     path('logout/', origin_auth_views.LogoutView.as_view(), name='logout'),
 
-    path('<int:pk>/password_change/', profile_views.PasswordChangeView.as_view(), name='password_change'),
+    path(
+        '<int:pk>/password_change/',
+        profile_views.PasswordChangeView.as_view(),
+        name='password_change'
+    ),
 
-    path('password_reset/', origin_auth_views.PasswordResetView.as_view(), name='password_reset'),
-    path('password_reset/done/', origin_auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', origin_auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('reset/done/', origin_auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path(
+        'password_reset/',
+        profile_views.PasswordResetView.as_view(),
+        name='password_reset'
+    ),
+    path(
+        'reset/<uidb64>/<token>/',
+        profile_views.PasswordResetConfirmView.as_view(),
+        name='password_reset_confirm'
+    ),
 ]
 
 reg_patterns = [

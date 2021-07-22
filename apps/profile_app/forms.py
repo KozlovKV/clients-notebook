@@ -84,6 +84,18 @@ class PasswordChangeFormModified(SetPasswordFormModified):
     )
 
 
+class PasswordResetForm(auth_forms.PasswordResetForm):
+    email = forms.EmailField(
+        label=_('Email'),
+        max_length=254,
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control-lg w-100',
+            'placeholder': _('Email'),
+            'autocomplete': 'email',
+        })
+    )
+
+
 class RegistrationFormUniqueEmailModified(reg_forms.RegistrationFormUniqueEmail):
     class Meta(reg_forms.RegistrationFormUniqueEmail.Meta):
         fields = [
