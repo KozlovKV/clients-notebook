@@ -3,6 +3,7 @@ from typing import List
 import requests
 from django.urls import reverse
 import django.contrib.messages as messages
+from django.core.exceptions import PermissionDenied
 
 from django.views.generic import TemplateView
 
@@ -12,6 +13,7 @@ import apps.profile_app.forms as profile_forms
 class BaseDetailedView(TemplateView):
     THEME = 'Darkly'
     THEMES_JSON_URL = 'https://bootswatch.com/api/5.json'
+    anons_allowed = True
     message_list = []
 
     @staticmethod
@@ -57,6 +59,18 @@ class BaseDetailedView(TemplateView):
             'messages': messages.get_messages(self.request),
         })
         return context
+
+    def check_anons_allowing(self):
+        if not (self.anons_allowed or self.request.user.is_authenticated):
+            raise PermissionDenied()
+
+    def get(self, request, *args, **kwargs):
+        self.check_anons_allowing()
+        return super(BaseDetailedView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.check_anons_allowing()
+        return super(BaseDetailedView, self).post(request, *args, **kwargs)
 
 
 class IndexView(BaseDetailedView):

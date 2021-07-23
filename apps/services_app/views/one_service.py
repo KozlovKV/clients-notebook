@@ -12,6 +12,7 @@ from apps.services_app.views.lists import MyServicesListView, \
 
 
 class CreateServiceView(MyServicesListView, generic_edit_views.BaseCreateView):
+    anons_allowed = False
     template_name = 'my_services.html'
     object = None
     model = service_models.Service
@@ -56,11 +57,14 @@ class OneServiceCalendarView(BaseDetailedView, generic_detail_views.DetailView):
 
 class EditServiceView(OneServiceCalendarView,
                       generic_edit_views.BaseUpdateView):
+    anons_allowed = False
     form_class = service_forms.ServiceForm
 
 
 class DeleteServiceView(OneServiceCalendarView,
                         generic_edit_views.BaseDeleteView):
+    anons_allowed = False
+
     def get_success_url(self):
         self.add_message('Услуга успешно удалена', messages.SUCCESS)
         return reverse_lazy('my_services')

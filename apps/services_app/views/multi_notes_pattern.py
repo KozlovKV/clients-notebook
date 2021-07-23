@@ -4,6 +4,8 @@ from apps.services_app.views.one_service import OneServiceDayView
 
 
 class MultiServiceNotePatternEditView(OneServiceDayView):
+    anons_allowed = False
+
     def get_object(self):
         return service_models.ServiceNoteGenerationPattern.objects.get(
             pk=self.kwargs['pattern_pk']
@@ -20,6 +22,8 @@ class MultiServiceNotePatternEditView(OneServiceDayView):
 
 class MultiServiceNotePatternExecuteView(MultiServiceNotePatternEditView,
                                          MultiServiceNoteCreateView):
+    anons_allowed = False
+
     def get(self, request, *args, **kwargs):
         response = super(MultiServiceNotePatternExecuteView, self).get(request,
                                                                        *args,

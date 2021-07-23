@@ -30,6 +30,7 @@ class ServicesListView(BaseDetailedView, generic_list_views.BaseListView,
 
 
 class MyServicesListView(BaseDetailedView, generic_list_views.ListView):
+    anons_allowed = False
     template_name = 'my_services.html'
     object_list = []
     model = service_models.Service
@@ -59,6 +60,7 @@ class MyServicesListView(BaseDetailedView, generic_list_views.ListView):
 
 
 class MyServiceNotesListView(BaseDetailedView):
+    anons_allowed = False
     template_name = 'my_notes.html'
 
     @staticmethod

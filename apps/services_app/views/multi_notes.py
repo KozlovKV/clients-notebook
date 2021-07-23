@@ -9,6 +9,7 @@ from apps.services_app.views.one_service import OneServiceDayView
 
 class MultiServiceNoteCreateView(OneServiceDayView,
                                  generic_edit_views.BaseFormView):
+    anons_allowed = False
     template_name = 'one_service_day.html'
     form_class = service_forms.MultiServiceNoteForm
 
@@ -29,6 +30,7 @@ class MultiServiceNoteCreateView(OneServiceDayView,
 
 
 class MultiServiceNoteDeleteView(OneServiceDayView):
+    anons_allowed = False
     template_name = 'one_service_day.html'
 
     def delete(self, request, *args, **kwargs):

@@ -9,6 +9,8 @@ from apps.services_app.views.one_service import OneServiceDayView
 
 class SingleServiceNoteCreateView(OneServiceDayView,
                                   generic_edit_views.CreateView):
+    anons_allowed = False
+
     model = service_models.ServiceNote
     object = None
     form_class = service_forms.SingleServiceNoteForm
@@ -62,6 +64,8 @@ class ServiceNoteRecordView(BaseServiceNoteEditView,
 
 
 class ServiceNoteApproveView(BaseServiceNoteEditView):
+    anons_allowed = False
+
     def post(self, request, *args, **kwargs):
         resp = super(ServiceNoteApproveView, self).post(request, *args, **kwargs)
         self.object.approve(self.request.user)
@@ -70,6 +74,8 @@ class ServiceNoteApproveView(BaseServiceNoteEditView):
 
 
 class ServiceNoteCancelView(BaseServiceNoteEditView):
+    anons_allowed = False
+
     def post(self, request, *args, **kwargs):
         resp = super(ServiceNoteCancelView, self).post(request, *args, **kwargs)
         self.object.cancel(self.request.user)
@@ -78,6 +84,8 @@ class ServiceNoteCancelView(BaseServiceNoteEditView):
 
 
 class SingleServiceNoteDeleteView(BaseServiceNoteEditView):
+    anons_allowed = False
+
     def delete(self, request, *args, **kwargs):
         resp = super(SingleServiceNoteDeleteView, self).post(request, *args, **kwargs)
         if self.request.user == self.object.service.provider:
