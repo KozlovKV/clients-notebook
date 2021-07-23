@@ -103,18 +103,20 @@
                 </div>
             {% endif %}
             {% if object_list %}
-                <div class="card border-2 border-danger">
-                    <div class="card-header d-flex justify-content-between">
-                        <h3>Удалить все записи</h3>
-                        <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#multiDelete">
-                            <i class="fs-3 fas fa-arrow-circle-down"></i>
-                        </button>
-                    </div>
-                    <div class="card-body collapse" id="multiDelete">
-                        <form class="text-center" action="{{ multi_delete_url }}" method="post">
-                            {% csrf_token %}
-                            <button class="btn btn-danger" type="submit">Удалить</button>
-                        </form>
+                <div class="col-12">
+                    <div class="card border-2 border-danger">
+                        <div class="card-header d-flex justify-content-between">
+                            <h3>Удалить все записи</h3>
+                            <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#multiDelete">
+                                <i class="fs-3 fas fa-arrow-circle-down"></i>
+                            </button>
+                        </div>
+                        <div class="card-body collapse" id="multiDelete">
+                            <form class="text-center" action="{{ multi_delete_url }}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-danger" type="submit">Удалить</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             {% endif %}
