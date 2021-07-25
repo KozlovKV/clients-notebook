@@ -28,7 +28,9 @@ SECRET_KEY = secret_const.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', secret_const.MY_IP, secret_const.VPS_IP]
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0',
+                 secret_const.MY_IP, secret_const.VPS_IP,
+                 'www.clients-notebook.ru', 'clients-notebook.ru']
 
 
 # Application definition
