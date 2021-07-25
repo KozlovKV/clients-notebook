@@ -24,4 +24,7 @@ urlpatterns = [
     path('', front.IndexView.as_view(), name='index'),
     path('service/', include('apps.services_app.urls')),
     path('profile/', include('apps.profile_app.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
