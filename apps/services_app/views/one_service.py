@@ -84,10 +84,13 @@ class OneServiceDayView(BaseDetailedView, generic_list_views.ListView):
     def service(self):
         return service_models.Service.objects.get(pk=self.kwargs['pk'])
 
+    def get_notes_list(self):
+        return self.service.notes.filter( date=self.date)
+
     def get_queryset(self):
-        return MyServiceNotesListView.get_status_divided_notes_dicts(self.service.notes.filter(
-            date=self.date
-        ))
+        return MyServiceNotesListView.get_status_divided_notes_dicts(
+            self.get_notes_list()
+        )
 
     def get_patterns(self):
         patterns_with_urls = []

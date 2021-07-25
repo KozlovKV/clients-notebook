@@ -34,10 +34,10 @@ class MultiServiceNoteDeleteView(OneServiceDayView):
     template_name = 'one_service_day.html'
 
     def delete(self, request, *args, **kwargs):
-        self.object_list = self.get_queryset()
+        self.object_list = self.get_notes_list()
         success_url = self.get_success_url()
         if len(self.object_list) > 0:
-            if self.request.user == self.object_list[0].service.provider:
+            if self.request.user == self.object_list[0].provider:
                 self.object_list.delete()
                 self.add_message('Записи успешно удалены', messages.SUCCESS)
             else:

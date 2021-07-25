@@ -88,7 +88,7 @@ class SingleServiceNoteDeleteView(BaseServiceNoteEditView):
 
     def delete(self, request, *args, **kwargs):
         resp = super(SingleServiceNoteDeleteView, self).post(request, *args, **kwargs)
-        if self.request.user == self.object.service.provider:
+        if self.request.user == self.object.provider:
             self.object.delete()
             self.add_message('Запись успешно удалена', messages.SUCCESS)
         else:
