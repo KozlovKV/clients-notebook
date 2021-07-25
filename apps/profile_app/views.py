@@ -57,7 +57,7 @@ class RegistrationCompleteView(BaseDetailedView):
 
 
 class ActivationView(reg_activation_views.ActivationView, BaseDetailedView):
-    success_url = reverse_lazy('django_activation_complete')
+    success_url = reverse_lazy('django_registration_activation_complete')
 
 
 class PasswordChangeView(auth_views.PasswordChangeView, BaseDetailedView):
