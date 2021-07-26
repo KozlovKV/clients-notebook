@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.contrib.auth import login
 
 
 from django.contrib.auth.models import User
@@ -60,7 +61,10 @@ class RegistrationCompleteView(BaseDetailedView):
 
 
 class ActivationView(reg_activation_views.ActivationView, BaseDetailedView):
-    success_url = reverse_lazy('django_registration_activation_complete')
+    def activate(self, *args, **kwargs):
+        user = super(ActivationView, self).activate(*args, **kwargs)
+        login(self.request, user)
+        return user
 
 
 class PasswordChangeView(auth_views.PasswordChangeView, BaseDetailedView):
@@ -82,6 +86,7 @@ class PasswordResetView(auth_views.PasswordResetView, BaseDetailedView):
 
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView, BaseDetailedView):
+    post_reset_login = True
     form_class = profile_forms.SetPasswordForm
     template_name = 'auth/password_reset_confirm.html'
 

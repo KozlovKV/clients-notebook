@@ -7,15 +7,17 @@
     <div class="card m-5">
         <h1 class="card-header text-center">Регистрация прошла успешно</h1>
         <h3 class="card-body">Поздравляю, теперь вам доступен весь функционал сайта</h3>
-        <div class="card-footer row g-2 text-center justify-content-around">
-            <div class="col-md-4">
-                <a class="btn btn-primary w-100" href="{% url 'index' %}">На главную</a>
-            </div>
-            <div class="col-md-4">
-                <a class="btn btn-success w-100" href="#">Мой профиль</a>
-            </div>
-            <div class="col-md-4">
-                <a class="btn btn-primary w-100" href="#">Мои услуги</a>
+        <div class="card-footer">
+            <div class="row g-2 text-center justify-content-around">
+                <div class="col-md-4">
+                    <a class="btn btn-primary w-100" href="{% url 'index' %}">На главную</a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-success w-100" href="{% url 'profile' user.pk %}">Мой профиль</a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-primary w-100" href="{% url 'my_services' %}">Мои услуги</a>
+                </div>
             </div>
         </div>
     </div>
