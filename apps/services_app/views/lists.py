@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.urls import reverse_lazy
 from django.views.generic import list as generic_list_views
 from django.views.generic import edit as generic_edit_views
@@ -14,6 +16,21 @@ class ServicesListView(BaseDetailedView, generic_list_views.BaseListView,
     form_class = service_forms.ServiceSearchForm
     success_url = reverse_lazy('services_list')
 
+    def get_allowed_services(self, all_services):
+        if not self.request.user.is_authenticated:
+            return all_services.filter(who_can_see=self.model.ALL)
+        return chain(
+            all_services.exclude(who_can_see=self.model.ONLY_PROVIDER),
+            all_services.filter(
+                who_can_see=self.model.ONLY_PROVIDER,
+                provider=self.request.user
+            )
+        )
+
+    def get_queryset(self):
+        all_services = super(ServicesListView, self).get_queryset()
+        return self.get_allowed_services(all_services)
+
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
         return super(ServicesListView, self).get(request, *args, **kwargs)
@@ -24,6 +41,7 @@ class ServicesListView(BaseDetailedView, generic_list_views.BaseListView,
             label__icontains=data.get('label', ''),
             description__icontains=data.get('description', ''),
         )
+        self.object_list = self.get_allowed_services(self.object_list)
         self.add_message(f'Найдено совпадений: {len(self.object_list)}')
         context = self.get_context_data(**self.kwargs)
         return self.render_to_response(context, **self.kwargs)
