@@ -1,6 +1,7 @@
 import datetime
 
 from django.contrib import messages as messages
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import edit as generic_edit_views, \
     detail as generic_detail_views, list as generic_list_views
@@ -52,6 +53,7 @@ class OneServiceCalendarView(BaseDetailedView, generic_detail_views.DetailView):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
+        self.object.process_see_permission(self.request.user)
         return super(OneServiceCalendarView, self).get(request, *args, **kwargs)
 
 
@@ -85,7 +87,7 @@ class OneServiceDayView(BaseDetailedView, generic_list_views.ListView):
         return service_models.Service.objects.get(pk=self.kwargs['pk'])
 
     def get_notes_list(self):
-        return self.service.notes.filter( date=self.date)
+        return self.service.notes.filter(date=self.date)
 
     def get_queryset(self):
         return MyServiceNotesListView.get_status_divided_notes_dicts(
@@ -143,5 +145,6 @@ class OneServiceDayView(BaseDetailedView, generic_list_views.ListView):
         return context
 
     def get(self, request, *args, **kwargs):
+        self.service.process_see_permission(self.request.user)
         self.object_list = self.get_queryset()
         return super(OneServiceDayView, self).get(request, *args, **kwargs)

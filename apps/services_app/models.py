@@ -22,6 +22,11 @@ class Service(models.Model):
         (AUTHORIZED, 'Авторизованные'),
         (ONLY_PROVIDER, 'Только я'),
     )
+    RIGHTS_FUNCTIONS = {
+        ALL: lambda user: True,
+        AUTHORIZED: lambda user: user.is_authenticated,
+        ONLY_PROVIDER: lambda user: -1,
+    }
     who_can_see = models.IntegerField(default=ALL, choices=RIGHTS_CHOICES)
     who_can_record = models.IntegerField(default=ALL, choices=RIGHTS_CHOICES)
 
@@ -31,6 +36,15 @@ class Service(models.Model):
     @property
     def notes(self):
         return ServiceNote.objects.filter(service=self)
+
+    def can_see(self, user):
+        if self.RIGHTS_FUNCTIONS[self.who_can_see](user) == -1:
+            return self.provider == user
+        return self.RIGHTS_FUNCTIONS[self.who_can_see](user)
+
+    def process_see_permission(self, user):
+        if not self.can_see(user):
+            raise PermissionDenied()
 
     def get_dates_with_notes(self):
         dates = set()
