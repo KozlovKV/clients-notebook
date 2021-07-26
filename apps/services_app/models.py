@@ -14,6 +14,17 @@ class Service(models.Model):
     image = models.ImageField(upload_to='services_images/', blank=True, null=True)
     description = models.TextField()
 
+    ALL = 0
+    AUTHORIZED = 1
+    ONLY_PROVIDER = 2
+    RIGHTS_CHOICES = (
+        (ALL, 'Все'),
+        (AUTHORIZED, 'Авторизованные'),
+        (ONLY_PROVIDER, 'Только я'),
+    )
+    who_can_see = models.IntegerField(default=ALL, choices=RIGHTS_CHOICES)
+    who_can_record = models.IntegerField(default=ALL, choices=RIGHTS_CHOICES)
+
     def __str__(self):
         return f'{self.label} by {self.provider}'
 
@@ -46,17 +57,6 @@ class ServiceNote(models.Model):
     time_end = models.TimeField()
     provider_addition = models.CharField(max_length=255, blank=True, null=True)
     client_addition = models.CharField(max_length=255, blank=True, null=True)
-
-    ALL = 0
-    AUTHORIZED = 1
-    ONLY_PROVIDER = 2
-    RIGHTS_CHOICES = (
-        (ALL, 'Все'),
-        (AUTHORIZED, 'Авторизованные'),
-        (ONLY_PROVIDER, 'Только я'),
-    )
-    who_can_see = models.IntegerField(default=ALL, choices=RIGHTS_CHOICES)
-    who_can_record = models.IntegerField(default=ALL, choices=RIGHTS_CHOICES)
 
     EMPTY = 0
     NEED_APPROVE = 1

@@ -10,11 +10,15 @@ class ServiceForm(forms.ModelForm):
         fields = [
             'label',
             'image',
+            'who_can_see',
+            'who_can_record',
             'description',
         ]
         labels = {
             'label': 'Название',
             'image': 'Изображение',
+            'who_can_see': 'Кто может видеть услугу',
+            'who_can_record': 'Кто может записываться на услугу',
             'description': 'Описание',
         }
         widgets = {
@@ -23,6 +27,12 @@ class ServiceForm(forms.ModelForm):
                 'placeholder': 'Название',
             }),
             'image': forms.FileInput(attrs={
+                'class': 'form-control-lg w-100',
+            }),
+            'who_can_see': forms.Select(attrs={
+                'class': 'form-control-lg w-100',
+            }),
+            'who_can_record': forms.Select(attrs={
                 'class': 'form-control-lg w-100',
             }),
             'description': forms.Textarea(attrs={
