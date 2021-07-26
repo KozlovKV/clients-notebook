@@ -41,19 +41,26 @@ class OneServiceCalendarView(BaseDetailedView, generic_detail_views.DetailView):
         js_dates = [date.isoformat() for date in dates]
         return js_dates
 
+    def get_service_form_context(self):
+        return {
+            'service_form': service_forms.ServiceForm(instance=self.object),
+            'service_form_url': self.object.get_edit_url(),
+            'service_form_submit_value': 'Изменить',
+        }
+
     def get_context_data(self, **kwargs):
         context = super(OneServiceCalendarView, self).get_context_data(**kwargs)
         context.update({
             'dates_with_notes': self.get_dates_for_js(
                 self.object.get_dates_with_notes()
-            ),
-            'service_form': service_forms.ServiceForm(instance=self.object),
+            )
         })
+        context.update(self.get_service_form_context())
         return context
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        self.object.process_see_permission(self.request.user)
+        self.object.process_permission(self.request.user, self.object.CAN_SEE_FIELD)
         return super(OneServiceCalendarView, self).get(request, *args, **kwargs)
 
 
@@ -126,6 +133,14 @@ class OneServiceDayView(BaseDetailedView, generic_list_views.ListView):
                                              kwargs=self.base_url_kwargs),
         }
 
+    def get_record_form_context(self):
+        return {
+            'can_record': self.service.have_permission(
+                self.request.user, self.service.CAN_RECORD_FIELD
+            ),
+            'record_form': service_forms.RecordServiceNoteForm(),
+        }
+
     def get_context_data(self, **kwargs):
         context = super(OneServiceDayView, self).get_context_data(**kwargs)
         self.base_url_kwargs = {
@@ -138,13 +153,15 @@ class OneServiceDayView(BaseDetailedView, generic_list_views.ListView):
             'service': self.service,
             'date': self.date,
             'patterns': self.get_patterns(),
-            'record_form': service_forms.RecordServiceNoteForm(),
         })
         context.update(self.get_single_form_context())
         context.update(self.get_multi_form_context())
+        context.update(self.get_record_form_context())
         return context
 
     def get(self, request, *args, **kwargs):
-        self.service.process_see_permission(self.request.user)
+        self.service.process_permission(
+            self.request.user, self.service.CAN_SEE_FIELD
+        )
         self.object_list = self.get_queryset()
         return super(OneServiceDayView, self).get(request, *args, **kwargs)

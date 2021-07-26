@@ -17,33 +17,40 @@ class Service(models.Model):
     ALL = 0
     AUTHORIZED = 1
     ONLY_PROVIDER = 2
-    RIGHTS_CHOICES = (
+    PERMISSION_CHOICES = (
         (ALL, 'Все'),
         (AUTHORIZED, 'Авторизованные'),
         (ONLY_PROVIDER, 'Только я'),
     )
-    RIGHTS_FUNCTIONS = {
-        ALL: lambda user: True,
-        AUTHORIZED: lambda user: user.is_authenticated,
-        ONLY_PROVIDER: lambda user: -1,
+    PERMISSION_CHECKERS = {
+        ALL: lambda *args: True,
+        AUTHORIZED: lambda *args: args[0].is_authenticated,
+        ONLY_PROVIDER: lambda *args: args[0] == args[1].provider,
     }
-    who_can_see = models.IntegerField(default=ALL, choices=RIGHTS_CHOICES)
-    who_can_record = models.IntegerField(default=ALL, choices=RIGHTS_CHOICES)
+    CAN_SEE_FIELD = 0
+    who_can_see = models.IntegerField(default=ALL, choices=PERMISSION_CHOICES)
+    CAN_RECORD_FIELD = 1
+    who_can_record = models.IntegerField(default=ALL, choices=PERMISSION_CHOICES)
+    PERMISSION_FIELDS_GETTERS = {
+        CAN_SEE_FIELD: lambda self: self.who_can_see,
+        CAN_RECORD_FIELD: lambda self: self.who_can_record,
+    }
 
     def __str__(self):
-        return f'{self.label} by {self.provider}'
+        return f'{self.label} от {self.provider}'
 
     @property
     def notes(self):
         return ServiceNote.objects.filter(service=self)
 
-    def can_see(self, user):
-        if self.RIGHTS_FUNCTIONS[self.who_can_see](user) == -1:
-            return self.provider == user
-        return self.RIGHTS_FUNCTIONS[self.who_can_see](user)
+    def have_permission(self, user, permission):
+        check_function = self.PERMISSION_CHECKERS[
+            self.PERMISSION_FIELDS_GETTERS[permission](self)
+        ]
+        return check_function(user, self)
 
-    def process_see_permission(self, user):
-        if not self.can_see(user):
+    def process_permission(self, user, permission):
+        if not self.have_permission(user, permission):
             raise PermissionDenied()
 
     def get_dates_with_notes(self):
@@ -54,6 +61,9 @@ class Service(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy('one_service_calendar', kwargs={'pk': self.pk})
+
+    def get_edit_url(self):
+        return reverse_lazy('edit_service', kwargs={'pk': self.pk})
 
     def get_image_url(self):
         try:
@@ -98,12 +108,6 @@ class ServiceNote(models.Model):
         self.save()
 
     @property
-    def status_name(self):
-        for status_pair in self.STATUS_CHOICES:
-            if status_pair[0] == self.status:
-                return status_pair[1]
-
-    @property
     def status_css(self):
         for status_pair in self.STATUS_CSS_CLASSES:
             if status_pair[0] == self.status:
@@ -113,6 +117,7 @@ class ServiceNote(models.Model):
         return self.status == self.EMPTY
 
     def record(self, client, client_addition=None):
+        self.service.process_permission(client, 'record')
         self.client_addition = client_addition
         if client == self.provider:
             self.set_status(self.OCCUPIED)
@@ -142,8 +147,10 @@ class ServiceNote(models.Model):
             raise PermissionDenied()
 
     def __str__(self):
-        return f'{self.service} for {self.client} at {self.date}, {self.time_start}-{self.time_end} ' \
-               f'({self.status_name})'
+        return f'{self.service} ' \
+               f'{f" для {self.client}" if self.client is not None else ""} ' \
+               f'на {self.date}, {self.time_start}-{self.time_end} ' \
+               f'({self.get_status_display()})'
 
     def get_absolute_url(self):
         return reverse_lazy('one_service_day', kwargs={

@@ -63,14 +63,21 @@ class MyServicesListView(BaseDetailedView, generic_list_views.ListView):
             )
         return queryset
 
+    def get_service_form_context(self):
+        return {
+            'service_form': service_forms.ServiceForm(data={
+                'provider': self.request.user,
+            }),
+            'service_form_url': reverse_lazy('create_service'),
+            'service_form_submit_value': 'Создать',
+        }
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
             'object_list': self.get_queryset(),
-            'service_form': service_forms.ServiceForm(data={
-                'provider': self.request.user,
-            }),
         })
+        context.update(self.get_service_form_context())
         return context
 
     def get(self, request, *args, **kwargs):

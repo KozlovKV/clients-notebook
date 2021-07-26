@@ -11,9 +11,13 @@
             {{ service.description }}
         </div>
     </div>
-    <div class="card-footer text-end">
-        <a class="card-link text-muted" href="{% url 'profile' service.provider.pk %}">
-            Поставщик ({{ service.provider }})
-        </a>
+    <div class="card-footer">
+        <div class="d-flex justify-content-between row row-cols-1 row-cols-md-3">
+            <span class="col card-text">Видимость - {{ service.get_who_can_see_display }}</span>
+            <span class="col card-text">Доступность записи - {{ service.get_who_can_record_display }}</span>
+            <a class="col card-link" href="{% url 'profile' service.provider.pk %}">
+                Поставщик ({{ service.provider }})
+            </a>
+        </div>
     </div>
 </div>

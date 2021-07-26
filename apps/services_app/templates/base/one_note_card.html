@@ -25,7 +25,7 @@
                     </li>
                 {% endif %}
                 <li class="list-group-item">
-                    <span class="fs-5 text-{{ note.status_css }}">{{ note.status_name }}</span>
+                    <span class="fs-5 text-{{ note.status_css }}">{{ note.get_status_display }}</span>
                 </li>
                 {% if user == note.provider or user == note.client %}
                     {% if note.client %}
@@ -50,7 +50,7 @@
                         </a>
                     </li>
                 {% endif %}
-                {% if note.is_free %}
+                {% if note.is_free and can_record %}
                     <li class="list-group-item">
                         <form method="post" action="{{ note.get_record_url }}">
                             {% csrf_token %}
