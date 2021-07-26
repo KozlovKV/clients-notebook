@@ -47,6 +47,17 @@ class ServiceNote(models.Model):
     provider_addition = models.CharField(max_length=255, blank=True, null=True)
     client_addition = models.CharField(max_length=255, blank=True, null=True)
 
+    ALL = 0
+    AUTHORIZED = 1
+    ONLY_PROVIDER = 2
+    RIGHTS_CHOICES = (
+        (ALL, 'Все'),
+        (AUTHORIZED, 'Авторизованные'),
+        (ONLY_PROVIDER, 'Только я'),
+    )
+    who_can_see = models.IntegerField(default=ALL, choices=RIGHTS_CHOICES)
+    who_can_record = models.IntegerField(default=ALL, choices=RIGHTS_CHOICES)
+
     EMPTY = 0
     NEED_APPROVE = 1
     OCCUPIED = 2
