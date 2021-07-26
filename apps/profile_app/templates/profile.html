@@ -17,7 +17,7 @@
                     <p class="list-group-item">{{ object.user.get_full_name }}</p>
                     <p class="font-monospace list-group-item">{{ object.user.email }}</p>
                     {% if object.about %}
-                        <p class="list-group-item fs-6">{{ object.about }}</p>
+                        <p class="list-group-item fs-5">{{ object.about }}</p>
                     {% endif %}
                     <div class="list-group-item">
                         <a href="#user_services" class="btn btn-success fs-4">
@@ -39,7 +39,7 @@
                         {{ field }}
                     </div>
                 {% endfor %}
-                <input class="col-12 btn btn-success" type="submit" value="Сохранить изменения">
+                <input class="col-12 fs-4 btn btn-success" type="submit" value="Сохранить изменения">
             </form>
         </div>
         <div class="card border-3 m-md-4 mt-3">
@@ -52,7 +52,7 @@
                         {{ field }}
                     </div>
                 {% endfor %}
-                <input class="col-12 btn btn-success" type="submit" value="Изменить пароль">
+                <input class="col-12 fs-4 btn btn-success" type="submit" value="Изменить пароль">
             </form>
         </div>
     {% endif %}

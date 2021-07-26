@@ -52,7 +52,10 @@ class RegistrationView(reg_activation_views.RegistrationView,
 
 class RegistrationCompleteView(BaseDetailedView):
     def get(self, request, *args, **kwargs):
-        self.add_message('Для заврешения регистрации подтвердите указанный при регистрации адерс электронной почты через высланное на него письмо', messages.INFO)
+        self.add_message(
+            f'Для завершения регистрации подтвердите указанный при регистрации '
+            f'адрес электронной почты через высланное на него письмо',
+            messages.INFO)
         return HttpResponseRedirect(reverse_lazy('index'))
 
 

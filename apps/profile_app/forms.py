@@ -79,7 +79,6 @@ class PasswordChangeForm(SetPasswordForm):
             'class': 'form-control-lg w-100',
             'placeholder': _('Old password'),
             'autocomplete': 'current-password',
-            'autofocus': True
         }),
     )
 
