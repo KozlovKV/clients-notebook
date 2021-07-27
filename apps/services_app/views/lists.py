@@ -10,6 +10,7 @@ from apps.services_app import models as service_models, forms as service_forms
 
 class ServicesListView(generic_list_views.BaseListView, BaseDetailedView,
                        generic_edit_views.BaseFormView):
+    title = 'Список услуг'
     template_name = 'services_list.html'
     object_list = []
     model = service_models.Service
@@ -45,6 +46,7 @@ class ServicesListView(generic_list_views.BaseListView, BaseDetailedView,
 
 
 class MyServicesListView(generic_list_views.BaseListView, BaseDetailedView):
+    title = 'Мои услуги'
     anons_allowed = False
     template_name = 'my_services.html'
     object_list = []
@@ -72,6 +74,7 @@ class MyServicesListView(generic_list_views.BaseListView, BaseDetailedView):
 
 
 class ServiceNotesWithMeListView(generic_list_views.BaseListView, BaseDetailedView):
+    title = 'Я записан'
     anons_allowed = False
     template_name = 'my_notes.html'
     model = service_models.ServiceNote
@@ -84,6 +87,8 @@ class ServiceNotesWithMeListView(generic_list_views.BaseListView, BaseDetailedVi
 
 
 class ServiceNotesToMeListView(ServiceNotesWithMeListView):
+    title = 'Ко мне записаны'
+
     def get_queryset(self):
         notes = self.model.objects.filter(provider=self.request.user)
         return service_models.get_status_divided_notes_dicts(notes)

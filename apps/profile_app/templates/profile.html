@@ -1,10 +1,6 @@
 {% extends 'base/base.html' %}
-{% block title %}
-    {{ object.user }}
-{% endblock %}
 
 {% block main_content %}
-    <h1 class="text-center m-5">Профиль пользователя {{ object.user }}</h1>
     <div class="card border-3 m-1 m-md-4">
         <div class="row">
             {% if object.get_avatar_url != '' %}

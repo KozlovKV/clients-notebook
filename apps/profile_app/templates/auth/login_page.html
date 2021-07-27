@@ -1,11 +1,6 @@
 {% extends 'base/base.html' %}
 
-{% block title %}
-    Вход
-{% endblock %}
-
 {% block main_content %}
-    <h1 class="text-center m-5">Страница входа</h1>
     <form method="post" class="card m-1">
         <div class="card-body m-2 row row-cols-md-2 g-2">
             {% csrf_token %}

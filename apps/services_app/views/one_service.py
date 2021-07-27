@@ -1,22 +1,17 @@
 import datetime
 
 from django.contrib import messages as messages
-from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import edit as generic_edit_views, \
     detail as generic_detail_views, list as generic_list_views
 
 from apps.front_app.views import BaseDetailedView
 from apps.services_app import models as service_models, forms as service_forms
-from apps.services_app.views.lists import MyServicesListView, \
-    ServiceNotesWithMeListView
+from apps.services_app.views.lists import MyServicesListView
 
 
 class CreateServiceView(MyServicesListView, generic_edit_views.BaseCreateView):
-    anons_allowed = False
-    template_name = 'my_services.html'
     object = None
-    model = service_models.Service
     form_class = service_forms.ServiceForm
 
     def get_success_url(self):
@@ -61,6 +56,8 @@ class OneServiceCalendarView(BaseDetailedView, generic_detail_views.DetailView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.process_permission(self.request.user, self.object.CAN_SEE_FIELD)
+        self.title = self.object.label
+        self.main_h1 = ''
         return super(OneServiceCalendarView, self).get(request, *args, **kwargs)
 
 
@@ -164,4 +161,6 @@ class OneServiceDayView(generic_list_views.BaseListView, BaseDetailedView):
         self.service.process_permission(
             self.request.user, self.service.CAN_SEE_FIELD
         )
+        self.title = f'{self.service.label} - {self.date}'
+        self.main_h1 = ''
         return super(OneServiceDayView, self).get(request, *args, **kwargs)

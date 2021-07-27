@@ -11,6 +11,8 @@ import apps.profile_app.forms as profile_forms
 
 
 class BaseDetailedView(TemplateView):
+    title = ''
+    main_h1 = None
     THEME = 'Darkly'
     THEMES_JSON_URL = 'https://bootswatch.com/api/5.json'
     anons_allowed = True
@@ -54,6 +56,8 @@ class BaseDetailedView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BaseDetailedView, self).get_context_data(**kwargs)
         context.update({
+            'title': self.title,
+            'main_h1': self.main_h1,
             'theme_css_url': self.get_theme_css_url(),
             'menu': self.get_menu(),
             'login_form': profile_forms.AuthForm(),
@@ -75,4 +79,5 @@ class BaseDetailedView(TemplateView):
 
 
 class IndexView(BaseDetailedView):
+    title = 'Главная'
     template_name = 'index.html'

@@ -17,12 +17,14 @@ from apps.profile_app import forms as profile_forms
 
 
 class LoginView(auth_views.LoginView, BaseDetailedView):
+    title = 'Вход'
     template_name = 'auth/login_page.html'
     form_class = profile_forms.AuthForm
 
 
 class RegistrationView(reg_activation_views.RegistrationView,
                        BaseDetailedView):
+    title = 'Регистрация'
     email_subject_template = 'django_registration/activation_email_subject.txt'
     email_body_template = 'django_registration/activation_email_body.txt'
     template_name = 'django_registration/register.html'
@@ -61,10 +63,21 @@ class RegistrationCompleteView(BaseDetailedView):
 
 
 class ActivationView(reg_activation_views.ActivationView, BaseDetailedView):
+    title = 'Активация аккаунта'
+
     def activate(self, *args, **kwargs):
         user = super(ActivationView, self).activate(*args, **kwargs)
         login(self.request, user)
         return user
+
+
+class ActivationCompleteView(BaseDetailedView):
+    def get(self, request, *args, **kwargs):
+        self.add_message(
+            f'Ваш аккаунт активирован! '
+            f'Теперь вам доступен весь функционал сайта',
+            messages.SUCCESS)
+        return HttpResponseRedirect(reverse_lazy('index'))
 
 
 class PasswordChangeView(auth_views.PasswordChangeView, BaseDetailedView):
@@ -77,6 +90,7 @@ class PasswordChangeView(auth_views.PasswordChangeView, BaseDetailedView):
 
 
 class PasswordResetView(auth_views.PasswordResetView, BaseDetailedView):
+    title = 'Сброс пароля'
     form_class = profile_forms.PasswordResetForm
     template_name = 'auth/password_reset_form.html'
 
@@ -86,6 +100,7 @@ class PasswordResetView(auth_views.PasswordResetView, BaseDetailedView):
 
 
 class PasswordResetConfirmView(auth_views.PasswordResetConfirmView, BaseDetailedView):
+    title = 'Создание нового пароля'
     post_reset_login = True
     form_class = profile_forms.SetPasswordForm
     template_name = 'auth/password_reset_confirm.html'
@@ -103,6 +118,8 @@ class ProfileView(generic_edit_views.UpdateView, BaseDetailedView):
 
     def get_object(self, queryset=None):
         real_user = super(ProfileView, self).get_object(queryset)
+        self.title = str(real_user)
+        self.main_h1 = f'Профиль пользователя {self.title}'
         return profile_models.UserAdditionInfo.objects.get(user=real_user)
 
     def get_success_url(self):

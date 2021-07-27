@@ -3,7 +3,10 @@
     Закрыто
 {% endblock %}
 
-{% block main_content %}
+{% block main_h1 %}
     <h1>Извините, но регистрация в данный момент закрыта</h1>
+{% endblock %}
+
+{% block main_content %}
     <a class="btn btn-primary" href="{% url 'index' %}">На главную</a>
 {% endblock %}

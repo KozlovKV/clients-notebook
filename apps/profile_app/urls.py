@@ -31,9 +31,7 @@ urlpatterns = [
 reg_patterns = [
     path(
         'activate/complete/',
-        BaseDetailedView.as_view(
-            template_name='django_registration/activation_complete.html'
-        ),
+        profile_views.ActivationCompleteView.as_view(),
         name='django_registration_activation_complete',
     ),
     path(
@@ -54,6 +52,7 @@ reg_patterns = [
     path(
         'register/closed/',
         BaseDetailedView.as_view(
+            title='Регистрация закрыта',
             template_name='django_registration/registration_closed.html'
         ),
         name='django_registration_disallowed',
