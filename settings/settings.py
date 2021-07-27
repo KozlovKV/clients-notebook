@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from django.contrib import messages
 
-import secret_const
+import const
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,13 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secret_const.SECRET_KEY
+SECRET_KEY = const.secret_settings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0',
-                 secret_const.MY_IP, secret_const.VPS_IP,
+                 const.secret_settings.MY_IP, const.secret_settings.VPS_IP,
                  'www.clients-notebook.ru', 'clients-notebook.ru']
 
 
@@ -100,7 +100,7 @@ DATABASES = {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'cndb',
             'USER': 'cndbuser',
-            'PASSWORD': secret_const.DB_PASSWORD,
+            'PASSWORD': const.secret_settings.DB_PASSWORD,
             'HOST': 'localhost',
             'PORT': '',
         }
@@ -128,13 +128,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_OPEN = True
 
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_PORT = 2525
-EMAIL_HOST_USER = secret_const.EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = secret_const.EMAIL_HOST_PASSWORD
-EMAIL_USE_TLS = True
-SERVER_EMAIL = EMAIL_HOST_USER
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_BACKEND = const.smtp_settings.EMAIL_BACKEND
+EMAIL_HOST = const.smtp_settings.EMAIL_HOST
+EMAIL_PORT = const.smtp_settings.EMAIL_PORT
+EMAIL_HOST_USER = const.smtp_settings.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = const.smtp_settings.EMAIL_HOST_PASSWORD
+EMAIL_USE_TLS = const.smtp_settings.EMAIL_USE_TLS
+SERVER_EMAIL = const.smtp_settings.SERVER_EMAIL
+DEFAULT_FROM_EMAIL = const.smtp_settings.DEFAULT_FROM_EMAIL
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
