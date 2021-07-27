@@ -52,7 +52,7 @@ class OneServiceCalendarView(BaseDetailedView, generic_detail_views.DetailView):
         context = super(OneServiceCalendarView, self).get_context_data(**kwargs)
         context.update({
             'dates_with_notes': self.get_dates_for_js(
-                self.object.get_dates_with_notes()
+                self.object.dates_with_notes
             )
         })
         context.update(self.get_service_form_context())
@@ -97,7 +97,7 @@ class OneServiceDayView(BaseDetailedView, generic_list_views.ListView):
         return self.service.notes.filter(date=self.date)
 
     def get_queryset(self):
-        return MyServiceNotesListView.get_status_divided_notes_dicts(
+        return service_models.get_status_divided_notes_dicts(
             self.get_notes_list()
         )
 

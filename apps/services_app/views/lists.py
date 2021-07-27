@@ -88,34 +88,17 @@ class MyServiceNotesListView(BaseDetailedView):
     anons_allowed = False
     template_name = 'my_notes.html'
 
-    @staticmethod
-    def get_status_divided_notes_dicts(notes):
-        notes_dicts = []
-        for status_id in range(len(service_models.ServiceNote.STATUS_CHOICES)):
-            status_type_dict = {
-                'name': service_models.ServiceNote.STATUS_CHOICES[status_id][1],
-                'class':
-                    service_models.ServiceNote.STATUS_CSS_CLASSES[status_id][1],
-                'list': list(notes.filter(
-                    status=
-                    service_models.ServiceNote.STATUS_CSS_CLASSES[status_id][0]
-                ))
-            }
-            status_type_dict['list'].sort(key=lambda x: (x.date, x.time_start))
-            notes_dicts.append(status_type_dict)
-        return notes_dicts
-
     def get_notes_me2other(self):
         notes = service_models.ServiceNote.objects.filter(
             client=self.request.user
         )
-        return self.get_status_divided_notes_dicts(notes)
+        return service_models.get_status_divided_notes_dicts(notes)
 
     def get_notes_other2me(self):
         notes = service_models.ServiceNote.objects.filter(
             provider=self.request.user
         )
-        return self.get_status_divided_notes_dicts(notes)
+        return service_models.get_status_divided_notes_dicts(notes)
 
     def get_context_data(self, **kwargs):
         context = super(MyServiceNotesListView, self).get_context_data(**kwargs)

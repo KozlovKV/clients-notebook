@@ -43,6 +43,14 @@ class Service(models.Model):
     def notes(self):
         return ServiceNote.objects.filter(service=self)
 
+    @property
+    def dates_with_notes(self):
+        return get_dates_with_notes(self.notes)
+
+    @property
+    def status_divided_notes_dicts(self):
+        return get_status_divided_notes_dicts(self.notes)
+
     def have_permission(self, user, permission):
         check_function = self.PERMISSION_CHECKERS[
             self.PERMISSION_FIELDS_GETTERS[permission](self)
@@ -52,12 +60,6 @@ class Service(models.Model):
     def process_permission(self, user, permission):
         if not self.have_permission(user, permission):
             raise PermissionDenied()
-
-    def get_dates_with_notes(self):
-        dates = set()
-        for note in self.notes:
-            dates.add(note.date)
-        return dates
 
     def get_absolute_url(self):
         return reverse_lazy('one_service_calendar', kwargs={'pk': self.pk})
@@ -187,6 +189,41 @@ class ServiceNote(models.Model):
         return reverse_lazy('cancel_record_to_note', kwargs={
             'pk': self.pk,
         })
+
+
+def get_dates_with_notes(notes):
+    dates = set()
+    for note in notes:
+        dates.add(note.date)
+    return dates
+
+
+def get_date_divided_notes_dicts(notes):
+    notes_dicts = []
+    for date in get_dates_with_notes(notes):
+        date_dict = {
+            'name': date,
+            'list': list(notes.filter(date=date))
+        }
+        date_dict['list'].sort(key=lambda x: x.time_start)
+        notes_dicts.append(date_dict)
+    return notes_dicts
+
+
+def get_status_divided_notes_dicts(notes):
+    notes_dicts = []
+    for status_id in range(len(ServiceNote.STATUS_CHOICES)):
+        status_type_dict = {
+            'name': ServiceNote.STATUS_CHOICES[status_id][1],
+            'class':
+                ServiceNote.STATUS_CSS_CLASSES[status_id][1],
+            'list': list(notes.filter(
+                status=ServiceNote.STATUS_CSS_CLASSES[status_id][0]
+            ))
+        }
+        status_type_dict['list'].sort(key=lambda x: (x.date, x.time_start))
+        notes_dicts.append(status_type_dict)
+    return notes_dicts
 
 
 class ServiceNoteGenerationPattern(models.Model):
