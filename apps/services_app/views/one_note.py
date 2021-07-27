@@ -86,7 +86,7 @@ class ServiceNoteCancelView(BaseServiceNoteEditView):
 class SingleServiceNoteDeleteView(BaseServiceNoteEditView):
     anons_allowed = False
 
-    def delete(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         resp = super(SingleServiceNoteDeleteView, self).post(request, *args, **kwargs)
         if self.request.user == self.object.provider:
             self.object.delete()

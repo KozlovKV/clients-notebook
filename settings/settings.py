@@ -26,10 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = const.secret_settings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = const.secret_settings.DEBUG
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0',
-                 const.secret_settings.MY_IP, const.secret_settings.VPS_IP,
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', const.secret_settings.VPS_IP,
                  'www.clients-notebook.ru', 'clients-notebook.ru']
 
 
@@ -86,25 +85,25 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# if DEBUG:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
-# else:
-DATABASES = {
-    'default':
-        {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'cndb',
-            'USER': 'cndbuser',
-            'PASSWORD': const.secret_settings.DB_PASSWORD,
-            'HOST': 'localhost',
-            'PORT': '',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
-}
+    }
+else:
+    DATABASES = {
+        'default':
+            {
+                'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                'NAME': 'cndb',
+                'USER': 'cndbuser',
+                'PASSWORD': const.secret_settings.DB_PASSWORD,
+                'HOST': 'localhost',
+                'PORT': '',
+            }
+    }
 
 
 # Password validation
