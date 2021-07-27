@@ -127,7 +127,7 @@ class ServiceNote(models.Model):
         return self.status == self.EMPTY
 
     def record(self, client, client_addition=None):
-        self.service.process_permission(client, 'record')
+        self.service.process_permission(client, self.service.CAN_RECORD_FIELD)
         self.client_addition = client_addition
         if client == self.provider:
             self.set_status(self.OCCUPIED)

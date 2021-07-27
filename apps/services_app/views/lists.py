@@ -8,11 +8,12 @@ from apps.front_app.views import BaseDetailedView
 from apps.services_app import models as service_models, forms as service_forms
 
 
-class ServicesListView(BaseDetailedView, generic_list_views.BaseListView,
+class ServicesListView(generic_list_views.BaseListView, BaseDetailedView,
                        generic_edit_views.BaseFormView):
     template_name = 'services_list.html'
     object_list = []
     model = service_models.Service
+    context_object_name = 'services_list'
     form_class = service_forms.ServiceSearchForm
     success_url = reverse_lazy('services_list')
 
@@ -31,10 +32,6 @@ class ServicesListView(BaseDetailedView, generic_list_views.BaseListView,
         all_services = super(ServicesListView, self).get_queryset()
         return self.get_allowed_services(all_services)
 
-    def get(self, request, *args, **kwargs):
-        self.object_list = self.get_queryset()
-        return super(ServicesListView, self).get(request, *args, **kwargs)
-
     def form_valid(self, form):
         data = form.cleaned_data
         self.object_list = self.model.objects.filter(
@@ -47,21 +44,17 @@ class ServicesListView(BaseDetailedView, generic_list_views.BaseListView,
         return self.render_to_response(context, **self.kwargs)
 
 
-class MyServicesListView(BaseDetailedView, generic_list_views.ListView):
+class MyServicesListView(generic_list_views.BaseListView, BaseDetailedView):
     anons_allowed = False
     template_name = 'my_services.html'
     object_list = []
     model = service_models.Service
-    form_class = service_forms.ServiceForm
-    success_url = reverse_lazy('my_services')
+    context_object_name = 'services_list'
 
     def get_queryset(self):
-        queryset = []
         if self.request.user.is_authenticated:
-            queryset = service_models.Service.objects.filter(
-                provider=self.request.user
-            )
-        return queryset
+            return self.model.objects.filter(provider=self.request.user)
+        return []
 
     def get_service_form_context(self):
         return {
@@ -74,36 +67,23 @@ class MyServicesListView(BaseDetailedView, generic_list_views.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({
-            'object_list': self.get_queryset(),
-        })
         context.update(self.get_service_form_context())
         return context
 
-    def get(self, request, *args, **kwargs):
-        return super(MyServicesListView, self).get(request, *args, **kwargs)
 
-
-class MyServiceNotesListView(BaseDetailedView):
+class ServiceNotesWithMeListView(generic_list_views.BaseListView, BaseDetailedView):
     anons_allowed = False
     template_name = 'my_notes.html'
+    model = service_models.ServiceNote
+    object_list = []
+    context_object_name = 'notes_list'
 
-    def get_notes_me2other(self):
-        notes = service_models.ServiceNote.objects.filter(
-            client=self.request.user
-        )
+    def get_queryset(self):
+        notes = self.model.objects.filter(client=self.request.user)
         return service_models.get_status_divided_notes_dicts(notes)
 
-    def get_notes_other2me(self):
-        notes = service_models.ServiceNote.objects.filter(
-            provider=self.request.user
-        )
-        return service_models.get_status_divided_notes_dicts(notes)
 
-    def get_context_data(self, **kwargs):
-        context = super(MyServiceNotesListView, self).get_context_data(**kwargs)
-        context.update({
-            'object_list': self.get_notes_me2other(),
-            'other2me': self.get_notes_other2me(),
-        })
-        return context
+class ServiceNotesToMeListView(ServiceNotesWithMeListView):
+    def get_queryset(self):
+        notes = self.model.objects.filter(provider=self.request.user)
+        return service_models.get_status_divided_notes_dicts(notes)

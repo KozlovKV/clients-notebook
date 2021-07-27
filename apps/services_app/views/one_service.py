@@ -9,7 +9,7 @@ from django.views.generic import edit as generic_edit_views, \
 from apps.front_app.views import BaseDetailedView
 from apps.services_app import models as service_models, forms as service_forms
 from apps.services_app.views.lists import MyServicesListView, \
-    MyServiceNotesListView
+    ServiceNotesWithMeListView
 
 
 class CreateServiceView(MyServicesListView, generic_edit_views.BaseCreateView):
@@ -79,9 +79,10 @@ class DeleteServiceView(OneServiceCalendarView,
         return reverse_lazy('my_services')
 
 
-class OneServiceDayView(BaseDetailedView, generic_list_views.ListView):
+class OneServiceDayView(generic_list_views.BaseListView, BaseDetailedView):
     template_name = 'one_service_day.html'
     object_list = []
+    context_object_name = 'notes_list'
     base_url_kwargs = {}
 
     @property
@@ -163,5 +164,4 @@ class OneServiceDayView(BaseDetailedView, generic_list_views.ListView):
         self.service.process_permission(
             self.request.user, self.service.CAN_SEE_FIELD
         )
-        self.object_list = self.get_queryset()
         return super(OneServiceDayView, self).get(request, *args, **kwargs)

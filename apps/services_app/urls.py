@@ -58,8 +58,12 @@ urlpatterns = [
         name='create_service'
     ),
     path(
-        'my/notes/', service_views.lists.MyServiceNotesListView.as_view(),
-        name='my_notes'
+        'my/notes/me2other', service_views.lists.ServiceNotesWithMeListView.as_view(),
+        name='me2other'
+    ),
+    path(
+        'my/notes/other2me', service_views.lists.ServiceNotesToMeListView.as_view(),
+        name='other2me'
     ),
     path(
         'my/notes/delete/<int:pk>/',

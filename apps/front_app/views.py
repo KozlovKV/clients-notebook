@@ -43,7 +43,8 @@ class BaseDetailedView(TemplateView):
                     {'pk': self.request.user.pk}
                 ),
                 self.get_link_dict('my_services', 'Мои услуги'),
-                self.get_link_dict('my_notes', 'Я записан'),
+                self.get_link_dict('me2other', 'Я записан'),
+                self.get_link_dict('other2me', 'Ко мне записаны'),
             ]
         return links
 
