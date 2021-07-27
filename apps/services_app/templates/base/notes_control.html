@@ -83,11 +83,12 @@
                                         <div class="d-flex align-items-center justify-content-around row row-cols-1 row-cols-md-2">
                                             <span class="col fs-5">{{ pattern.object }}</span>
                                             <div class="col row row-cols-1 row-cols-md-2 gy-2 justify-content-around">
-                                                <div class="col">
-                                                    <a class="w-100 btn btn-success" href="{{ pattern.execute_url }}">
+                                                <form class="col" method="post" action="{{ pattern.execute_url }}">
+                                                    {% csrf_token %}
+                                                    <button class="w-100 btn btn-success" type="submit">
                                                         Использовать паттерн
-                                                    </a>
-                                                </div>
+                                                    </button>
+                                                </form>
                                                 <div class="col">
                                                     <a class="w-100 btn btn-primary" href="{{ pattern.edit_url }}">
                                                         Редактировать в форме

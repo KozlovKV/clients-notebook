@@ -1,3 +1,5 @@
+from django.http import HttpResponseRedirect
+
 from apps.services_app import models as service_models, forms as service_forms
 from apps.services_app.views.multi_notes import MultiServiceNoteCreateView
 from apps.services_app.views.one_service import OneServiceDayView
@@ -24,11 +26,8 @@ class MultiServiceNotePatternExecuteView(MultiServiceNotePatternEditView,
                                          MultiServiceNoteCreateView):
     anons_allowed = False
 
-    def get(self, request, *args, **kwargs):
-        response = super(MultiServiceNotePatternExecuteView, self).get(request,
-                                                                       *args,
-                                                                       **kwargs)
+    def post(self, request, *args, **kwargs):
         pattern = self.get_object()
         form = service_forms.MultiServiceNoteForm(instance=pattern)
         self.form_valid(form)
-        return response
+        return HttpResponseRedirect(self.get_success_url())

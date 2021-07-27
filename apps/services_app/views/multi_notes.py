@@ -23,10 +23,7 @@ class MultiServiceNoteCreateView(OneServiceDayView,
         return super(MultiServiceNoteCreateView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('one_service_day', args=(
-            self.kwargs['pk'], self.kwargs['Y'],
-            self.kwargs['m'], self.kwargs['d'],
-        ))
+        return self.service.get_date_url(self.date)
 
 
 class MultiServiceNoteDeleteView(OneServiceDayView):

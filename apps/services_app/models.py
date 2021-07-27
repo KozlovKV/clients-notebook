@@ -62,6 +62,14 @@ class Service(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('one_service_calendar', kwargs={'pk': self.pk})
 
+    def get_date_url(self, date):
+        return reverse_lazy('one_service_day', kwargs={
+            'pk': self.pk,
+            'Y': date.year,
+            'm': date.month,
+            'd': date.day,
+        })
+
     def get_edit_url(self):
         return reverse_lazy('edit_service', kwargs={'pk': self.pk})
 
