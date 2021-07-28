@@ -79,7 +79,7 @@ class DeleteServiceView(OneServiceCalendarView,
 class OneServiceDayView(generic_list_views.BaseListView, BaseDetailedView):
     template_name = 'one_service_day.html'
     object_list = []
-    context_object_name = 'notes_list'
+    context_object_name = 'notes_list_l1'
     base_url_kwargs = {}
 
     @property

@@ -1,40 +1,18 @@
 <div class="row row-cols-1 gy-3">
-    {% for notes_dict in notes_list %}
-        {% if notes_dict.list %}
+    {% for notes_dict_l2 in notes_list_l2 %}
+        {% if notes_dict_l2.list %}
         <div class="col">
-            <div class="card border-2 border-{{ notes_dict.class_postfix }}">
+            <div class="card border-2 border-{{ notes_dict_l2.class_postfix }}">
                 <div class="card-header d-flex justify-content-between">
-                    <h3>{{ notes_dict.name }}</h3>
-                    <button class="btn btn-{{ notes_dict.class_postfix }}" type="button" data-toggle="collapse" data-target="#{{ notes_dict.id }}">
+                    <h3>{{ notes_dict_l2.name }}</h3>
+                    <button class="btn btn-{{ notes_dict_l2.class_postfix }}" type="button" data-toggle="collapse" data-target="#{{ notes_dict_l2.id  }}">
                         <i class="fs-3 fas fa-arrow-circle-down"></i>
                     </button>
                 </div>
-                <div class="card-body collapse" id="{{ notes_dict.id }}">
-                    {% for notes_dict_l2 in notes_dict.list %}
-                        <div class="row row-cols-1 gy-3">
-                            {% if notes_dict_l2.list %}
-                            <div class="col">
-                                <div class="card border-2 border-{{ notes_dict_l2.class_postfix }}">
-                                    <div class="card-header d-flex justify-content-between">
-                                        <h3>{{ notes_dict_l2.name }}</h3>
-                                        <button class="btn btn-{{ notes_dict_l2.class_postfix }}" type="button" data-toggle="collapse" data-target="#{{ notes_dict_l2.id }}">
-                                            <i class="fs-3 fas fa-arrow-circle-down"></i>
-                                        </button>
-                                    </div>
-                                    <div class="card-body collapse" id="{{ notes_dict_l2.id }}">
-                                        <div class="row row-cols-1 row-cols-md-3 g-2 g-md-3 justify-content-around">
-                                            {% for note in notes_dict_l2.list %}
-                                                <div class="col">
-                                                    {% include 'base/one_note_card.html' %}
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
+                <div class="card-body collapse p-1 p-md-3" id="{{ notes_dict_l2.id  }}">
+                    {% with notes_list_l1=notes_dict_l2.list %}
+                        {% include 'base/notes_list.html' %}
+                    {% endwith %}
                 </div>
             </div>
         </div>

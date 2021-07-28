@@ -79,14 +79,14 @@ class ServiceNotesWithMeListView(generic_list_views.BaseListView, BaseDetailedVi
     template_name = 'my_notes.html'
     model = service_models.ServiceNote
     object_list = []
-    context_object_name = 'notes_list'
+    context_object_name = 'notes_list_l2'
 
     def get_queryset(self):
         notes = self.model.objects.filter(client=self.request.user)
         dicts_list = service_models.get_date_divided_notes_dicts(notes)
         for dict_l1 in dicts_list:
             dict_l1['list'] = service_models.get_status_divided_notes_dicts(
-                dict_l1['list']
+                dict_l1['list'], dict_l1['id']
             )
         return dicts_list
 
@@ -99,6 +99,10 @@ class ServiceNotesToMeListView(ServiceNotesWithMeListView):
         dicts_list = service_models.get_date_divided_notes_dicts(notes)
         for dict_l1 in dicts_list:
             dict_l1['list'] = service_models.get_status_divided_notes_dicts(
-                dict_l1['list']
+                dict_l1['list'], dict_l1['id']
             )
         return dicts_list
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ServiceNotesToMeListView, self).get_context_data(object_list=None, **kwargs)
+        return context

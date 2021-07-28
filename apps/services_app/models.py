@@ -198,7 +198,8 @@ def get_dates_with_notes(notes):
     return dates
 
 
-def get_date_divided_notes_dicts(notes):
+# TODO: В один класс всё это надо запихать
+def get_date_divided_notes_dicts(notes, parent_id=''):
     notes_dicts = []
     for date in get_dates_with_notes(notes):
         date_dict = {
@@ -207,11 +208,13 @@ def get_date_divided_notes_dicts(notes):
             'id': f'id_date_{date}',
             'list': notes.filter(date=date).extra(order_by=['date'])
         }
+        if parent_id != '':
+            date_dict['id'] += f'_in_{parent_id}'
         notes_dicts.append(date_dict)
     return notes_dicts
 
 
-def get_status_divided_notes_dicts(notes):
+def get_status_divided_notes_dicts(notes, parent_id=''):
     notes_dicts = []
     for status_id in range(len(ServiceNote.STATUS_CHOICES)):
         status_type_dict = {
@@ -223,6 +226,8 @@ def get_status_divided_notes_dicts(notes):
                 status=ServiceNote.STATUS_CSS_CLASSES[status_id][0]
             ).extra(order_by=['date', 'time_start'])
         }
+        if parent_id != '':
+            status_type_dict['id'] += f'_in_{parent_id}'
         notes_dicts.append(status_type_dict)
     return notes_dicts
 
