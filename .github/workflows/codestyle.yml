@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  pep8statistics:
+  codestyle:
 
     runs-on: ubuntu-latest
 
@@ -21,7 +21,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pycodestyle
+        pip install pycodestyle pylint
     - name: Analysing the code with pycodestyle
+      continue-on-error: true
       run: |
         pycodestyle . --exclude=venv,migrations --statistics --max-line-length=80 --format=pylint
+    - name: Analysing the code with pylint
+      continue-on-error: true
+      run: |
+        echo `ls -R|grep .py$|xargs`
+        pylint `ls -R|grep .py$|xargs`
