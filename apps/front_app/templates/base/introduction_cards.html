@@ -1,0 +1,61 @@
+<div class="d-flex justify-content-around g-1 row">
+    <div class="col-md-6">
+        <div class="card border-3 text-center fs-5">
+            <h2 class="card-header">Для чего нужен этот сайт?</h2>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item card-text">
+                        Clients-notebook.ru - это простое вэб-приложение,
+                        которое позволяет удобно вести запись клиентов для
+                        оказания каких-либо услуг.
+                    </li>
+                    <li class="list-group-item card-text">
+                        Незарегистрированные пользователи смогут записаться
+                        на услуги, видимость и возможность записи на которые
+                        открыта создателем. При этом перед фиксацией запись
+                        будет отправлена на одобрение создателю услуги.
+                    </li>
+                    <li class="list-group-item card-text"><strong>
+                        Мы предоставляем только возможность записи с целью
+                        тайм-менеджмента и никак не отвечаем за качество
+                        предоставляемых услуг!
+                    </strong></li>
+                </ul>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary fs-4" href="{% url 'services_list' %}">Записаться к кому-нибудь</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card border-3 text-center fs-5">
+            <h2 class="card-header">Для чего нужен этот сайт?</h2>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item card-text">
+                        После регистрации вам становится доступным
+                        создание услуг и осуществление записи на них.
+                    </li>
+                    <li class="list-group-item card-text">
+                        При записи к самому себе подтверждение не
+                        требуется, а когда вы будете записываться к
+                        кому-то другому, то у владельца услуги будет
+                        отображаться ссылка на ваш профиль, что повысит
+                        вашу узнаваемость.
+                    </li>
+                    <li class="list-group-item card-text">
+                        Одной из самых крутых особенностей нашего сайта
+                        является возможность создавать паттерны генерации
+                        записей - особые правила для создания нескольких
+                        записей сразу. Единожды настроив и сохранив
+                        паттерн, вы сможете в дальнейшем за несколько
+                        кликов полностью заполнять день новыми записями.
+                    </li>
+                </ul>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-warning fs-4" href="{% url 'register' %}">Регистрация</a>
+            </div>
+        </div>
+    </div>
+</div>

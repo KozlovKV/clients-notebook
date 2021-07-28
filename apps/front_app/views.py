@@ -4,10 +4,12 @@ import requests
 from django.urls import reverse
 import django.contrib.messages as messages
 from django.core.exceptions import PermissionDenied
+from django.utils import timezone
 
 from django.views.generic import TemplateView
 
 import apps.profile_app.forms as profile_forms
+from apps.services_app import models as service_models
 
 
 class BaseDetailedView(TemplateView):
@@ -81,3 +83,21 @@ class BaseDetailedView(TemplateView):
 class IndexView(BaseDetailedView):
     title = 'Главная'
     template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            self.main_h1 = f'Здравствуйте, {user.get_full_name()}!'
+            context.update({
+                'services_list': service_models.Service.objects.filter(
+                    provider=user.pk
+                ),
+                'notes_list_l1': service_models.get_status_divided_notes_dicts(
+                    service_models.ServiceNote.objects.filter(
+                        provider=user.pk, date=timezone.now().date()
+                    )
+                )
+            })
+        context.update(super(IndexView, self).get_context_data(**kwargs))
+        return context

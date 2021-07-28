@@ -1,0 +1,25 @@
+<div class="card border-3 border-success">
+    <h3 class="card-header">{{ service.label }}</h3>
+    {% if service.get_image_url != '' %}
+        <img class="card-img-top" src="{{ service.get_image_url }}"
+             alt="Картинка услуги {{ service.label }}">
+    {% endif %}
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item card-text">
+                {{ service.description }}
+            </li>
+            <li class="list-group-item text-center">
+                <a class="btn btn-success m-1" href="{{ service.get_absolute_url }}">Календарь услуги</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex justify-content-between row row-cols-1 row-cols-md-2">
+            <span class="col card-text">Доступность записи - {{ service.get_who_can_record_display }}</span>
+            <a class="col card-link text-muted" href="{% url 'profile' service.provider.pk %}">
+                Поставщик ({{ service.provider }})
+            </a>
+        </div>
+    </div>
+</div>

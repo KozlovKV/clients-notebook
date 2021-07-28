@@ -1,0 +1,7 @@
+<div class="d-flex justify-content-around g-3 row row-cols-1 row-cols-md-3">
+    {% for service in services_list %}
+        <div class="col">
+            {% include 'base/service_slim_card.html' %}
+        </div>
+    {% endfor %}
+</div>
