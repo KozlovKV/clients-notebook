@@ -83,7 +83,12 @@ class ServiceNotesWithMeListView(generic_list_views.BaseListView, BaseDetailedVi
 
     def get_queryset(self):
         notes = self.model.objects.filter(client=self.request.user)
-        return service_models.get_status_divided_notes_dicts(notes)
+        dicts_list = service_models.get_date_divided_notes_dicts(notes)
+        for dict_l1 in dicts_list:
+            dict_l1['list'] = service_models.get_status_divided_notes_dicts(
+                dict_l1['list']
+            )
+        return dicts_list
 
 
 class ServiceNotesToMeListView(ServiceNotesWithMeListView):
@@ -91,4 +96,9 @@ class ServiceNotesToMeListView(ServiceNotesWithMeListView):
 
     def get_queryset(self):
         notes = self.model.objects.filter(provider=self.request.user)
-        return service_models.get_status_divided_notes_dicts(notes)
+        dicts_list = service_models.get_date_divided_notes_dicts(notes)
+        for dict_l1 in dicts_list:
+            dict_l1['list'] = service_models.get_status_divided_notes_dicts(
+                dict_l1['list']
+            )
+        return dicts_list

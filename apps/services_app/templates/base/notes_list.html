@@ -2,14 +2,14 @@
     {% for notes_dict in notes_list %}
         {% if notes_dict.list %}
         <div class="col">
-            <div class="card border-2 border-{{ notes_dict.class }}">
+            <div class="card border-2 border-{{ notes_dict.class_postfix }}">
                 <div class="card-header d-flex justify-content-between">
                     <h3>{{ notes_dict.name }}</h3>
-                    <button class="btn btn-{{ notes_dict.class }}" type="button" data-toggle="collapse" data-target="#id_status_{{ notes_dict.class }}">
+                    <button class="btn btn-{{ notes_dict.class_postfix }}" type="button" data-toggle="collapse" data-target="#{{ notes_dict.id }}">
                         <i class="fs-3 fas fa-arrow-circle-down"></i>
                     </button>
                 </div>
-                <div class="card-body collapse" id="id_status_{{ notes_dict.class }}">
+                <div class="card-body collapse" id="{{ notes_dict.id }}">
                     <div class="row row-cols-1 row-cols-md-3 g-2 g-md-3 justify-content-around">
                         {% for note in notes_dict.list %}
                             <div class="col">

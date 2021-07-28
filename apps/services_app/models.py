@@ -203,9 +203,10 @@ def get_date_divided_notes_dicts(notes):
     for date in get_dates_with_notes(notes):
         date_dict = {
             'name': date,
-            'list': list(notes.filter(date=date))
+            'class_postfix': 'primary',
+            'id': f'id_date_{date}',
+            'list': notes.filter(date=date).extra(order_by=['date'])
         }
-        date_dict['list'].sort(key=lambda x: x.time_start)
         notes_dicts.append(date_dict)
     return notes_dicts
 
@@ -215,13 +216,13 @@ def get_status_divided_notes_dicts(notes):
     for status_id in range(len(ServiceNote.STATUS_CHOICES)):
         status_type_dict = {
             'name': ServiceNote.STATUS_CHOICES[status_id][1],
-            'class':
+            'class_postfix':
                 ServiceNote.STATUS_CSS_CLASSES[status_id][1],
-            'list': list(notes.filter(
+            'id': f'id_status_{status_id}',
+            'list': notes.filter(
                 status=ServiceNote.STATUS_CSS_CLASSES[status_id][0]
-            ))
+            ).extra(order_by=['date', 'time_start'])
         }
-        status_type_dict['list'].sort(key=lambda x: (x.date, x.time_start))
         notes_dicts.append(status_type_dict)
     return notes_dicts
 
