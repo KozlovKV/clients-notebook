@@ -38,12 +38,12 @@ class BaseDetailedView(TemplateView):
     def get_menu(self) -> List[dict]:
         links = [
             self.get_link_dict('index', 'Главная'),
-            self.get_link_dict('services_list', 'Запись на приём'),
+            self.get_link_dict('services_list', 'Все услуги'),
         ]
         if self.request.user.is_authenticated:
             links += [
                 self.get_link_dict(
-                    'profile', f'Личный кабинет ({self.request.user})',
+                    'profile', f'Профиль ({self.request.user})',
                     {'pk': self.request.user.pk}
                 ),
                 self.get_link_dict('my_services', 'Мои услуги'),

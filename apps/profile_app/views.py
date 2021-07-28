@@ -129,7 +129,7 @@ class ProfileView(generic_edit_views.UpdateView, BaseDetailedView):
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
         context.update({
-            'object_list': service_models.Service.objects.filter(
+            'services_list': service_models.Service.objects.filter(
                 provider=self.object.user
             ),
             'change_password_form': profile_forms.PasswordChangeForm(
