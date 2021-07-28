@@ -195,7 +195,7 @@ def get_dates_with_notes(notes):
     dates = set()
     for note in notes:
         dates.add(note.date)
-    return dates
+    return sorted(list(dates), reverse=True)
 
 
 # TODO: В один класс всё это надо запихать
