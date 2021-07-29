@@ -12,22 +12,22 @@
             </button>
         </div>
         <div class="collapse navbar-collapse row col-12 col-md-10 justify-content-between" id="navbarSupportedContent">
-            <div class="navbar-nav col-12 col-md-10 md-justify-content-start">
+            <div class="navbar-nav col-12 col-md-9 md-justify-content-start">
                 {% for link in menu %}
                     <a class="nav-link ms-3 ms-md-0" href="{{ link.url }}">{{ link.name }}</a>
                 {% endfor %}
             </div>
             {% if user.is_authenticated %}
-                <div class="text-end col-12 col-md-2">
+                <div class="text-end col-12 col-md-3">
                     <a class="btn btn-danger" href="{% url 'logout' %}">
-                        <i class="bi bi-box-arrow-right"></i>
+                        Выйти <i class="bi bi-box-arrow-right"></i>
                     </a>
                 </div>
             {% else %}
-                <div class="d-flex justify-content-end col-12 col-md-2 row row-cols-2">
+                <div class="d-flex justify-content-end col-12 col-md-3 row row-cols-2">
                     <div class="text-center col">
                         <button class="btn btn-success" type="button" data-bs-target="#loginForm" data-bs-toggle="modal">
-                            <i class="bi bi-box-arrow-in-right"></i>
+                            Войти <i class="bi bi-box-arrow-in-right"></i>
                         </button>
                     </div>
                     <div class="text-center col">

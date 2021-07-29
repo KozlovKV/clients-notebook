@@ -81,6 +81,7 @@
                             <form class="col" method="post" action="{{ note.get_delete_url }}">
                                 {% csrf_token %}
                                 <input class="btn btn-danger" type="submit" value="Удалить запись">
+                                <i class="bi bi-file-earmark-x"></i>
                             </form>
                         </li>
                         {% if note.is_need_approve %}

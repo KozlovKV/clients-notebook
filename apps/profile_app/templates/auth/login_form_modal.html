@@ -3,8 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Вход</h5>
-        <button type="button" class="btn btn-light border-dark close" data-bs-dismiss="modal" aria-label="Закрыть">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn border-white close fs-5 bi bi-journal-x" data-bs-dismiss="modal" aria-label="Закрыть">
         </button>
       </div>
       <form method="post" action="{% url 'login' %}">
@@ -19,10 +18,11 @@
             {% endfor %}
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <div class="modal-footer d-flex justify-content-between">
           <a class="btn btn-warning" href="{% url 'password_reset' %}">Восстановить пароль</a>
-          <button type="submit" class="btn btn-success">Войти</button>
+          <button type="submit" class="btn btn-success">
+            Войти <i class="bi bi-box-arrow-in-right"></i>
+          </button>
         </div>
       </form>
     </div>
