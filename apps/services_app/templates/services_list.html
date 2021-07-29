@@ -8,8 +8,13 @@
         </a>
     {% endif %}
     <div class="card">
-        <h2 class="card-header">Поиск</h2>
-        <div class="card-body">
+        <div class="card-header d-flex justify-content-between">
+            <h2>Поиск</h2>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#search_form">
+                <i class="bi bi-arrow-down-up"></i>
+            </button>
+        </div>
+        <div class="card-body collapse" id="search_form">
             <form class="row g-2" method="post">
                 {% csrf_token %}
                 <div class="col-md-6">
@@ -20,7 +25,7 @@
                     <label class="form-label fs-5" for="id_{{ form.description.name }}">{{ form.description.label }}</label>
                     {{ form.description }}
                 </div>
-                    <button class="col-12 btn btn-primary" type="submit">Искать</button>
+                    <button class="col-12 btn btn-primary fs-4 w-100" type="submit">Искать  <i class="bi bi-search"></i></button>
             </form>
         </div>
     </div>

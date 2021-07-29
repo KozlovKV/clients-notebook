@@ -3,8 +3,8 @@
         <h3 class="font-monospace">
             {{ note.time_start }} - {{ note.time_end }}
         </h3>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#note_{{ note.id }}">
-            <i class="fs-3 fas fa-arrow-circle-down"></i>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#note_{{ note.id }}">
+            <i class="bi bi-arrow-down-up"></i>
         </button>
     </div>
     <div class="collapse" id="note_{{ note.id }}">
@@ -71,8 +71,8 @@
             <div class="card-footer text-center">
                 <div class="d-flex align-items-center justify-content-between">
                     <h4>Управление</h4>
-                    <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#note_{{ note.id }}_control_panel">
-                        <i class="fs-3 fas fa-arrow-circle-down"></i>
+                    <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#note_{{ note.id }}_control_panel">
+                        <i class="bi bi-arrow-down-up"></i>
                     </button>
                 </div>
                 <ul class="list-group list-group-flush collapse mt-2" id="note_{{ note.id }}_control_panel">
