@@ -1,6 +1,6 @@
 from typing import List
 
-import requests
+from django.templatetags.static import static
 from django.urls import reverse
 import django.contrib.messages as messages
 from django.core.exceptions import PermissionDenied
@@ -15,18 +15,9 @@ from apps.services_app import models as service_models
 class BaseDetailedView(TemplateView):
     title = ''
     main_h1 = None
-    THEME = 'Darkly'
-    THEMES_JSON_URL = 'https://bootswatch.com/api/5.json'
+    theme_name = 'darkly'
     anons_allowed = True
     message_list = []
-
-    @staticmethod
-    def get_theme_css_url():
-        json_request = requests.get(BaseDetailedView.THEMES_JSON_URL).json()
-        for theme in json_request['themes']:
-            if theme['name'] == BaseDetailedView.THEME:
-                return theme['css']
-        return ''
 
     @staticmethod
     def get_link_dict(url_name: str, human_name: str, kwargs: dict = {}) -> dict:
@@ -51,6 +42,9 @@ class BaseDetailedView(TemplateView):
                 self.get_link_dict('other2me', 'Ко мне записаны'),
             ]
         return links
+
+    def get_theme_css_url(self):
+        return static(f'bootswatch-themes/{self.theme_name}.css')
 
     def add_message(self, text, level=messages.INFO):
         messages.add_message(self.request, level, text)
