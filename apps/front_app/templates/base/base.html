@@ -15,12 +15,7 @@
         <link href="{% static 'bi-font/bootstrap-icons.css' %}" rel="stylesheet" type="text/css">
     </noscript>
 
-    <link rel="preload" href="{{ theme_css_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link href="{{ theme_css_url }}" rel="stylesheet" type="text/css">
-    </noscript>
-
-
+    <link href="{{ theme_css_url }}" rel="stylesheet" type="text/css">
 
     {% block extra_head %}
 
