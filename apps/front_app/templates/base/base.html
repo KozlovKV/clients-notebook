@@ -9,9 +9,19 @@
     <title>
         {% block title %}{{ title }}{% endblock %}
     </title>
-    <link href="{% static 'bootstrap5/css/bootstrap.min.css' %}" rel="stylesheet" crossorigin="anonymous">
-    <link href="{% static 'bi-font/bootstrap-icons.css' %}" rel="stylesheet">
-    <link href="{{ theme_css_url }}" rel="stylesheet">
+
+    <link rel="preload" href="{% static 'bi-font/bootstrap-icons.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="{% static 'bi-font/bootstrap-icons.css' %}" rel="stylesheet" type="text/css">
+    </noscript>
+
+    <link rel="preload" href="{{ theme_css_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="{{ theme_css_url }}" rel="stylesheet" type="text/css">
+    </noscript>
+
+
+
     {% block extra_head %}
 
     {% endblock %}
@@ -56,10 +66,9 @@
         {% endblock %}
     </footer>
 
-    <script src="{% static 'bootstrap5/js/bootstrap.min.js' %}" crossorigin="anonymous"></script>
+    <script src="{% static 'bootstrap5/js/bootstrap.min.js' %}" rel="script" type="module" async></script>
     {% block extra_script %}
 
     {% endblock %}
 </body>
-
 </html>

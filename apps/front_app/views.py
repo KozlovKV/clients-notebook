@@ -13,9 +13,13 @@ from apps.services_app import models as service_models
 
 
 class BaseDetailedView(TemplateView):
+    class THEMES(enumerate):
+        DEFAULT = 'bootstrap5/css/bootstrap.min.css'
+        DARKLY = 'bootswatch-themes/darkly/darkly.css'
+
     title = ''
     main_h1 = None
-    theme_name = 'darkly'
+    theme_url = THEMES.DARKLY
     anons_allowed = True
     message_list = []
 
@@ -44,7 +48,7 @@ class BaseDetailedView(TemplateView):
         return links
 
     def get_theme_css_url(self):
-        return static(f'bootswatch-themes/{self.theme_name}.css')
+        return static(self.theme_url)
 
     def add_message(self, text, level=messages.INFO):
         messages.add_message(self.request, level, text)
