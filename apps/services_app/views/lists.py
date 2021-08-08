@@ -6,6 +6,7 @@ from django.views.generic import edit as generic_edit_views
 
 from apps.front_app.views import BaseDetailedView
 from apps.services_app import models as service_models, forms as service_forms
+from apps.services_app import sorter
 
 
 class ServicesListView(generic_list_views.BaseListView, BaseDetailedView,
@@ -30,7 +31,7 @@ class ServicesListView(generic_list_views.BaseListView, BaseDetailedView,
         )
 
     def get_queryset(self):
-        all_services = super(ServicesListView, self).get_queryset()
+        all_services = super(ServicesListView, self).get_queryset().select_related('provider')
         return self.get_allowed_services(all_services)
 
     def form_valid(self, form):
@@ -81,27 +82,26 @@ class ServiceNotesWithMeListView(generic_list_views.BaseListView, BaseDetailedVi
     object_list = []
     context_object_name = 'notes_list_l2'
 
+    def get_raw_notes(self):
+        return self.model.objects.filter(client=self.request.user).select_related('service', 'provider', 'client')
+
     def get_queryset(self):
-        notes = self.model.objects.filter(client=self.request.user)
-        dicts_list = service_models.get_date_divided_notes_dicts(notes)
+        notes = self.get_raw_notes()
+        dicts_list = sorter.ServiceNoteDateSorter(
+            service_models.ServiceNote, notes
+        ).execute()
         for dict_l1 in dicts_list:
-            dict_l1['list'] = service_models.get_status_divided_notes_dicts(
-                dict_l1['list'], dict_l1['id']
-            )
+            dict_l1['list'] = sorter.ServiceNoteStatusSorter(
+                service_models.ServiceNote, dict_l1['list']
+            ).execute(dict_l1['id'])
         return dicts_list
 
 
 class ServiceNotesToMeListView(ServiceNotesWithMeListView):
     title = 'Ко мне записаны'
 
-    def get_queryset(self):
-        notes = self.model.objects.filter(provider=self.request.user)
-        dicts_list = service_models.get_date_divided_notes_dicts(notes)
-        for dict_l1 in dicts_list:
-            dict_l1['list'] = service_models.get_status_divided_notes_dicts(
-                dict_l1['list'], dict_l1['id']
-            )
-        return dicts_list
+    def get_raw_notes(self):
+        return self.model.objects.filter(provider=self.request.user).select_related('service', 'provider', 'client')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ServiceNotesToMeListView, self).get_context_data(object_list=None, **kwargs)

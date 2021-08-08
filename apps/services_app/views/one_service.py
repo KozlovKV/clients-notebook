@@ -8,6 +8,7 @@ from django.views.generic import edit as generic_edit_views, \
 from apps.front_app.views import BaseDetailedView
 from apps.services_app import models as service_models, forms as service_forms
 from apps.services_app.views.lists import MyServicesListView
+from apps.services_app import sorter
 
 
 class CreateServiceView(MyServicesListView, generic_edit_views.BaseCreateView):
@@ -95,9 +96,9 @@ class OneServiceDayView(generic_list_views.BaseListView, BaseDetailedView):
         return self.service.notes.filter(date=self.date)
 
     def get_queryset(self):
-        return service_models.get_status_divided_notes_dicts(
-            self.get_notes_list()
-        )
+        return sorter.ServiceNoteStatusSorter(
+            service_models.ServiceNote, self.get_notes_list()
+        ).execute()
 
     def get_patterns(self):
         patterns_with_urls = []

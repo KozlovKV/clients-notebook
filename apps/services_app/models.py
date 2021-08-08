@@ -7,6 +7,8 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User
 from django.db import models
 
+from apps.services_app import sorter
+
 
 class Service(models.Model):
     provider = models.ForeignKey(User, on_delete=models.SET(-1))
@@ -45,11 +47,11 @@ class Service(models.Model):
 
     @property
     def dates_with_notes(self):
-        return get_dates_with_notes(self.notes)
+        return sorter.get_dates_with_notes(self.notes)
 
     @property
     def status_divided_notes_dicts(self):
-        return get_status_divided_notes_dicts(self.notes)
+        return sorter.ServiceNoteStatusSorter(ServiceNote, self.notes).execute()
 
     def have_permission(self, user, permission):
         check_function = self.PERMISSION_CHECKERS[
@@ -191,45 +193,7 @@ class ServiceNote(models.Model):
         })
 
 
-def get_dates_with_notes(notes):
-    dates = set()
-    for note in notes:
-        dates.add(note.date)
-    return sorted(list(dates), reverse=True)
 
-
-# TODO: В один класс всё это надо запихать
-def get_date_divided_notes_dicts(notes, parent_id=''):
-    notes_dicts = []
-    for date in get_dates_with_notes(notes):
-        date_dict = {
-            'name': date,
-            'class_postfix': 'primary',
-            'id': f'id_date_{date}',
-            'list': notes.filter(date=date).extra(order_by=['date'])
-        }
-        if parent_id != '':
-            date_dict['id'] += f'_in_{parent_id}'
-        notes_dicts.append(date_dict)
-    return notes_dicts
-
-
-def get_status_divided_notes_dicts(notes, parent_id=''):
-    notes_dicts = []
-    for status_id in range(len(ServiceNote.STATUS_CHOICES)):
-        status_type_dict = {
-            'name': ServiceNote.STATUS_CHOICES[status_id][1],
-            'class_postfix':
-                ServiceNote.STATUS_CSS_CLASSES[status_id][1],
-            'id': f'id_status_{status_id}',
-            'list': notes.filter(
-                status=ServiceNote.STATUS_CSS_CLASSES[status_id][0]
-            ).extra(order_by=['date', 'time_start'])
-        }
-        if parent_id != '':
-            status_type_dict['id'] += f'_in_{parent_id}'
-        notes_dicts.append(status_type_dict)
-    return notes_dicts
 
 
 class ServiceNoteGenerationPattern(models.Model):

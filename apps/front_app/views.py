@@ -10,12 +10,14 @@ from django.views.generic import TemplateView
 
 import apps.profile_app.forms as profile_forms
 from apps.services_app import models as service_models
+from apps.services_app import sorter
 
 
 class BaseDetailedView(TemplateView):
     class THEMES(enumerate):
         DEFAULT = 'bootstrap5/css/bootstrap.min.css'
-        DARKLY = 'bootswatch-themes/darkly/darkly.css'
+        DARKLY = 'bootswatch-themes/darkly.css'
+        CYBORG = 'bootswatch-themes/cyborg.css'
 
     title = ''
     main_h1 = None
@@ -91,11 +93,12 @@ class IndexView(BaseDetailedView):
                 'services_list': service_models.Service.objects.filter(
                     provider=user.pk
                 ),
-                'notes_list_l1': service_models.get_status_divided_notes_dicts(
+                'notes_list_l1': sorter.ServiceNoteStatusSorter(
+                    service_models.ServiceNote,
                     service_models.ServiceNote.objects.filter(
                         provider=user.pk, date=timezone.now().date()
                     )
-                )
+                ).execute(),
             })
         context.update(super(IndexView, self).get_context_data(**kwargs))
         return context
