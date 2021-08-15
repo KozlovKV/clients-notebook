@@ -75,7 +75,7 @@
             {% if patterns %}
                 <div class="col-12">
                     <div class="card border-2">
-                        <h3 class="card-header">Сохранённые паттерны генрации</h3>
+                        <h3 class="card-header">Сохранённые паттерны генерации</h3>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
                                 {% for pattern in patterns %}
@@ -95,6 +95,12 @@
                                                     </a>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </li>
+                                {% empty %}
+                                    <li class="list-group-item">
+                                        <div class="text-center h4">
+                                            Список пуст
                                         </div>
                                     </li>
                                 {% endfor %}

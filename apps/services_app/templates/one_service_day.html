@@ -3,11 +3,11 @@
 
 {% block main_content %}
     {% include 'base/service_wide_card.html' %}
-    {% include 'base/notes_control.html' %}
     <div class="card mt-3 text-center border-3">
         <h2 class="card-header font-monospace">{{ date }}</h2>
         <div class="card-body">
             {% include 'base/notes_list.html' %}
         </div>
     </div>
+    {% include 'base/notes_control.html' %}
 {% endblock %}

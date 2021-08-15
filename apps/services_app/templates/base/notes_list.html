@@ -15,11 +15,19 @@
                             <div class="col">
                                 {% include 'base/one_note_card.html' %}
                             </div>
+                        {% empty %}
+                            <div class="col text-center h4">
+                                Список пуст
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
         {% endif %}
+    {% empty %}
+        <div class="col text-center h3">
+            Список пуст
+        </div>
     {% endfor %}
 </div>
