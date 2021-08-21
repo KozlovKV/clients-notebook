@@ -193,9 +193,6 @@ class ServiceNote(models.Model):
         })
 
 
-
-
-
 class ServiceNoteGenerationPattern(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     day_time_start = models.TimeField()

@@ -1,3 +1,4 @@
+import datetime
 from typing import List
 
 from django.templatetags.static import static
@@ -93,12 +94,25 @@ class IndexView(BaseDetailedView):
                 'services_list': service_models.Service.objects.filter(
                     provider=user.pk
                 ),
-                'notes_list_l1': sorter.ServiceNoteStatusSorter(
+                'notes_list_today': sorter.ServiceNoteStatusSorter(
                     service_models.ServiceNote,
                     service_models.ServiceNote.objects.filter(
                         provider=user.pk, date=timezone.now().date()
                     )
                 ).execute(),
+                'notes_list_week': self.get_week_notes(),
             })
         context.update(super(IndexView, self).get_context_data(**kwargs))
         return context
+
+    def get_week_notes(self):
+        today = timezone.datetime.today()
+        monday = today - datetime.timedelta(days=today.weekday())
+        sunday = monday + datetime.timedelta(days=7)
+        return sorter.ServiceNoteDateSorter(
+            service_models.ServiceNote,
+            service_models.ServiceNote.objects.filter(
+                provider=self.request.user.pk,
+                date__gte=monday, date__lte=sunday
+            )
+        ).execute()

@@ -5,7 +5,13 @@
         <div class="card border-2">
             <h2 class="card-header">Записи на сегодня</h2>
             <div class="card-body">
-                {% include 'base/notes_list.html' %}
+                {% include 'base/notes_list.html' with notes_list_l1=notes_list_today %}
+            </div>
+        </div>
+        <div class="card border-2 mt-3">
+            <h2 class="card-header">Записи на эту неделю</h2>
+            <div class="card-body">
+                {% include 'base/notes_list.html' with notes_list_l1=notes_list_week %}
             </div>
         </div>
         <div class="card border-2 mt-3">

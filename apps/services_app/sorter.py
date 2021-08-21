@@ -1,3 +1,6 @@
+from django.utils.translation import gettext_lazy as _
+
+
 class ModelsSorterABC:
     def __init__(self, model_class, queryset):
         self.model_class = model_class
@@ -45,7 +48,8 @@ class ServiceNoteDateSorter(ModelsSorterABC):
         return get_dates_with_notes(self.queryset)
 
     def get_attr_instance_name(self, attr_instance):
-        return attr_instance
+        return f'{attr_instance.strftime("%d.%m.%Y")} - ' \
+               f'{_(attr_instance.strftime("%A"))}'
 
     def get_attr_instance_class_postfix(self, attr_instance):
         return 'primary'

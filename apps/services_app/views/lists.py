@@ -80,7 +80,7 @@ class ServiceNotesWithMeListView(generic_list_views.BaseListView, BaseDetailedVi
     template_name = 'my_notes.html'
     model = service_models.ServiceNote
     object_list = []
-    context_object_name = 'notes_list_l2'
+    context_object_name = 'notes_list'
 
     def get_raw_notes(self):
         return self.model.objects.filter(client=self.request.user).select_related('service', 'provider', 'client')
