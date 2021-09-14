@@ -59,6 +59,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'settings.urls'
+ADMIN_URL = 'very_secr3t_p4nel/'
 
 TEMPLATES = [
     {
@@ -125,6 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+ACTIVATION_REQUIRED = const.secret_settings.ACTIVATION_REQUIRED
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_OPEN = True
 

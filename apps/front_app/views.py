@@ -9,6 +9,7 @@ from django.utils import timezone
 
 from django.views.generic import TemplateView
 
+from settings import settings
 import apps.profile_app.forms as profile_forms
 from apps.services_app import models as service_models
 from apps.services_app import sorter
@@ -48,6 +49,13 @@ class BaseDetailedView(TemplateView):
                 self.get_link_dict('me2other', 'Я записан'),
                 self.get_link_dict('other2me', 'Ко мне записаны'),
             ]
+            if self.request.user.is_superuser:
+                links += [
+                    {
+                        'url': settings.ADMIN_URL,
+                        'name': 'Админка',
+                    }
+                ]
         return links
 
     def get_theme_css_url(self):

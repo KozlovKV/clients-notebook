@@ -20,7 +20,7 @@ from apps.front_app import views as front
 from settings import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(settings.ADMIN_URL, admin.site.urls),
     path('', front.IndexView.as_view(), name='index'),
     path('service/', include('apps.services_app.urls')),
     path('profile/', include('apps.profile_app.urls')),
