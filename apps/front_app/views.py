@@ -52,7 +52,7 @@ class BaseDetailedView(TemplateView):
             if self.request.user.is_superuser:
                 links += [
                     {
-                        'url': settings.ADMIN_URL,
+                        'url': f'/{settings.ADMIN_URL}',
                         'name': 'Админка',
                     }
                 ]
