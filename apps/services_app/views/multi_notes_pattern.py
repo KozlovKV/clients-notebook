@@ -1,5 +1,7 @@
 from django.http import HttpResponseRedirect
 
+from django.views.generic import edit as generic_edit_views
+
 from apps.services_app import models as service_models, forms as service_forms
 from apps.services_app.views.multi_notes import MultiServiceNoteCreateView
 from apps.services_app.views.one_service import OneServiceDayView
@@ -31,3 +33,13 @@ class MultiServiceNotePatternExecuteView(MultiServiceNotePatternEditView,
         form = service_forms.MultiServiceNoteForm(instance=pattern)
         self.form_valid(form)
         return HttpResponseRedirect(self.get_success_url())
+
+
+class MultiServiceNotePatternDeleteView(generic_edit_views.BaseDeleteView, OneServiceDayView):
+    anons_allowed = False
+    model = service_models.ServiceNoteGenerationPattern
+    pk_url_kwarg = 'pattern_pk'
+
+    def get_success_url(self):
+        self.add_message('Паттерн успешно удалён')
+        return self.service.get_date_url(self.date)

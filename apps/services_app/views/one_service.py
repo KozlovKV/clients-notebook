@@ -112,6 +112,8 @@ class OneServiceDayView(generic_list_views.BaseListView, BaseDetailedView):
                                                    'execute'),
                     'edit_url': pattern.get_url(self.service, self.date,
                                                 'edit'),
+                    'delete_url': pattern.get_url(self.service, self.date,
+                                                  'delete'),
                 }
                 patterns_with_urls.append(pattern_dict)
         return patterns_with_urls

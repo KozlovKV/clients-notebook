@@ -35,7 +35,7 @@
                     {% csrf_token %}
                     <h3 class="card-header">Сгенерировать список карточек для записи</h3>
                     <div class="card-body p-3">
-                        <div class="row row-cols-3 mb-2">
+                        <div class="row row-cols-1 row-cols-md-3 mb-2">
                             <div class="col">
                                 <label class="form-label fs-6" for="id_{{ multi_form.day_time_start.name }}">
                                     {{ multi_form.day_time_start.label }}
@@ -77,34 +77,57 @@
                     <div class="card border-2">
                         <h3 class="card-header">Сохранённые паттерны генерации</h3>
                         <div class="card-body">
-                            <ul class="list-group list-group-flush">
+                            <div class="row row-cols-1 row-cols-md-3 justify-content-around">
                                 {% for pattern in patterns %}
-                                    <li class="list-group-item">
-                                        <div class="d-flex align-items-center justify-content-around row row-cols-1 row-cols-md-2">
-                                            <span class="col fs-5">{{ pattern.object }}</span>
-                                            <div class="col row row-cols-1 row-cols-md-2 gy-2 justify-content-around">
-                                                <form class="col" method="post" action="{{ pattern.execute_url }}">
-                                                    {% csrf_token %}
-                                                    <button class="w-100 btn btn-success" type="submit">
-                                                        Использовать паттерн
-                                                    </button>
-                                                </form>
-                                                <div class="col">
-                                                    <a class="w-100 btn btn-primary" href="{{ pattern.edit_url }}">
-                                                        Редактировать в форме
-                                                    </a>
+                                    <div class="col">
+                                        <div class="card card-border-2">
+                                            <div class="card-header">
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">
+                                                        Время начала дня - {{ pattern.object.day_time_start }}
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        Интервал - {{ pattern.object.time_interval }}
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        Время конца дня - {{ pattern.object.day_time_end }}
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        Дополнительная информация {{ pattern.multi_addition }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="col row row-cols-1 gy-2 justify-content-around">
+                                                    <form class="col" method="post" action="{{ pattern.execute_url }}">
+                                                        {% csrf_token %}
+                                                        <button class="w-100 btn btn-success" type="submit">
+                                                            Использовать паттерн
+                                                        </button>
+                                                    </form>
+                                                    <div class="col">
+                                                        <a class="w-100 btn btn-primary" href="{{ pattern.edit_url }}">
+                                                            Редактировать в форме
+                                                        </a>
+                                                    </div>
+                                                    <form class="col" method="post" action="{{ pattern.delete_url }}">
+                                                        {% csrf_token %}
+                                                        <button class="w-100 btn btn-danger" type="submit">
+                                                            Удалить паттерн
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-                                    </li>
+                                    </div>
                                 {% empty %}
-                                    <li class="list-group-item">
+                                    <div class="col">
                                         <div class="text-center h4">
                                             Список пуст
                                         </div>
-                                    </li>
+                                    </div>
                                 {% endfor %}
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

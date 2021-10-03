@@ -50,6 +50,11 @@ urlpatterns = [
         name='pattern_edit'
     ),
     path(
+        '<int:pk>/<int:Y>/<int:m>/<int:d>/create/multi/pattern/<int:pattern_pk>/delete/',
+        service_views.multi_notes_pattern.MultiServiceNotePatternDeleteView.as_view(),
+        name='pattern_delete'
+    ),
+    path(
         'my/services/', service_views.lists.MyServicesListView.as_view(),
         name='my_services'
     ),
