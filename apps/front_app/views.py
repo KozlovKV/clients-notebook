@@ -116,7 +116,7 @@ class IndexView(BaseDetailedView):
     def get_week_notes(self):
         today = timezone.datetime.today()
         monday = today - datetime.timedelta(days=today.weekday())
-        sunday = monday + datetime.timedelta(days=7)
+        sunday = monday + datetime.timedelta(days=6)
         return sorter.ServiceNoteDateSorter(
             service_models.ServiceNote,
             service_models.ServiceNote.objects.filter(
