@@ -136,6 +136,7 @@ EMAIL_PORT = const.smtp_settings.EMAIL_PORT
 EMAIL_HOST_USER = const.smtp_settings.EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = const.smtp_settings.EMAIL_HOST_PASSWORD
 EMAIL_USE_TLS = const.smtp_settings.EMAIL_USE_TLS
+EMAIL_USE_SSL = const.smtp_settings.EMAIL_USE_SSL
 SERVER_EMAIL = const.smtp_settings.SERVER_EMAIL
 DEFAULT_FROM_EMAIL = const.smtp_settings.DEFAULT_FROM_EMAIL
 
