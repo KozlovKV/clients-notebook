@@ -59,7 +59,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'settings.urls'
-ADMIN_URL = 'very_secr3t_p4nel/'
+ADMIN_URL = const.secret_settings.ADMIN_URL
 
 TEMPLATES = [
     {
